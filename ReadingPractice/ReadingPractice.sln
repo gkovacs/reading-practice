@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingPractice", "ReadingPractice\ReadingPractice.csproj", "{5AF9DE16-C5E5-49A0-9C42-C93AAD5F766C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingPractice.Web", "ReadingPractice.Web\ReadingPractice.Web.csproj", "{9DD66750-52E6-466A-B435-16C5D7E0B0A0}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AF9DE16-C5E5-49A0-9C42-C93AAD5F766C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AF9DE16-C5E5-49A0-9C42-C93AAD5F766C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AF9DE16-C5E5-49A0-9C42-C93AAD5F766C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AF9DE16-C5E5-49A0-9C42-C93AAD5F766C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DD66750-52E6-466A-B435-16C5D7E0B0A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DD66750-52E6-466A-B435-16C5D7E0B0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD66750-52E6-466A-B435-16C5D7E0B0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD66750-52E6-466A-B435-16C5D7E0B0A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
