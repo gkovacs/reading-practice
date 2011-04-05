@@ -3,10 +3,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
-
-    <Grid x:Name="LayoutRoot" Background="White">
-
+    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="685" d:DesignWidth="1008">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical" Width="400">
+            <sdk:Label Content="study focus:" Margin="50,20,0,0" FontSize="16"></sdk:Label>
+            <sdk:Label Content="食べる" Margin="50,0,0,0" FontSize="30"></sdk:Label>
+            <sdk:Label Content="to eat" Margin="50,0,0,0" FontSize="16"></sdk:Label>
+            <Button Content="return to general review" Margin="50,0,50,50"></Button>
+            
+        </StackPanel>
+        <Grid x:Name="LayoutRoot" Background="White" Height="685" Width="503">
+        <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0" Name="tabControl1" VerticalAlignment="Top" Width="503">
+            <sdk:TabItem Header="Read Sentences" Name="readTab">
+                <Grid>
+                    <ScrollViewer Height="531" HorizontalAlignment="Left" Margin="12,9,0,0" Name="scrollViewer1" VerticalAlignment="Top" Width="476" />
+                </Grid>
+            </sdk:TabItem>
+            <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
+                
+            </sdk:TabItem>
+        </sdk:TabControl>
+            <sdk:Label Content="Language:" Height="28" HorizontalAlignment="Left" Margin="04,35,0,0" Name="label1" VerticalAlignment="Top" Width="120" />
+            <ComboBox Height="23" HorizontalAlignment="Left" Margin="70,32,0,0" Name="LanguageSelector" VerticalAlignment="Top" Width="209">
+            
+        </ComboBox>
+        <Button Content="Logout" Height="23" HorizontalAlignment="Left" Margin="433,32,0,0" Name="button1" VerticalAlignment="Top" Width="67" />
+        <sdk:Label Content="Logged in as gkovacs"  Height="28" HorizontalAlignment="Left" Margin="310,35,0,0" Name="label2" VerticalAlignment="Top" Width="125" />
     </Grid>
+    </StackPanel>
 </UserControl>

@@ -17,6 +17,9 @@ namespace ReadingPractice
         public MainPage()
         {
             InitializeComponent();
+            LanguageSelector.Items.Add("Select Language");
+            LanguageSelector.Items.Add("Mandarin Chinese (Simplified)");
+            LanguageSelector.SelectedIndex = 0;
         }
     }
 }
