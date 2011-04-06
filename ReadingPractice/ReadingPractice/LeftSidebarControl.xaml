@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="400" d:DesignWidth="400">
-    <StackPanel Orientation="Vertical" Width="400">
+    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="600" d:DesignWidth="400">
+    <StackPanel Orientation="Vertical" Width="400" Height="600">
         <sdk:Label Content="study focus:" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
         <sdk:Label Name="StudyFocusForeignWord"  Content="someforeignword" HorizontalAlignment="Center" FontSize="30"></sdk:Label>
         <sdk:Label Name="StudyFocusReading"  Content="somereading" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
@@ -16,7 +16,7 @@
             </TextBox>
         </StackPanel>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400">
             <sdk:TreeView>
                 <sdk:TreeViewItem Name="AllVocabList"  Header="All Vocab" IsExpanded="False">
                     <CheckBox Content="Vocab 1"></CheckBox>
