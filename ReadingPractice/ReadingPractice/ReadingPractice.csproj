@@ -81,8 +81,8 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RightSidebarControl.xaml.cs">
-      <DependentUpon>RightSidebarControl.xaml</DependentUpon>
+    <Compile Include="MainPageRightSideControl.xaml.cs">
+      <DependentUpon>MainPageRightSideControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="SentenceView.xaml.cs">
       <DependentUpon>SentenceView.xaml</DependentUpon>
@@ -101,7 +101,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RightSidebarControl.xaml">
+    <Page Include="MainPageRightSideControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
