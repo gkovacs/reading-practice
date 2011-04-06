@@ -77,6 +77,8 @@
     <Compile Include="ContributeSentenceTab.xaml.cs">
       <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WordDictionary.cs" />
+    <Compile Include="Languages.cs" />
     <Compile Include="LeftSidebarControl.xaml.cs">
       <DependentUpon>LeftSidebarControl.xaml</DependentUpon>
     </Compile>
