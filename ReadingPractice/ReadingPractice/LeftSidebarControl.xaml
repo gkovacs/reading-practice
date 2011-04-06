@@ -18,7 +18,7 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <sdk:TreeView>
-                <sdk:TreeViewItem Header="All Vocab" IsExpanded="False">
+                <sdk:TreeViewItem Name="AllVocabList"  Header="All Vocab" IsExpanded="False">
                     <CheckBox Content="Vocab 1"></CheckBox>
                     <CheckBox Content="Vocab 2"></CheckBox>
                     <CheckBox Content="Vocab 3"></CheckBox>
