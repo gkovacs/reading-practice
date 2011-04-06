@@ -11,10 +11,14 @@
     <Grid x:Name="LayoutRoot" Background="White" Height="685" Width="503">
         <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0" Name="tabControl1" VerticalAlignment="Top" Width="503">
             <sdk:TabItem Header="Read Sentences" Name="readTab">
-                <rp:ReadSentencesTab />
+                <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                    <rp:ReadSentencesTab />
+                </ScrollViewer>
             </sdk:TabItem>
             <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
-
+                <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                    <rp:ContributeSentenceTab />
+                </ScrollViewer>
             </sdk:TabItem>
         </sdk:TabControl>
         <sdk:Label Content="Language:" Height="28" HorizontalAlignment="Left" Margin="04,35,0,0" Name="label1" VerticalAlignment="Top" Width="120" />

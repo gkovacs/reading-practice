@@ -74,6 +74,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContributeSentenceTab.xaml.cs">
+      <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LeftSidebarControl.xaml.cs">
       <DependentUpon>LeftSidebarControl.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="ContributeSentenceTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LeftSidebarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
