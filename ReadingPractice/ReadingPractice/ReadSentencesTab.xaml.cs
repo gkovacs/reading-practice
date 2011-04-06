@@ -12,14 +12,17 @@ using System.Windows.Shapes;
 
 namespace ReadingPractice
 {
-    public partial class RightSidebarControl : UserControl
+    public partial class ReadSentencesTab : UserControl
     {
-        public RightSidebarControl()
+        public ReadSentencesTab()
         {
             InitializeComponent();
-            LanguageSelector.Items.Add("Select Language");
-            LanguageSelector.Items.Add("Mandarin Chinese (Simplified)");
-            LanguageSelector.SelectedIndex = 0;
+        }
+
+        private void FetchNextSentenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            int sentenceNum = SentenceListViewer.Children.Count;
+            SentenceListViewer.Children.Insert(1, new SentenceView("native sentence " + sentenceNum, "translated sentence " + sentenceNum));
         }
     }
 }

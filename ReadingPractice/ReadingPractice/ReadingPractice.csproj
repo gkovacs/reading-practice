@@ -84,6 +84,9 @@
     <Compile Include="MainPageRightSideControl.xaml.cs">
       <DependentUpon>MainPageRightSideControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReadSentencesTab.xaml.cs">
+      <DependentUpon>ReadSentencesTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SentenceView.xaml.cs">
       <DependentUpon>SentenceView.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPageRightSideControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReadSentencesTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
