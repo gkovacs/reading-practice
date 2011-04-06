@@ -14,7 +14,22 @@ namespace ReadingPractice
 {
     public partial class LeftSidebarControl : UserControl
     {
-        public WordDictionary wordDictionary;
+        public MainPage mainPage;
+
+        public WordDictionary wordDictionary
+        {
+            get
+            {
+                return mainPage.wordDictionary;
+            }
+        }
+        public Languages language
+        {
+            get
+            {
+                return mainPage.language;
+            }
+        }
 
         public LeftSidebarControl()
         {
@@ -22,20 +37,24 @@ namespace ReadingPractice
         }
 
         /// <summary>
-        /// TODO
         /// getter returns empty string if no study focus is set (reviewing mode), returns study focus in
         /// the foreign language being studied otherwise.
         /// setter sets the study focus and updates GUI appropriately
         /// </summary>
+        ///
+        private string _studyFocus;
         public string StudyFocus
         {
             get
             {
-                return "";
+                return _studyFocus;
             }
             set
             {
-                value = "";
+                _studyFocus = value;
+                StudyFocusForeignWord.Content = _studyFocus;
+                StudyFocusReading.Content = wordDictionary.getReading(_studyFocus, language);
+                StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus, language);
             }
         }
 

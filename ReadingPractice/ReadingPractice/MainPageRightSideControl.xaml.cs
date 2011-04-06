@@ -14,7 +14,15 @@ namespace ReadingPractice
 {
     public partial class RightSidebarControl : UserControl
     {
-        public WordDictionary wordDictionary;
+        public MainPage mainPage;
+
+        public WordDictionary wordDictionary
+        {
+            get
+            {
+                return mainPage.wordDictionary;
+            }
+        }
 
         public RightSidebarControl()
         {

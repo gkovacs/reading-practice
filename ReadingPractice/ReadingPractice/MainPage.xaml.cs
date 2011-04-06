@@ -15,16 +15,21 @@ namespace ReadingPractice
     public partial class MainPage : UserControl
     {
         public WordDictionary wordDictionary;
+        public Languages language
+        {
+            get
+            {
+                return Languages.SimplifiedMandarin;
+            }
+        }
 
         public MainPage()
         {
-            InitializeComponent();
             wordDictionary = new WordDictionary();
-            this.LeftSidebar.wordDictionary = wordDictionary;
-            this.RightSidebar.wordDictionary = wordDictionary;
-            this.LeftSidebar.StudyFocusForeignWord.Content = "食";
-            this.LeftSidebar.StudyFocusReading.Content = wordDictionary.getReading(this.LeftSidebar.StudyFocusForeignWord.Content.ToString(), Languages.SimplifiedMandarin);
-            this.LeftSidebar.StudyFocusTranslation.Content = wordDictionary.translateToEnglish(this.LeftSidebar.StudyFocusForeignWord.Content.ToString(), Languages.SimplifiedMandarin);
+            InitializeComponent();
+            this.LeftSidebar.mainPage = this;
+            this.RightSidebar.mainPage = this;
+            this.LeftSidebar.StudyFocus = "地震";
         }
     }
 }
