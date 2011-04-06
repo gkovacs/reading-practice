@@ -21,5 +21,10 @@ namespace ReadingPractice
             LanguageSelector.Items.Add("Mandarin Chinese (Simplified)");
             LanguageSelector.SelectedIndex = 0;
         }
+
+        private void FetchNextSentenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            SentenceListViewer.Children.Insert(1, new SentenceView());
+        }
     }
 }

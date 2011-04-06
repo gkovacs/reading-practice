@@ -76,8 +76,12 @@
         <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0" Name="tabControl1" VerticalAlignment="Top" Width="503">
             <sdk:TabItem Header="Read Sentences" Name="readTab">
                 <Grid>
-                    <ScrollViewer Height="531" HorizontalAlignment="Left" Margin="12,9,0,0" Name="scrollViewer1" VerticalAlignment="Top" Width="476" />
-                </Grid>
+                        <ScrollViewer Height="531" HorizontalAlignment="Left" Margin="12,9,0,0" VerticalAlignment="Top" Width="476">
+                            <StackPanel Orientation="Vertical" Name="SentenceListViewer">
+                                <Button Name="FetchNextSentenceButton" Click="FetchNextSentenceButton_Click">Fetch next sentence</Button>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
             </sdk:TabItem>
             <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
                 
