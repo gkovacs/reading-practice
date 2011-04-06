@@ -77,6 +77,7 @@
     <Compile Include="ContributeSentenceTab.xaml.cs">
       <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="WordDictionary.cs" />
     <Compile Include="Languages.cs" />
     <Compile Include="LeftSidebarControl.xaml.cs">
@@ -128,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cmn-simp-eng.txt" />
+    <Resource Include="cmn-simp-seg.txt" />
+    <Resource Include="cmn-simp-word-def.txt" />
+    <Resource Include="cmn-simp-word-reading.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

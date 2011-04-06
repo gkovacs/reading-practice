@@ -14,6 +14,8 @@ namespace ReadingPractice
 {
     public partial class RightSidebarControl : UserControl
     {
+        public WordDictionary wordDictionary;
+
         public RightSidebarControl()
         {
             InitializeComponent();
