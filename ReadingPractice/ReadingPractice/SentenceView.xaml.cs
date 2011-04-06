@@ -14,9 +14,11 @@ namespace ReadingPractice
 {
     public partial class SentenceView : UserControl
     {
-        public SentenceView()
+        public SentenceView(string nativeSentence, string translatedSentence)
         {
             InitializeComponent();
+            this.NativeLanguageSentence.Text = nativeSentence;
+            this.TranslatedSentence.Text = translatedSentence;
         }
     }
 }

@@ -7,10 +7,10 @@
     d:DesignHeight="187" d:DesignWidth="414" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     
     <StackPanel Orientation="Vertical">
-        <TextBlock FontSize="20" TextWrapping="Wrap">Some sentence is displayed here in this text box over multiple lines.</TextBlock>
+        <TextBlock FontSize="20" TextWrapping="Wrap" Name="NativeLanguageSentence">Some sentence is displayed here in this text box over multiple lines.</TextBlock>
         <sdk:TreeView>
             <sdk:TreeViewItem Header="Show English Translation" IsExpanded="False">
-                <TextBlock FontSize="16" TextWrapping="Wrap">Some translation.</TextBlock>
+                <TextBlock FontSize="16" TextWrapping="Wrap" Name="TranslatedSentence">Some translation.</TextBlock>
             </sdk:TreeViewItem>
         </sdk:TreeView>
     </StackPanel>

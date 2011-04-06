@@ -24,7 +24,8 @@ namespace ReadingPractice
 
         private void FetchNextSentenceButton_Click(object sender, RoutedEventArgs e)
         {
-            SentenceListViewer.Children.Insert(1, new SentenceView());
+            int sentenceNum = SentenceListViewer.Children.Count;
+            SentenceListViewer.Children.Insert(1, new SentenceView("native sentence "+sentenceNum, "translated sentence "+sentenceNum));
         }
     }
 }
