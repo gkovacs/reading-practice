@@ -12,9 +12,9 @@ using System.Windows.Shapes;
 
 namespace ReadingPractice
 {
-    public partial class MainPage : UserControl
+    public partial class LeftSidebarControl : UserControl
     {
-        public MainPage()
+        public LeftSidebarControl()
         {
             InitializeComponent();
         }
