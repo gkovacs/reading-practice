@@ -29,7 +29,8 @@ namespace ReadingPractice
             InitializeComponent();
             this.LeftSidebar.mainPage = this;
             this.RightSidebar.mainPage = this;
-            this.LeftSidebar.StudyFocus = "地震";
+            this.LeftSidebar.performOnStartup();
+            this.RightSidebar.performOnStartup();
         }
     }
 }

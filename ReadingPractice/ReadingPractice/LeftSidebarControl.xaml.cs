@@ -31,9 +31,18 @@ namespace ReadingPractice
             }
         }
 
+        /// <summary>
+        /// do not add code to the constructor. Put things you want to occur on startup in performOnStartup
+        /// </summary>
         public LeftSidebarControl()
         {
             InitializeComponent();
+        }
+
+        public void performOnStartup()
+        {
+            StudyFocus = "地震";
+
         }
 
         /// <summary>

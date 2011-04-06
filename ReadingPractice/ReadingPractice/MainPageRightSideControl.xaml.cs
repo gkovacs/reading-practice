@@ -24,9 +24,16 @@ namespace ReadingPractice
             }
         }
 
+        /// <summary>
+        /// do not add code to the constructor. Put things you want to occur on startup in performOnStartup
+        /// </summary>
         public RightSidebarControl()
         {
             InitializeComponent();
+        }
+
+        public void performOnStartup()
+        {
             LanguageSelector.Items.Add("Select Language");
             LanguageSelector.Items.Add("Mandarin Chinese (Simplified)");
             LanguageSelector.SelectedIndex = 0;
