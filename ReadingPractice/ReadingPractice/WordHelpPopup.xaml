@@ -18,7 +18,7 @@
         <sdk:Label Content="Reading" FontSize="14"  Height="28" HorizontalAlignment="Left" Margin="20,42,0,0" Name="displayReading" VerticalAlignment="Top" Width="266" />
         <sdk:Label Content="Definition" FontSize="14"  Height="24" HorizontalAlignment="Left" Margin="20,68,0,0" Name="displayDefinition" VerticalAlignment="Top" Width="266" />
         <CheckBox Content="Allow this word to be displayed in sentences" Height="16" HorizontalAlignment="Left" Margin="20,98,0,0" Name="displayedCheckbox" VerticalAlignment="Top" Width="266" />
-        <Button Content="Make this word the study focus" Height="23" HorizontalAlignment="Left" Margin="20,120,0,0" Name="makeStudyFocus" VerticalAlignment="Top" Width="266" />
+        <Button Content="Make this word the study focus" Height="23" HorizontalAlignment="Left" Margin="20,120,0,0" Name="makeStudyFocus" VerticalAlignment="Top" Width="266" Click="makeStudyFocus_Click" />
     </Grid>
     </Border>
 </UserControl>

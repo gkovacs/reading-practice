@@ -40,6 +40,16 @@ namespace ReadingPractice
             this.displayReading.Content = wordDictionary.getReading(foreignWord, language);
             this.displayDefinition.Content = wordDictionary.translateToEnglish(foreignWord, language);
             this.displayedCheckbox.IsChecked = mainPage.LeftSidebar.isDisplayed(foreignWord);
+            if (mainPage.LeftSidebar.StudyFocus == foreignWord)
+            {
+                this.makeStudyFocus.IsEnabled = false;
+            }
+        }
+
+        private void makeStudyFocus_Click(object sender, RoutedEventArgs e)
+        {
+            mainPage.LeftSidebar.StudyFocus = this.foreignWord;
+            this.makeStudyFocus.IsEnabled = false;
         }
     }
 }

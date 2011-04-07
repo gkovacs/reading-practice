@@ -37,6 +37,13 @@ namespace ReadingPractice
                 return mainPage.wordDictionary;
             }
         }
+        public string StudyFocus
+        {
+            get
+            {
+                return mainPage.LeftSidebar.StudyFocus;
+            }
+        }
 
         public SentenceView(string nativeSentence, MainPage mainPage)
         {
@@ -45,13 +52,17 @@ namespace ReadingPractice
             this.nativeSentence = nativeSentence;
             foreach (string word in sentenceDictionary.getWords(nativeSentence, language))
             {
+                string currentWord = word;
                 string reading = wordDictionary.getReading(word, language);
                 string definition = wordDictionary.translateToEnglish(word, language);
                 if (reading != "" && definition != "")
                 {
                     Button button = new Button();
                     button.Content = word;
-                    string currentWord = word;
+                    if (StudyFocus == currentWord)
+                    {
+                        button.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+                    }
                     button.FontSize = 20.0;
                     button.Click += (s, e) =>
                     {
@@ -76,11 +87,11 @@ namespace ReadingPractice
                         {
                             popup.VerticalOffset = buttoncoords.Y + button.ActualHeight;
                         }
-                        popup.IsOpen = true;
                         wordHelp.closeButton.Click += (s2, e2) =>
                         {
                             popup.IsOpen = false;
                         };
+                        popup.IsOpen = true;
                     };
                     this.NativeLanguageSentenceDisplay.Children.Add(button);
                 }
@@ -88,6 +99,10 @@ namespace ReadingPractice
                 {
                     Label label = new Label();
                     label.Content = word;
+                    if (StudyFocus == currentWord)
+                    {
+                        label.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+                    }
                     label.FontSize = 20.0;
                     this.NativeLanguageSentenceDisplay.Children.Add(label);
                 }
