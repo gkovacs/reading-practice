@@ -78,6 +78,7 @@
       <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="SentenceDictionary.cs" />
     <Compile Include="WordDictionary.cs" />
     <Compile Include="Languages.cs" />
     <Compile Include="LeftSidebarControl.xaml.cs">

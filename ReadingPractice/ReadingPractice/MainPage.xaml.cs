@@ -15,6 +15,7 @@ namespace ReadingPractice
     public partial class MainPage : UserControl
     {
         public WordDictionary wordDictionary;
+        public SentenceDictionary sentenceDictionary;
         public Languages language
         {
             get
@@ -26,6 +27,7 @@ namespace ReadingPractice
         public MainPage()
         {
             wordDictionary = new WordDictionary();
+            sentenceDictionary = new SentenceDictionary();
             InitializeComponent();
             this.LeftSidebar.mainPage = this;
             this.RightSidebar.mainPage = this;

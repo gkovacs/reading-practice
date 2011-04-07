@@ -14,11 +14,15 @@ namespace ReadingPractice
 {
     public partial class SentenceView : UserControl
     {
-        public SentenceView(string nativeSentence, string translatedSentence)
+        MainPage mainPage;
+
+        public SentenceView(string nativeSentence, MainPage mainPage)
         {
             InitializeComponent();
+            this.mainPage = mainPage;
             this.NativeLanguageSentence.Text = nativeSentence;
-            this.TranslatedSentence.Text = translatedSentence;
+            this.TranslatedSentence.Text = mainPage.sentenceDictionary.translateToEnglish(nativeSentence, mainPage.language);
+
         }
     }
 }

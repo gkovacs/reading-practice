@@ -12,12 +12,12 @@
         <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0" Name="tabControl1" VerticalAlignment="Top" Width="503">
             <sdk:TabItem Header="Read Sentences" Name="readTab">
                 <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
-                    <rp:ReadSentencesTab />
+                    <rp:ReadSentencesTab Name="readSentencesTab" />
                 </ScrollViewer>
             </sdk:TabItem>
             <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
                 <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
-                    <rp:ContributeSentenceTab />
+                    <rp:ContributeSentenceTab Name="contributeSentencesTab" />
                 </ScrollViewer>
             </sdk:TabItem>
         </sdk:TabControl>

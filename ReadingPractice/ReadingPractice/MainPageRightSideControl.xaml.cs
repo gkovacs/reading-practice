@@ -37,6 +37,8 @@ namespace ReadingPractice
             LanguageSelector.Items.Add("Select Language");
             LanguageSelector.Items.Add("Mandarin Chinese (Simplified)");
             LanguageSelector.SelectedIndex = 0;
+            this.readSentencesTab.mainPage = mainPage;
+            this.contributeSentencesTab.mainPage = mainPage;
         }
     }
 }

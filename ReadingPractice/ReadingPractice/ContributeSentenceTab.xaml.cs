@@ -14,6 +14,8 @@ namespace ReadingPractice
 {
     public partial class ContributeSentenceTab : UserControl
     {
+        public MainPage mainPage;
+
         public ContributeSentenceTab()
         {
             InitializeComponent();
@@ -23,7 +25,7 @@ namespace ReadingPractice
         {
             string nativeSentence = this.NativeSentenceTextBox.Text;
             string translatedSentence = this.TranslatedSentenceTextBox.Text;
-            this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, translatedSentence));
+            this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, mainPage));
         }
     }
 }
