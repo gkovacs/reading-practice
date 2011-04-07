@@ -66,7 +66,14 @@ namespace ReadingPractice
                     sentenceDictionary.getSentences(StudyFocus, language, mainPage.LeftSidebar.isDisplayed)
                     .Where(sent => !isAlreadyPresent(sent))
                 );
-                // if size is 0, make some warning
+                if (this.sentencesToBeAdded.Count == 0)
+                {
+                    noMoreSentencesAvailable();
+                }
+                else
+                {
+                    haveSentencesAvailable();
+                }
             };
             mainPage.LeftSidebar.displayedListChanged += () =>
             {
@@ -74,6 +81,16 @@ namespace ReadingPractice
             };
             mainPage.LeftSidebar.focusWordChanged += newSentences;
             newSentences(StudyFocus);
+        }
+
+        private void noMoreSentencesAvailable()
+        {
+            this.FetchNextSentenceButton.IsEnabled = false;
+        }
+
+        private void haveSentencesAvailable()
+        {
+            this.FetchNextSentenceButton.IsEnabled = true;
         }
 
         private bool isAlreadyPresent(string sentence)
@@ -91,6 +108,10 @@ namespace ReadingPractice
         {
             if (sentencesToBeAdded.Count == 0)
                 return;
+            else if (sentencesToBeAdded.Count == 1)
+            {
+                noMoreSentencesAvailable();
+            }
             string sent = sentencesToBeAdded.First();
             sentencesToBeAdded.RemoveFirst();
             SentenceListViewer.Children.Insert(1, new SentenceView(sent, mainPage));
