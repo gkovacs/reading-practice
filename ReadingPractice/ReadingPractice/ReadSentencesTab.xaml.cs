@@ -98,7 +98,7 @@ namespace ReadingPractice
             foreach (var x in SentenceListViewer.Children.Skip(1))
             {
                 SentenceView sen = (SentenceView)x;
-                if (sentence == sen.NativeLanguageSentence.Text)
+                if (sentence == sen.nativeSentence)
                     return true;
             }
             return false;

@@ -3,14 +3,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
     mc:Ignorable="d"
     d:DesignHeight="187" d:DesignWidth="414" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
     
     <StackPanel Orientation="Vertical">
-        <TextBlock FontSize="20" TextWrapping="Wrap" Name="NativeLanguageSentence">Some sentence is displayed here in this text box over multiple lines.</TextBlock>
+        <controls:WrapPanel Name="NativeLanguageSentenceDisplay">
+            
+        </controls:WrapPanel>
+        <!--<TextBlock FontSize="20" TextWrapping="Wrap" Name="NativeLanguageSentence">Some sentence is displayed here in this text box over multiple lines.</TextBlock>-->
         <sdk:TreeView>
             <sdk:TreeViewItem Header="Show English Translation" IsExpanded="False">
-                <TextBlock FontSize="16" TextWrapping="Wrap" Name="TranslatedSentence">Some translation.</TextBlock>
+                <TextBlock FontSize="16" TextWrapping="Wrap" Name="TranslatedSentence" Width="405">Some translation.</TextBlock>
             </sdk:TreeViewItem>
         </sdk:TreeView>
     </StackPanel>
