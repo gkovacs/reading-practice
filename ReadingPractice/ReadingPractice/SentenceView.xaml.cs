@@ -23,20 +23,46 @@ namespace ReadingPractice
                 return mainPage.language;
             }
         }
+        public SentenceDictionary sentenceDictionary
+        {
+            get
+            {
+                return mainPage.sentenceDictionary;
+            }
+        }
+        public WordDictionary wordDictionary
+        {
+            get
+            {
+                return mainPage.wordDictionary;
+            }
+        }
 
         public SentenceView(string nativeSentence, MainPage mainPage)
         {
             InitializeComponent();
             this.mainPage = mainPage;
             this.nativeSentence = nativeSentence;
-            foreach (string word in mainPage.sentenceDictionary.getWords(nativeSentence, language))
+            foreach (string word in sentenceDictionary.getWords(nativeSentence, language))
             {
-                Button button = new Button();
-                button.Content = word;
-                button.FontSize = 20.0;
-                this.NativeLanguageSentenceDisplay.Children.Add(button);
+                string reading = wordDictionary.getReading(word, language);
+                string definition = wordDictionary.translateToEnglish(word, language);
+                if (reading != "" && definition != "")
+                {
+                    Button button = new Button();
+                    button.Content = word;
+                    button.FontSize = 20.0;
+                    this.NativeLanguageSentenceDisplay.Children.Add(button);
+                }
+                else
+                {
+                    Label label = new Label();
+                    label.Content = word;
+                    label.FontSize = 20.0;
+                    this.NativeLanguageSentenceDisplay.Children.Add(label);
+                }
             }
-            this.TranslatedSentence.Text = mainPage.sentenceDictionary.translateToEnglish(nativeSentence, mainPage.language);
+            this.TranslatedSentence.Text = sentenceDictionary.translateToEnglish(nativeSentence, language);
         }
     }
 }

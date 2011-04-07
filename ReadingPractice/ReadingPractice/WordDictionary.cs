@@ -70,16 +70,22 @@ namespace ReadingPractice
 
         public string translateToEnglish(string foreignWord, Languages language)
         {
+            if (!foreignToEnglish[language].ContainsKey(foreignWord))
+                return "";
             return foreignToEnglish[language][foreignWord];
         }
 
         public string translateToForeign(string englishWord, Languages language)
         {
+            if (!englishToForeign[language].ContainsKey(englishWord))
+                return "";
             return englishToForeign[language][englishWord];
         }
 
         public string getReading(string foreignWord, Languages language)
         {
+            if (!readings[language].ContainsKey(foreignWord))
+                return "";
             return readings[language][foreignWord];
         }
 
