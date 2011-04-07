@@ -11,10 +11,9 @@
         <controls:WrapPanel Name="NativeLanguageSentenceDisplay">
             
         </controls:WrapPanel>
-        <!--<TextBlock FontSize="20" TextWrapping="Wrap" Name="NativeLanguageSentence">Some sentence is displayed here in this text box over multiple lines.</TextBlock>-->
         <sdk:TreeView>
             <sdk:TreeViewItem Header="Show English Translation" IsExpanded="False">
-                <TextBlock FontSize="16" TextWrapping="Wrap" Name="TranslatedSentence" Width="405">Some translation.</TextBlock>
+                <TextBlock FontSize="16" TextWrapping="Wrap" Name="TranslatedSentence" Width="385">Some translation.</TextBlock>
             </sdk:TreeViewItem>
         </sdk:TreeView>
     </StackPanel>
