@@ -59,7 +59,15 @@ namespace ReadingPractice
                         WordHelpPopup wordHelp = new WordHelpPopup(currentWord, mainPage);
                         popup.Child = wordHelp;
                         Point buttoncoords = button.TransformToVisual(mainPage).Transform(new Point(0, 0));
-                        popup.HorizontalOffset = buttoncoords.X;
+                        Point rightsidebarcoords = mainPage.RightSidebar.TransformToVisual(mainPage).Transform(new Point(0, 0));
+                        if (buttoncoords.X + wordHelp.Width < mainPage.RightSidebar.ActualWidth + rightsidebarcoords.X)
+                        {
+                            popup.HorizontalOffset = buttoncoords.X;
+                        }
+                        else
+                        {
+                            popup.HorizontalOffset = mainPage.RightSidebar.ActualWidth + rightsidebarcoords.X - wordHelp.Width;
+                        }
                         if (buttoncoords.Y - wordHelp.Height >= 0)
                         {
                             popup.VerticalOffset = buttoncoords.Y - wordHelp.Height;
