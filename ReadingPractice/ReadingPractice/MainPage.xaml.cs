@@ -37,11 +37,6 @@ namespace ReadingPractice
                 {
                     _popup.IsOpen = false;
                 }
-                if (value == null)
-                {
-                    _popup = null;
-                    return;
-                }
                 _popup = value;
             }
         }
