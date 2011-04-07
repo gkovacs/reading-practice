@@ -16,7 +16,7 @@ namespace ReadingPractice
 {
     public class SentenceDictionary
     {
-        List<string> sentences = new List<string>();
+        Dictionary<Languages, List<string>> sentences = new Dictionary<Languages, List<string>>();
         Dictionary<Languages, Dictionary<string, string[]>> segmentation = new Dictionary<Languages, Dictionary<string, string[]>>();
         Dictionary<Languages, Dictionary<string, string>> foreignToEnglish = new Dictionary<Languages, Dictionary<string, string>>();
         Dictionary<Languages, Dictionary<string, string>> englishToForeign = new Dictionary<Languages, Dictionary<string, string>>();
@@ -28,6 +28,7 @@ namespace ReadingPractice
                 segmentation[lang] = new Dictionary<string, string[]>();
                 englishToForeign[lang] = new Dictionary<string, string>();
                 foreignToEnglish[lang] = new Dictionary<string, string>();
+                sentences[lang] = new List<string>();
             }
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-eng.txt", UriKind.Relative)).Stream))
             {
@@ -56,13 +57,13 @@ namespace ReadingPractice
             }
             foreach (string sent in foreignToEnglish[Languages.SimplifiedMandarin].Keys)
             {
-                sentences.Add(sent);
+                sentences[Languages.SimplifiedMandarin].Add(sent);
             }
         }
 
         public IList<string> getSentences(string focusWord, Languages language, Func<string, bool> isWordAllowedFunc)
         {
-            return sentences.Where((sent) =>
+            return sentences[language].Where((sent) =>
             {
                 string[] words = segmentation[language][sent];
                 if (!words.Contains(focusWord))

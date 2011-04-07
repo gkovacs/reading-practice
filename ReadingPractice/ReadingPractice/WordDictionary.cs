@@ -16,7 +16,7 @@ namespace ReadingPractice
 {
     public class WordDictionary
     {
-        List<string> allWords = new List<string>();
+        Dictionary<Languages, List<string>> allWords = new Dictionary<Languages, List<string>>();
         Dictionary<Languages, Dictionary<string, string>> readings = new Dictionary<Languages,Dictionary<string,string>>();
         Dictionary<Languages, Dictionary<string, string>> englishToForeign = new Dictionary<Languages,Dictionary<string,string>>();
         Dictionary<Languages, Dictionary<string, string>> foreignToEnglish = new Dictionary<Languages,Dictionary<string,string>>();
@@ -28,6 +28,7 @@ namespace ReadingPractice
                 readings[lang] = new Dictionary<string, string>();
                 englishToForeign[lang] = new Dictionary<string, string>();
                 foreignToEnglish[lang] = new Dictionary<string, string>();
+                allWords[lang] = new List<string>();
             }
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-word-def.txt", UriKind.Relative)).Stream))
             {
@@ -58,7 +59,7 @@ namespace ReadingPractice
             {
                 if (this.foreignToEnglish[Languages.SimplifiedMandarin].ContainsKey(word))
                 {
-                    this.allWords.Add(word);
+                    this.allWords[Languages.SimplifiedMandarin].Add(word);
                 }
                 else
                 {
@@ -82,9 +83,9 @@ namespace ReadingPractice
             return readings[language][foreignWord];
         }
 
-        public IList<string> listWords()
+        public IList<string> listWords(Languages language)
         {
-            return this.allWords.AsReadOnly();
+            return this.allWords[language].AsReadOnly();
         }
     }
 }
