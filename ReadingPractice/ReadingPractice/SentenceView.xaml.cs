@@ -51,7 +51,29 @@ namespace ReadingPractice
                 {
                     Button button = new Button();
                     button.Content = word;
+                    string currentWord = word;
                     button.FontSize = 20.0;
+                    button.Click += (s, e) =>
+                    {
+                        System.Windows.Controls.Primitives.Popup popup = new System.Windows.Controls.Primitives.Popup();
+                        WordHelpPopup wordHelp = new WordHelpPopup(currentWord, mainPage);
+                        popup.Child = wordHelp;
+                        Point buttoncoords = button.TransformToVisual(mainPage).Transform(new Point(0, 0));
+                        popup.HorizontalOffset = buttoncoords.X;
+                        if (buttoncoords.Y - wordHelp.Height >= 0)
+                        {
+                            popup.VerticalOffset = buttoncoords.Y - wordHelp.Height;
+                        }
+                        else
+                        {
+                            popup.VerticalOffset = buttoncoords.Y + button.ActualHeight;
+                        }
+                        popup.IsOpen = true;
+                        wordHelp.closeButton.Click += (s2, e2) =>
+                        {
+                            popup.IsOpen = false;
+                        };
+                    };
                     this.NativeLanguageSentenceDisplay.Children.Add(button);
                 }
                 else
