@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 
 namespace ReadingPractice
 {
@@ -23,6 +24,27 @@ namespace ReadingPractice
                 return Languages.SimplifiedMandarin;
             }
         }
+        private Popup _popup;
+        public Popup popup
+        {
+            get
+            {
+                return _popup;
+            }
+            set
+            {
+                if (_popup != null)
+                {
+                    _popup.IsOpen = false;
+                }
+                if (value == null)
+                {
+                    _popup = null;
+                    return;
+                }
+                _popup = value;
+            }
+        }
 
         public MainPage()
         {
@@ -33,6 +55,22 @@ namespace ReadingPractice
             this.RightSidebar.mainPage = this;
             this.LeftSidebar.performOnStartup();
             this.RightSidebar.performOnStartup();
+            MouseButtonEventHandler closePopupIfClickedOutside = (s, e) =>
+            {
+                if (popup == null)
+                    return;
+                Point position = e.GetPosition(popup);
+                if (position.X >= 0 && position.Y >= 0)
+                {
+                    if (position.X <= popup.ActualWidth && position.Y <= popup.ActualHeight)
+                    {
+                        return;
+                    }
+                }
+                popup = null;
+            };
+            this.AddHandler(UIElement.MouseLeftButtonDownEvent, closePopupIfClickedOutside, true);
+            PopupShield.AddHandler(UIElement.MouseLeftButtonDownEvent, closePopupIfClickedOutside, true);
         }
     }
 }

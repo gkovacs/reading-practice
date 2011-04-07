@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 
 namespace ReadingPractice
 {
@@ -44,6 +45,17 @@ namespace ReadingPractice
                 return mainPage.LeftSidebar.StudyFocus;
             }
         }
+        public Popup popup
+        {
+            get
+            {
+                return mainPage.popup;
+            }
+            set
+            {
+                mainPage.popup = value;
+            }
+        }
 
         public SentenceView(string nativeSentence, MainPage mainPage)
         {
@@ -66,7 +78,7 @@ namespace ReadingPractice
                     button.FontSize = 20.0;
                     button.Click += (s, e) =>
                     {
-                        System.Windows.Controls.Primitives.Popup popup = new System.Windows.Controls.Primitives.Popup();
+                        popup = new Popup();
                         WordHelpPopup wordHelp = new WordHelpPopup(currentWord, mainPage);
                         popup.Child = wordHelp;
                         Point buttoncoords = button.TransformToVisual(mainPage).Transform(new Point(0, 0));
@@ -89,7 +101,15 @@ namespace ReadingPractice
                         }
                         wordHelp.closeButton.Click += (s2, e2) =>
                         {
-                            popup.IsOpen = false;
+                            mainPage.popup = null;
+                        };
+                        popup.LostMouseCapture += (s3, e3) =>
+                        {
+                            mainPage.popup = null;
+                        };
+                        popup.LostFocus += (s4, e4) =>
+                        {
+                            mainPage.popup = null;
                         };
                         popup.IsOpen = true;
                     };
