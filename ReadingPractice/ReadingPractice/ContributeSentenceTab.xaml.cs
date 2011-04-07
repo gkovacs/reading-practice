@@ -21,6 +21,11 @@ namespace ReadingPractice
             InitializeComponent();
         }
 
+        public void performOnStartup()
+        {
+
+        }
+
         private void ContributeButton_Click(object sender, RoutedEventArgs e)
         {
             string nativeSentence = this.NativeSentenceTextBox.Text;

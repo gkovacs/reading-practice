@@ -16,6 +16,8 @@ namespace ReadingPractice
     {
         public MainPage mainPage;
 
+        private LinkedList<string> sentencesToBeAdded = new LinkedList<string>();
+
         public string StudyFocus
         {
             get
@@ -56,6 +58,24 @@ namespace ReadingPractice
             InitializeComponent();
         }
 
+        public void performOnStartup()
+        {
+            Action<string> newSentences = (focusWord) =>
+            {
+                this.sentencesToBeAdded = new LinkedList<string>(
+                    sentenceDictionary.getSentences(StudyFocus, language, mainPage.LeftSidebar.isDisplayed)
+                    .Where(sent => !isAlreadyPresent(sent))
+                );
+                // if size is 0, make some warning
+            };
+            mainPage.LeftSidebar.displayedListChanged += () =>
+            {
+                newSentences(StudyFocus);
+            };
+            mainPage.LeftSidebar.focusWordChanged += newSentences;
+            newSentences(StudyFocus);
+        }
+
         private bool isAlreadyPresent(string sentence)
         {
             foreach (var x in SentenceListViewer.Children.Skip(1))
@@ -69,21 +89,11 @@ namespace ReadingPractice
 
         private void FetchNextSentenceButton_Click(object sender, RoutedEventArgs e)
         {
-            IList<string> sentences = sentenceDictionary.getSentences(StudyFocus, language, mainPage.LeftSidebar.isDisplayed);
-            System.Diagnostics.Debug.WriteLine(sentences.Count);
-            foreach (string sent in sentences)
-            {
-                System.Diagnostics.Debug.WriteLine(sent);
-                if (!isAlreadyPresent(sent))
-                {
-                    SentenceListViewer.Children.Insert(1, new SentenceView(sent, mainPage));
-                    System.Diagnostics.Debug.WriteLine(sent+"added");
-                    return;
-                }
-            }
-            //int sentenceNum = SentenceListViewer.Children.Count;
-            //SentenceListViewer.Children.Insert(1, new SentenceView("native sentence " + sentenceNum, "translated sentence " + sentenceNum));
-
+            if (sentencesToBeAdded.Count == 0)
+                return;
+            string sent = sentencesToBeAdded.First();
+            sentencesToBeAdded.RemoveFirst();
+            SentenceListViewer.Children.Insert(1, new SentenceView(sent, mainPage));
         }
     }
 }

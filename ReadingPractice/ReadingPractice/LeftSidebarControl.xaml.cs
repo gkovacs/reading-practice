@@ -15,6 +15,8 @@ namespace ReadingPractice
     public partial class LeftSidebarControl : UserControl
     {
         public MainPage mainPage;
+        public event Action<string> focusWordChanged;
+        public event Action displayedListChanged;
 
         public WordDictionary wordDictionary
         {
@@ -70,6 +72,8 @@ namespace ReadingPractice
                 StudyFocusForeignWord.Content = _studyFocus;
                 StudyFocusReading.Content = wordDictionary.getReading(_studyFocus, language);
                 StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus, language);
+                if (focusWordChanged != null)
+                    focusWordChanged(_studyFocus);
             }
         }
 

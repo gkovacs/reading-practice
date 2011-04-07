@@ -39,6 +39,8 @@ namespace ReadingPractice
             LanguageSelector.SelectedIndex = 0;
             this.readSentencesTab.mainPage = mainPage;
             this.contributeSentencesTab.mainPage = mainPage;
+            this.readSentencesTab.performOnStartup();
+            this.contributeSentencesTab.performOnStartup();
         }
     }
 }
