@@ -44,14 +44,14 @@ namespace ReadingPractice
         public void performOnStartup()
         {
             StudyFocus = "地震";
-            /*
+            
             foreach (string word in wordDictionary.listWords().Take(50)) // first 50 words in dictionary
             {
                 CheckBox checkbox = new CheckBox();
                 checkbox.Content = word;
                 this.AllVocabList.Items.Add(checkbox);
             }
-            */
+            
 
         }
 
