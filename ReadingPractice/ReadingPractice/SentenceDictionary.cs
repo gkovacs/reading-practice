@@ -20,5 +20,7 @@ namespace ReadingPractice
         string translateToEnglish(string foreignSentence);
         string translateToForeign(string englishSentence);
         string[] getWords(string foreignSentence);
+        WordDictionary wordDictionary { get; }
+        Languages language { get; }
     }
 }

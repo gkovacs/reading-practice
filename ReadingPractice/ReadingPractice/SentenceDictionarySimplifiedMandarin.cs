@@ -20,12 +20,25 @@ namespace ReadingPractice
         Dictionary<Languages, Dictionary<string, string[]>> segmentation = new Dictionary<Languages, Dictionary<string, string[]>>();
         Dictionary<Languages, Dictionary<string, string>> foreignToEnglish = new Dictionary<Languages, Dictionary<string, string>>();
         Dictionary<Languages, Dictionary<string, string>> englishToForeign = new Dictionary<Languages, Dictionary<string, string>>();
-        WordDictionary wordDictionary;
-        readonly Languages language = Languages.SimplifiedMandarin;
-
-        public SentenceDictionarySimplifiedMandarin(WordDictionary wordDictionary)
+        WordDictionary _wordDictionary;
+        public WordDictionary wordDictionary
         {
-            this.wordDictionary = wordDictionary;
+            get
+            {
+                return _wordDictionary;
+            }
+        }
+        public Languages language
+        {
+            get
+            {
+                return Languages.SimplifiedMandarin;
+            }
+        }
+
+        public SentenceDictionarySimplifiedMandarin()
+        {
+            _wordDictionary = new WordDictionarySimplifiedMandarin();
             foreach (Languages lang in EnumHelper.GetValues<Languages>())
             {
                 segmentation[lang] = new Dictionary<string, string[]>();

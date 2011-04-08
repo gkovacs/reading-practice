@@ -17,8 +17,8 @@ namespace ReadingPractice
     public interface WordDictionary
     {
         string translateToEnglish(string foreignWord);
-        public string translateToForeign(string englishWord);
-        public string getReading(string foreignWord);
-        public IList<string> listWords();
+        string translateToForeign(string englishWord);
+        string getReading(string foreignWord);
+        IList<string> listWords();
     }
 }

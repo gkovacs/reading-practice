@@ -43,8 +43,8 @@ namespace ReadingPractice
 
         public MainPage()
         {
-            wordDictionary = new WordDictionarySimplifiedMandarin();
-            sentenceDictionary = new SentenceDictionarySimplifiedMandarin(wordDictionary);
+            sentenceDictionary = new SentenceDictionarySimplifiedMandarin();
+            wordDictionary = sentenceDictionary.wordDictionary;
             InitializeComponent();
             this.LeftSidebar.mainPage = this;
             this.RightSidebar.mainPage = this;
