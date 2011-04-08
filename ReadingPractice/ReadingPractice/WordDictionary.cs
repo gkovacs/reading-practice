@@ -20,5 +20,6 @@ namespace ReadingPractice
         string translateToForeign(string englishWord);
         string getReading(string foreignWord);
         IList<string> listWords();
+        Languages language { get; }
     }
 }

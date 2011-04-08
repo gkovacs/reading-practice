@@ -20,7 +20,13 @@ namespace ReadingPractice
         Dictionary<Languages, Dictionary<string, string>> readings = new Dictionary<Languages,Dictionary<string,string>>();
         Dictionary<Languages, Dictionary<string, string>> englishToForeign = new Dictionary<Languages,Dictionary<string,string>>();
         Dictionary<Languages, Dictionary<string, string>> foreignToEnglish = new Dictionary<Languages,Dictionary<string,string>>();
-        readonly Languages language = Languages.SimplifiedMandarin;
+        public Languages language
+        {
+            get
+            {
+                return Languages.SimplifiedMandarin;
+            }
+        }
 
         public WordDictionarySimplifiedMandarin()
         {
