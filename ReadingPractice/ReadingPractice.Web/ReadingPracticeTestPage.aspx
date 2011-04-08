@@ -2,7 +2,8 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" >
-<head runat="server">
+
+<head>
     <title>ReadingPractice</title>
     <style type="text/css">
     html, body {
@@ -23,19 +24,19 @@
         function onSilverlightError(sender, args) {
             var appSource = "";
             if (sender != null && sender != 0) {
-              appSource = sender.getHost().Source;
+                appSource = sender.getHost().Source;
             }
-            
+
             var errorType = args.ErrorType;
             var iErrorCode = args.ErrorCode;
 
             if (errorType == "ImageError" || errorType == "MediaError") {
-              return;
+                return;
             }
 
-            var errMsg = "Unhandled Error in Silverlight Application " +  appSource + "\n" ;
+            var errMsg = "Unhandled Error in Silverlight Application " + appSource + "\n";
 
-            errMsg += "Code: "+ iErrorCode + "    \n";
+            errMsg += "Code: " + iErrorCode + "    \n";
             errMsg += "Category: " + errorType + "       \n";
             errMsg += "Message: " + args.ErrorMessage + "     \n";
 
@@ -44,10 +45,10 @@
                 errMsg += "Line: " + args.lineNumber + "     \n";
                 errMsg += "Position: " + args.charPosition + "     \n";
             }
-            else if (errorType == "RuntimeError") {           
+            else if (errorType == "RuntimeError") {
                 if (args.lineNumber != 0) {
                     errMsg += "Line: " + args.lineNumber + "     \n";
-                    errMsg += "Position: " +  args.charPosition + "     \n";
+                    errMsg += "Position: " + args.charPosition + "     \n";
                 }
                 errMsg += "MethodName: " + args.methodName + "     \n";
             }
@@ -62,7 +63,8 @@
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
 		  <param name="source" value="ClientBin/ReadingPractice.xap"/>
 		  <param name="onError" value="onSilverlightError" />
-		  <param name="background" value="white" />
+		  <param name="background" value="transparent" />
+          <param name="windowless" value="true" />
 		  <param name="minRuntimeVersion" value="4.0.50826.0" />
 		  <param name="autoUpgrade" value="true" />
 		  <a href="http://go.microsoft.com/fwlink/?LinkID=149156&v=4.0.50826.0" style="text-decoration:none">
@@ -70,5 +72,6 @@
 		  </a>
 	    </object><iframe id="_sl_historyFrame" style="visibility:hidden;height:0px;width:0px;border:0px"></iframe></div>
     </form>
+<iframe src="sidebar.html" style="border:none; z-index: 100; position: absolute; left: 0px; top:170px" width="380" height="500" />
 </body>
 </html>
