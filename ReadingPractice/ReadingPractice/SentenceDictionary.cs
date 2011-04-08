@@ -20,9 +20,11 @@ namespace ReadingPractice
         Dictionary<Languages, Dictionary<string, string[]>> segmentation = new Dictionary<Languages, Dictionary<string, string[]>>();
         Dictionary<Languages, Dictionary<string, string>> foreignToEnglish = new Dictionary<Languages, Dictionary<string, string>>();
         Dictionary<Languages, Dictionary<string, string>> englishToForeign = new Dictionary<Languages, Dictionary<string, string>>();
+        WordDictionary wordDictionary;
 
-        public SentenceDictionary()
+        public SentenceDictionary(WordDictionary wordDictionary)
         {
+            this.wordDictionary = wordDictionary;
             foreach (Languages lang in EnumHelper.GetValues<Languages>())
             {
                 segmentation[lang] = new Dictionary<string, string[]>();
@@ -93,9 +95,27 @@ namespace ReadingPractice
 
         public string[] getWords(string foreignSentence, Languages language)
         {
-            if (!segmentation[language].ContainsKey(foreignSentence))
-                return new string[0];
-            return segmentation[language][foreignSentence];
+            Func<string, string> longestStartWord = null;
+            longestStartWord = (remaining) =>
+            {
+                if (remaining.Length == 1)
+                {
+                    return remaining;
+                }
+                if (wordDictionary.translateToEnglish(remaining, language) != "")
+                {
+                    return remaining;
+                }
+                return longestStartWord(remaining.Substring(0, remaining.Length - 1));
+            };
+            LinkedList<string> words = new LinkedList<string>();
+            for (int i = 0; i < foreignSentence.Length; )
+            {
+                string nextWord = longestStartWord(foreignSentence.Substring(i));
+                words.AddLast(nextWord);
+                i += nextWord.Length;
+            }
+            return words.ToArray();
         }
     }
 }

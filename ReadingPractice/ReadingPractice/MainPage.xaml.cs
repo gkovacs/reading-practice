@@ -44,7 +44,7 @@ namespace ReadingPractice
         public MainPage()
         {
             wordDictionary = new WordDictionary();
-            sentenceDictionary = new SentenceDictionary();
+            sentenceDictionary = new SentenceDictionary(wordDictionary);
             InitializeComponent();
             this.LeftSidebar.mainPage = this;
             this.RightSidebar.mainPage = this;
