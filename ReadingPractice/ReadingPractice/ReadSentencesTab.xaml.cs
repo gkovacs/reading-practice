@@ -63,7 +63,7 @@ namespace ReadingPractice
             Action<string> newSentences = (focusWord) =>
             {
                 this.sentencesToBeAdded = new LinkedList<string>(
-                    sentenceDictionary.getSentences(StudyFocus, language, mainPage.LeftSidebar.isDisplayed)
+                    sentenceDictionary.getSentences(StudyFocus, mainPage.LeftSidebar.isDisplayed)
                     .Where(sent => !isAlreadyPresent(sent))
                 );
                 if (this.sentencesToBeAdded.Count == 0)
@@ -113,7 +113,7 @@ namespace ReadingPractice
                 noMoreSentencesAvailable();
             }
             string sent = sentencesToBeAdded.First();
-            string tranlatedSentence = sentenceDictionary.translateToEnglish(sent, language);
+            string tranlatedSentence = sentenceDictionary.translateToEnglish(sent);
             sentencesToBeAdded.RemoveFirst();
             SentenceListViewer.Children.Insert(1, new SentenceView(sent, tranlatedSentence, mainPage));
         }

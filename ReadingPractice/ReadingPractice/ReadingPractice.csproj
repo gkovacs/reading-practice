@@ -80,7 +80,9 @@
     </Compile>
     <Compile Include="EnumHelper.cs" />
     <Compile Include="SentenceDictionary.cs" />
+    <Compile Include="SentenceDictionarySimplifiedMandarin.cs" />
     <Compile Include="WordDictionary.cs" />
+    <Compile Include="WordDictionarySimplifiedMandarin.cs" />
     <Compile Include="Languages.cs" />
     <Compile Include="LeftSidebarControl.xaml.cs">
       <DependentUpon>LeftSidebarControl.xaml</DependentUpon>

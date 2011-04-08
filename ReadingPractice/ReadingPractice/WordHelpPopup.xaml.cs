@@ -37,8 +37,8 @@ namespace ReadingPractice
             this.mainPage = mainPage;
             this.foreignWord = foreignWord;
             this.displayForeignWord.Content = foreignWord;
-            this.displayReading.Content = wordDictionary.getReading(foreignWord, language);
-            this.displayDefinition.Content = wordDictionary.translateToEnglish(foreignWord, language);
+            this.displayReading.Content = wordDictionary.getReading(foreignWord);
+            this.displayDefinition.Content = wordDictionary.translateToEnglish(foreignWord);
             this.displayedCheckbox.IsChecked = mainPage.LeftSidebar.isDisplayed(foreignWord);
             if (mainPage.LeftSidebar.StudyFocus == foreignWord)
             {

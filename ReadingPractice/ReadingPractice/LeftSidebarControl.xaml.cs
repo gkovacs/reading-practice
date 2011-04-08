@@ -44,7 +44,7 @@ namespace ReadingPractice
         public void performOnStartup()
         {
             StudyFocus = "地震";
-            foreach (string word in wordDictionary.listWords(language).Take(50)) // first 50 words in dictionary
+            foreach (string word in wordDictionary.listWords().Take(50)) // first 50 words in dictionary
             {
                 CheckBox checkbox = new CheckBox();
                 checkbox.Content = word;
@@ -70,8 +70,8 @@ namespace ReadingPractice
             {
                 _studyFocus = value;
                 StudyFocusForeignWord.Content = _studyFocus;
-                StudyFocusReading.Content = wordDictionary.getReading(_studyFocus, language);
-                StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus, language);
+                StudyFocusReading.Content = wordDictionary.getReading(_studyFocus);
+                StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus);
                 if (focusWordChanged != null)
                     focusWordChanged(_studyFocus);
             }

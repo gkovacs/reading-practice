@@ -62,7 +62,7 @@ namespace ReadingPractice
             InitializeComponent();
             this.mainPage = mainPage;
             this.nativeSentence = nativeSentence;
-            string[] segmented = sentenceDictionary.getWords(nativeSentence, language);
+            string[] segmented = sentenceDictionary.getWords(nativeSentence);
             if (segmented.Length == 0)
             {
                 segmented = nativeSentence.ToCharArray().Select(x => x.ToString()).ToArray();
@@ -70,8 +70,8 @@ namespace ReadingPractice
             foreach (string word in segmented)
             {
                 string currentWord = word;
-                string reading = wordDictionary.getReading(word, language);
-                string definition = wordDictionary.translateToEnglish(word, language);
+                string reading = wordDictionary.getReading(word);
+                string definition = wordDictionary.translateToEnglish(word);
                 if (reading != "" && definition != "")
                 {
                     Button button = new Button();
