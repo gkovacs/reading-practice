@@ -11,9 +11,11 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Windows.Browser;
 
 namespace ReadingPractice
 {
+    [ScriptableType]
     public class SentenceDictionarySimplifiedMandarin : SentenceDictionary
     {
         List<string> sentences = new List<string>();
@@ -22,14 +24,14 @@ namespace ReadingPractice
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         readonly WordDictionary _wordDictionary;
         readonly WordDictionary _traditionalWordDictionary;
-        public WordDictionary wordDictionary
+        public override WordDictionary wordDictionary
         {
             get
             {
                 return _wordDictionary;
             }
         }
-        public Languages language
+        public override Languages language
         {
             get
             {
@@ -72,7 +74,7 @@ namespace ReadingPractice
             }
         }
 
-        public IList<string> getSentences(string focusWord, Func<string, bool> isWordAllowedFunc)
+        public override IList<string> getSentences(string focusWord, Func<string, bool> isWordAllowedFunc)
         {
             return sentences.Where((sent) =>
             {
@@ -88,21 +90,21 @@ namespace ReadingPractice
             }).ToArray();
         }
 
-        public string translateToEnglish(string foreignSentence)
+        public override string translateToEnglish(string foreignSentence)
         {
             if (!foreignToEnglish.ContainsKey(foreignSentence))
                 return "";
             return foreignToEnglish[foreignSentence];
         }
 
-        public string translateToForeign(string englishSentence)
+        public override string translateToForeign(string englishSentence)
         {
             if (!englishToForeign.ContainsKey(englishSentence))
                 return "";
             return englishToForeign[englishSentence];
         }
 
-        public string[] getWords(string foreignSentence)
+        public override string[] getWords(string foreignSentence)
         {
             Func<string, string> longestStartWord = null;
             longestStartWord = (remaining) =>

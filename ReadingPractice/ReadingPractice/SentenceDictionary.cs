@@ -11,16 +11,18 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Windows.Browser;
 
 namespace ReadingPractice
 {
-    public interface SentenceDictionary
+    [ScriptableType]
+    public abstract class SentenceDictionary
     {
-        IList<string> getSentences(string focusWord, Func<string, bool> isWordAllowedFunc);
-        string translateToEnglish(string foreignSentence);
-        string translateToForeign(string englishSentence);
-        string[] getWords(string foreignSentence);
-        WordDictionary wordDictionary { get; }
-        Languages language { get; }
+        public abstract IList<string> getSentences(string focusWord, Func<string, bool> isWordAllowedFunc);
+        public abstract string translateToEnglish(string foreignSentence);
+        public abstract string translateToForeign(string englishSentence);
+        public abstract string[] getWords(string foreignSentence);
+        public abstract WordDictionary wordDictionary { get; }
+        public abstract Languages language { get; }
     }
 }

@@ -11,16 +11,18 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Windows.Resources;
 using System.IO;
+using System.Windows.Browser;
 
 namespace ReadingPractice
 {
+    [ScriptableType]
     public class WordDictionaryTraditionalMandarin : WordDictionary
     {
         List<string> allWords = new List<string>();
         Dictionary<string, string> readings = new Dictionary<string, string>();
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
-        public Languages language
+        public override Languages language
         {
             get
             {
@@ -68,28 +70,28 @@ namespace ReadingPractice
             }
         }
 
-        public string translateToEnglish(string foreignWord)
+        public override string translateToEnglish(string foreignWord)
         {
             if (!foreignToEnglish.ContainsKey(foreignWord))
                 return "";
             return foreignToEnglish[foreignWord];
         }
 
-        public string translateToForeign(string englishWord)
+        public override string translateToForeign(string englishWord)
         {
             if (!englishToForeign.ContainsKey(englishWord))
                 return "";
             return englishToForeign[englishWord];
         }
 
-        public string getReading(string foreignWord)
+        public override string getReading(string foreignWord)
         {
             if (!readings.ContainsKey(foreignWord))
                 return "";
             return readings[foreignWord];
         }
 
-        public IList<string> listWords()
+        public override IList<string> listWords()
         {
             return this.allWords.AsReadOnly();
         }

@@ -10,9 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using System.Windows.Browser;
 
 namespace ReadingPractice
 {
+    [ScriptableType]
     public partial class MainPage : UserControl
     {
         public WordDictionary wordDictionary;
@@ -66,6 +68,20 @@ namespace ReadingPractice
             };
             this.AddHandler(UIElement.MouseLeftButtonDownEvent, closePopupIfClickedOutside, true);
             PopupShield.AddHandler(UIElement.MouseLeftButtonDownEvent, closePopupIfClickedOutside, true);
+            HtmlPage.RegisterScriptableObject("mainPage", this);
+            HtmlPage.RegisterScriptableObject("sentenceDictionary", sentenceDictionary);
+            HtmlPage.RegisterScriptableObject("wordDictionary", wordDictionary);
+        }
+
+        public void htmlMouseDown()
+        {
+            System.Diagnostics.Debug.WriteLine("stuff pressed");
+            popup = null;
+        }
+
+        public void setStudyFocus(string text)
+        {
+            LeftSidebar.StudyFocus = text;
         }
     }
 }
