@@ -79,6 +79,7 @@
       <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="WordMapSimplifiedToTraditional.cs" />
     <Compile Include="SentenceDictionary.cs" />
     <Compile Include="SentenceDictionarySimplifiedMandarin.cs" />
     <Compile Include="WordDictionary.cs" />
@@ -151,6 +152,9 @@
   <ItemGroup>
     <Resource Include="cmn-trad-word-def.txt" />
     <Resource Include="cmn-trad-word-reading.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cmn-word-simptotrad.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

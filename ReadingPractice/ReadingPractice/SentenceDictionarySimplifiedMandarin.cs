@@ -124,7 +124,7 @@ namespace ReadingPractice
                 }
                 if (_traditionalWordDictionary.translateToEnglish(remaining) != "")
                 {
-                    return remaining;
+                    return WordMapSimplifiedToTraditional.toSimplified(remaining);
                 }
                 return longestStartWord(remaining.Substring(0, remaining.Length - 1));
             };
