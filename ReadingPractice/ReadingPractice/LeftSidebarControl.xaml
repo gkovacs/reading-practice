@@ -19,50 +19,124 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Height="400">
             <sdk:TreeView>
-                <sdk:TreeViewItem Name="AllVocabList"  Header="All Vocab" IsExpanded="False">
+                <sdk:TreeViewItem Name="AllVocabList" IsExpanded="False">
+                    <sdk:TreeViewItem.Header>
+                        <CheckBox>All Vocab</CheckBox>
+                    </sdk:TreeViewItem.Header>
                     <CheckBox Content="Vocab 1"></CheckBox>
                     <CheckBox Content="Vocab 2"></CheckBox>
                     <CheckBox Content="Vocab 3"></CheckBox>
                 </sdk:TreeViewItem>
-                <sdk:TreeViewItem Header="Textbook Vocab" IsExpanded="True">
-                    <sdk:TreeViewItem Header="Textbook 1">
-                        <sdk:TreeViewItem Header="Chapter 1">
+                <sdk:TreeViewItem IsExpanded="True">
+                    <sdk:TreeViewItem.Header>
+                        <CheckBox>
+                            Textbook Vocab
+                        </CheckBox>
+                    </sdk:TreeViewItem.Header>
+                    <sdk:TreeViewItem>
+                        <sdk:TreeViewItem.Header>
+                            <CheckBox>
+                                Textbook 1
+                            </CheckBox>
+                        </sdk:TreeViewItem.Header>
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 1
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Content="Vocab 1 - Translation"></CheckBox>
+                                <Button Margin="50,0,0,0">Make study focus</Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Content="Vocab 1 - Translation"></CheckBox>
+                                <Button Margin="50,0,0,0">Make study focus</Button>
+                            </StackPanel>
+                        </sdk:TreeViewItem>
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 2
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
-                        <sdk:TreeViewItem Header="Chapter 2">
-                            <CheckBox Content="Vocab 1"></CheckBox>
-                            <CheckBox Content="Vocab 2"></CheckBox>
-                        </sdk:TreeViewItem>
-                        <sdk:TreeViewItem Header="Chapter 3">
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 3
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
                     </sdk:TreeViewItem>
-                    <sdk:TreeViewItem Header="Textbook 2">
-                        <sdk:TreeViewItem Header="Chapter 1">
+                    <sdk:TreeViewItem>
+                        <sdk:TreeViewItem.Header>
+                            <CheckBox>
+                                Textbook 2
+                            </CheckBox>
+                        </sdk:TreeViewItem.Header>
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 1
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
-                        <sdk:TreeViewItem Header="Chapter 2">
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 2
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
-                        <sdk:TreeViewItem Header="Chapter 3">
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 3
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
                     </sdk:TreeViewItem>
-                    <sdk:TreeViewItem Header="Textbook 3">
-                        <sdk:TreeViewItem Header="Chapter 1">
+                    <sdk:TreeViewItem>
+                        <sdk:TreeViewItem.Header>
+                            <CheckBox>
+                                Textbook 3
+                            </CheckBox>
+                        </sdk:TreeViewItem.Header>
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 1
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
-                        <sdk:TreeViewItem Header="Chapter 2">
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 2
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
-                        <sdk:TreeViewItem Header="Chapter 3">
+                        <sdk:TreeViewItem>
+                            <sdk:TreeViewItem.Header>
+                                <CheckBox>
+                                    Chapter 3
+                                </CheckBox>
+                            </sdk:TreeViewItem.Header>
                             <CheckBox Content="Vocab 1"></CheckBox>
                             <CheckBox Content="Vocab 2"></CheckBox>
                         </sdk:TreeViewItem>
