@@ -30,7 +30,7 @@ namespace ReadingPractice
         {
             string nativeSentence = this.NativeSentenceTextBox.Text;
             string translatedSentence = this.TranslatedSentenceTextBox.Text;
-            this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, mainPage));
+            this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, translatedSentence, mainPage));
         }
     }
 }

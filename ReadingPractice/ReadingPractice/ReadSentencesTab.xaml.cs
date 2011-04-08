@@ -113,8 +113,9 @@ namespace ReadingPractice
                 noMoreSentencesAvailable();
             }
             string sent = sentencesToBeAdded.First();
+            string tranlatedSentence = sentenceDictionary.translateToEnglish(sent, language);
             sentencesToBeAdded.RemoveFirst();
-            SentenceListViewer.Children.Insert(1, new SentenceView(sent, mainPage));
+            SentenceListViewer.Children.Insert(1, new SentenceView(sent, tranlatedSentence, mainPage));
         }
     }
 }

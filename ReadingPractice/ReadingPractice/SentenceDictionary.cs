@@ -79,16 +79,22 @@ namespace ReadingPractice
 
         public string translateToEnglish(string foreignSentence, Languages language)
         {
+            if (!foreignToEnglish[language].ContainsKey(foreignSentence))
+                return "";
             return foreignToEnglish[language][foreignSentence];
         }
 
         public string translateToForeign(string englishSentence, Languages language)
         {
+            if (!englishToForeign[language].ContainsKey(englishSentence))
+                return "";
             return englishToForeign[language][englishSentence];
         }
 
         public string[] getWords(string foreignSentence, Languages language)
         {
+            if (!segmentation[language].ContainsKey(foreignSentence))
+                return new string[0];
             return segmentation[language][foreignSentence];
         }
     }

@@ -57,12 +57,17 @@ namespace ReadingPractice
             }
         }
 
-        public SentenceView(string nativeSentence, MainPage mainPage)
+        public SentenceView(string nativeSentence, string translated, MainPage mainPage)
         {
             InitializeComponent();
             this.mainPage = mainPage;
             this.nativeSentence = nativeSentence;
-            foreach (string word in sentenceDictionary.getWords(nativeSentence, language))
+            string[] segmented = sentenceDictionary.getWords(nativeSentence, language);
+            if (segmented.Length == 0)
+            {
+                segmented = nativeSentence.ToCharArray().Select(x => x.ToString()).ToArray();
+            }
+            foreach (string word in segmented)
             {
                 string currentWord = word;
                 string reading = wordDictionary.getReading(word, language);
@@ -127,7 +132,7 @@ namespace ReadingPractice
                     this.NativeLanguageSentenceDisplay.Children.Add(label);
                 }
             }
-            this.TranslatedSentence.Text = sentenceDictionary.translateToEnglish(nativeSentence, language);
+            this.TranslatedSentence.Text = translated;
         }
     }
 }
