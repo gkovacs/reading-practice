@@ -16,10 +16,10 @@ namespace ReadingPractice
 {
     public class WordDictionarySimplifiedMandarin : WordDictionary
     {
-        Dictionary<Languages, List<string>> allWords = new Dictionary<Languages, List<string>>();
-        Dictionary<Languages, Dictionary<string, string>> readings = new Dictionary<Languages,Dictionary<string,string>>();
-        Dictionary<Languages, Dictionary<string, string>> englishToForeign = new Dictionary<Languages,Dictionary<string,string>>();
-        Dictionary<Languages, Dictionary<string, string>> foreignToEnglish = new Dictionary<Languages,Dictionary<string,string>>();
+        List<string> allWords = new List<string>();
+        Dictionary<string, string> readings = new Dictionary<string, string>();
+        Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
+        Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         public Languages language
         {
             get
@@ -30,13 +30,6 @@ namespace ReadingPractice
 
         public WordDictionarySimplifiedMandarin()
         {
-            foreach (Languages lang in EnumHelper.GetValues<Languages>())
-            {
-                readings[lang] = new Dictionary<string, string>();
-                englishToForeign[lang] = new Dictionary<string, string>();
-                foreignToEnglish[lang] = new Dictionary<string, string>();
-                allWords[lang] = new List<string>();
-            }
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-word-def.txt", UriKind.Relative)).Stream))
             {
                 while (!reader.EndOfStream)
@@ -45,8 +38,8 @@ namespace ReadingPractice
                     string[] parts = line.Split('\t');
                     if (parts.Length != 2)
                         throw new Exception();
-                    foreignToEnglish[Languages.SimplifiedMandarin][parts[0]] = parts[1];
-                    englishToForeign[Languages.SimplifiedMandarin][parts[1]] = parts[0];
+                    foreignToEnglish[parts[0]] = parts[1];
+                    englishToForeign[parts[1]] = parts[0];
                 }
                 reader.Close();
             }
@@ -58,47 +51,47 @@ namespace ReadingPractice
                     string[] parts = line.Split('\t');
                     if (parts.Length != 2)
                         throw new Exception();
-                    readings[Languages.SimplifiedMandarin][parts[0]] = parts[1];
+                    readings[parts[0]] = parts[1];
                 }
                 reader.Close();
             }
-            foreach (string word in readings[Languages.SimplifiedMandarin].Keys)
+            foreach (string word in readings.Keys)
             {
-                if (this.foreignToEnglish[Languages.SimplifiedMandarin].ContainsKey(word))
+                if (this.foreignToEnglish.ContainsKey(word))
                 {
-                    this.allWords[Languages.SimplifiedMandarin].Add(word);
+                    this.allWords.Add(word);
                 }
                 else
                 {
-                    this.foreignToEnglish[Languages.SimplifiedMandarin].Remove(word);
+                    this.foreignToEnglish.Remove(word);
                 }
             }
         }
 
         public string translateToEnglish(string foreignWord)
         {
-            if (!foreignToEnglish[language].ContainsKey(foreignWord))
+            if (!foreignToEnglish.ContainsKey(foreignWord))
                 return "";
-            return foreignToEnglish[language][foreignWord];
+            return foreignToEnglish[foreignWord];
         }
 
         public string translateToForeign(string englishWord)
         {
-            if (!englishToForeign[language].ContainsKey(englishWord))
+            if (!englishToForeign.ContainsKey(englishWord))
                 return "";
-            return englishToForeign[language][englishWord];
+            return englishToForeign[englishWord];
         }
 
         public string getReading(string foreignWord)
         {
-            if (!readings[language].ContainsKey(foreignWord))
+            if (!readings.ContainsKey(foreignWord))
                 return "";
-            return readings[language][foreignWord];
+            return readings[foreignWord];
         }
 
         public IList<string> listWords()
         {
-            return this.allWords[language].AsReadOnly();
+            return this.allWords.AsReadOnly();
         }
     }
 }

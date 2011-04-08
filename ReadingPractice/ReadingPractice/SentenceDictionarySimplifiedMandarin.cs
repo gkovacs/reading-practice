@@ -20,7 +20,8 @@ namespace ReadingPractice
         Dictionary<Languages, Dictionary<string, string[]>> segmentation = new Dictionary<Languages, Dictionary<string, string[]>>();
         Dictionary<Languages, Dictionary<string, string>> foreignToEnglish = new Dictionary<Languages, Dictionary<string, string>>();
         Dictionary<Languages, Dictionary<string, string>> englishToForeign = new Dictionary<Languages, Dictionary<string, string>>();
-        WordDictionary _wordDictionary;
+        readonly WordDictionary _wordDictionary;
+        readonly WordDictionary _traditionalWordDictionary;
         public WordDictionary wordDictionary
         {
             get
@@ -39,6 +40,7 @@ namespace ReadingPractice
         public SentenceDictionarySimplifiedMandarin()
         {
             _wordDictionary = new WordDictionarySimplifiedMandarin();
+            _traditionalWordDictionary = new WordDictionaryTraditionalMandarin();
             foreach (Languages lang in EnumHelper.GetValues<Languages>())
             {
                 segmentation[lang] = new Dictionary<string, string[]>();
@@ -117,6 +119,10 @@ namespace ReadingPractice
                     return remaining;
                 }
                 if (wordDictionary.translateToEnglish(remaining) != "")
+                {
+                    return remaining;
+                }
+                if (_traditionalWordDictionary.translateToEnglish(remaining) != "")
                 {
                     return remaining;
                 }
