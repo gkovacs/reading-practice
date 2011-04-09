@@ -111,6 +111,9 @@ namespace ReadingPractice
             {
                 if (remaining.Length == 1)
                 {
+                    string asSimplified = WordMapSimplifiedToTraditional.toSimplified(remaining);
+                    if (asSimplified != "")
+                        return asSimplified;
                     return remaining;
                 }
                 if (wordDictionary.translateToEnglish(remaining) != "")
