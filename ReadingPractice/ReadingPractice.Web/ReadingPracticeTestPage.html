@@ -20,7 +20,7 @@
     <script type="text/javascript" src="Silverlight.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script type="text/javascript">
-
+    /*
         var mainPage = null;
         var wordDictionary = null;
         var sentenceDictionary = null;
@@ -30,7 +30,7 @@
             $(document).mousedown(function (evt) {
                 mainPage.htmlMouseDown();
             });
-            /*
+            
             $("#button1").click(function (evt) {
                 mainPage.setStudyFocus("食");
             });
@@ -43,7 +43,7 @@
                     alert(nativeWord + " translation: " + englishTranslation + " reading: " + reading);
                 }
             });
-            */
+            
         });
 
         function onSilverlightLoad(sender, args) {
@@ -52,6 +52,7 @@
             sentenceDictionary = silverlightControl.Content.sentenceDictionary;
             wordDictionary = silverlightControl.Content.wordDictionary;
         }
+        */
 
         function onSilverlightError(sender, args) {
             var appSource = "";
@@ -95,9 +96,9 @@
         <object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
 		  <param name="source" value="ClientBin/ReadingPractice.xap"/>
 		  <param name="onError" value="onSilverlightError" />
-          <param name="onLoad" value="onSilverlightLoad" />
+          <!--<param name="onLoad" value="onSilverlightLoad" />
 		  <param name="background" value="transparent" />
-          <param name="windowless" value="true" />
+          <param name="windowless" value="true" />-->
 		  <param name="minRuntimeVersion" value="4.0.50826.0" />
 		  <param name="autoUpgrade" value="true" />
 		  <a href="http://go.microsoft.com/fwlink/?LinkID=149156&v=4.0.50826.0" style="text-decoration:none">

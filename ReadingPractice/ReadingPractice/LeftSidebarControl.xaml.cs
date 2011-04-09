@@ -44,14 +44,37 @@ namespace ReadingPractice
         public void performOnStartup()
         {
             StudyFocus = "地震";
-            
+
+            Label showVocab = new Label();
+            showVocab.Height = 20.0;
+            showVocab.Content = "show all vocab";
+            showVocab.MouseLeftButtonDown += (s, e) =>
+            {
+                IList<string> allWords = wordDictionary.listWords();
+                VocabSelectionCanvas.Height = 20.0 + 20.0 * 1000;
+                for (int i = 0; i < 1000; ++i)
+                {
+                    string word = allWords[i];
+                    CheckBox newVocab = new CheckBox();
+                    newVocab.Height = 20.0;
+                    newVocab.Content = word;
+                    VocabSelectionCanvas.Children.Add(newVocab);
+                    newVocab.SetValue(Canvas.LeftProperty, 10.0);
+                    newVocab.SetValue(Canvas.TopProperty, 20.0 + 20.0 * i);
+                }
+            };
+
+            VocabSelectionCanvas.Children.Add(showVocab);
+            showVocab.SetValue(Canvas.LeftProperty, 0.0);
+            showVocab.SetValue(Canvas.TopProperty, 0.0);
+            /*
             foreach (string word in wordDictionary.listWords().Take(50)) // first 50 words in dictionary
             {
                 CheckBox checkbox = new CheckBox();
                 checkbox.Content = word;
                 this.AllVocabList.Items.Add(checkbox);
             }
-            
+            */
 
         }
 
