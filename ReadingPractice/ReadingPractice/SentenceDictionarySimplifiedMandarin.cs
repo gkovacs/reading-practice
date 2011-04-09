@@ -23,7 +23,6 @@ namespace ReadingPractice
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         readonly WordDictionary _wordDictionary;
-        readonly WordDictionary _traditionalWordDictionary;
         public override WordDictionary wordDictionary
         {
             get
@@ -42,7 +41,6 @@ namespace ReadingPractice
         public SentenceDictionarySimplifiedMandarin()
         {
             _wordDictionary = new WordDictionarySimplifiedMandarin();
-            _traditionalWordDictionary = new WordDictionaryTraditionalMandarin();
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-eng.txt", UriKind.Relative)).Stream))
             {
                 while (!reader.EndOfStream)
@@ -109,20 +107,20 @@ namespace ReadingPractice
             Func<string, string> longestStartWord = null;
             longestStartWord = (remaining) =>
             {
-                if (remaining.Length == 1)
-                {
-                    string asSimplified = WordMapSimplifiedToTraditional.toSimplified(remaining);
-                    if (asSimplified != "")
-                        return asSimplified;
-                    return remaining;
-                }
                 if (wordDictionary.translateToEnglish(remaining) != "")
                 {
                     return remaining;
                 }
-                if (_traditionalWordDictionary.translateToEnglish(remaining) != "")
+                string asSimplified = WordMapSimplifiedToTraditional.toSimplified(remaining);
+                if (remaining.Length == 1)
                 {
-                    return WordMapSimplifiedToTraditional.toSimplified(remaining);
+                    if (asSimplified != "")
+                        return asSimplified;
+                    return remaining;
+                }
+                if (asSimplified != "")
+                {
+                    return asSimplified;
                 }
                 return longestStartWord(remaining.Substring(0, remaining.Length - 1));
             };
