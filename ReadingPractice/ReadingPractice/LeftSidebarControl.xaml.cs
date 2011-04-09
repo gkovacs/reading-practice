@@ -70,10 +70,11 @@ namespace ReadingPractice
             Action<int, int> drawItemsInRange = (firstItemVisible, lastItemVisible) =>
             {
                 VocabSelectionCanvas.Children.Clear();
-                for (int i = Math.Max(firstItemVisible-2, 0); i < Math.Min(lastItemVisible+2, elementList.Count-1); ++i)
+                int startpos = Math.Max(firstItemVisible - 2, 0);
+                int endpos = Math.Min(lastItemVisible + 2, elementList.Count - 1);
+                for (int i = startpos; i < endpos; ++i)
                 {
-                    UIElement currentElement = elementList[i];
-                    VocabSelectionCanvas.Children.Add(currentElement);
+                    VocabSelectionCanvas.Children.Add(elementList[i]);
                 }
             };
             bool vocabShownClicked = false;
