@@ -9,6 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Reflection;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 
 namespace ReadingPractice
 {
@@ -48,25 +51,50 @@ namespace ReadingPractice
             Label showVocab = new Label();
             showVocab.Height = 20.0;
             showVocab.Content = "show all vocab";
-            showVocab.MouseLeftButtonDown += (s, e) =>
-            {
-                IList<string> allWords = wordDictionary.listWords();
-                VocabSelectionCanvas.Height = 20.0 + 20.0 * 1000;
-                for (int i = 0; i < 1000; ++i)
-                {
-                    string word = allWords[i];
-                    CheckBox newVocab = new CheckBox();
-                    newVocab.Height = 20.0;
-                    newVocab.Content = word;
-                    VocabSelectionCanvas.Children.Add(newVocab);
-                    newVocab.SetValue(Canvas.LeftProperty, 10.0);
-                    newVocab.SetValue(Canvas.TopProperty, 20.0 + 20.0 * i);
-                }
-            };
-
-            VocabSelectionCanvas.Children.Add(showVocab);
+            IList<string> allWords = wordDictionary.listWords();
+            IList<UIElement> elementList = new List<UIElement>();
             showVocab.SetValue(Canvas.LeftProperty, 0.0);
             showVocab.SetValue(Canvas.TopProperty, 0.0);
+            elementList.Add(showVocab);
+            for (int i = 0; i < allWords.Count; ++i)
+            {
+                string word = allWords[i];
+                CheckBox newVocab = new CheckBox();
+                newVocab.Height = 20.0;
+                newVocab.Content = word;
+                newVocab.SetValue(Canvas.LeftProperty, 10.0);
+                newVocab.SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
+                elementList.Add(newVocab);
+            }
+            VocabSelectionCanvas.Children.Add(showVocab);
+            Action<int, int> drawItemsInRange = (firstItemVisible, lastItemVisible) =>
+            {
+                VocabSelectionCanvas.Children.Clear();
+                for (int i = Math.Max(firstItemVisible-2, 0); i < Math.Min(lastItemVisible+2, elementList.Count-1); ++i)
+                {
+                    UIElement currentElement = elementList[i];
+                    VocabSelectionCanvas.Children.Add(currentElement);
+                }
+            };
+            bool vocabShownClicked = false;
+            showVocab.MouseLeftButtonDown += (s, e) =>
+            {
+                vocabShownClicked = true;
+                VocabSelectionCanvas.Height = 20.0 + 20.0 * allWords.Count;
+                int firstItemVisible = (int) (VocabSelectionScrollViewer.VerticalOffset / 20.0);
+                int lastItemVisible = (int) ((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height) / 20.0);
+                drawItemsInRange(firstItemVisible, lastItemVisible);
+            };
+            
+            PropertyChangedCallback onScrollChanged = (s, e) =>
+            {
+                if (!vocabShownClicked) return;
+                int firstItemVisible = (int)(VocabSelectionScrollViewer.VerticalOffset / 20.0);
+                int lastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height) / 20.0);
+                drawItemsInRange(firstItemVisible, lastItemVisible);
+            };
+            VocabSelectionScrollViewer.AddScrollCallback(onScrollChanged);
+
             /*
             foreach (string word in wordDictionary.listWords().Take(50)) // first 50 words in dictionary
             {

@@ -79,6 +79,7 @@
       <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="WordMapSimplifiedToTraditional.cs" />
     <Compile Include="SentenceDictionary.cs" />
     <Compile Include="SentenceDictionarySimplifiedMandarin.cs" />
