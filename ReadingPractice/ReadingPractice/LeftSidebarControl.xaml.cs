@@ -47,6 +47,7 @@ namespace ReadingPractice
         public void performOnStartup()
         {
             StudyFocus = "地震";
+            //StudyFocus = "";
 
             Label showVocab = new Label();
             showVocab.Height = 20.0;

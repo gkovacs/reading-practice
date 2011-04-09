@@ -34,7 +34,7 @@ namespace ReadingPractice
 
         public void performOnStartup()
         {
-            LanguageSelector.Items.Add("Select Language");
+            //LanguageSelector.Items.Add("Select Language");
             LanguageSelector.Items.Add("Mandarin Chinese (Simplified)");
             LanguageSelector.SelectedIndex = 0;
             this.readSentencesTab.mainPage = mainPage;
