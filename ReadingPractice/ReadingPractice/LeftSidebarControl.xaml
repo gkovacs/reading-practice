@@ -10,7 +10,7 @@
         <sdk:Label Name="StudyFocusForeignWord"  Content="someforeignword" HorizontalAlignment="Center" FontSize="30"></sdk:Label>
         <sdk:Label Name="StudyFocusReading"  Content="somereading" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
         <sdk:Label Name="StudyFocusTranslation"  Content="to eat" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
-        <Button Content="return to general review" Margin="50,0,50,30"></Button>
+        <Button Content="return to general review" Name="reviewButton"  Margin="50,0,50,30" Click="reviewButton_Click"></Button>
         <StackPanel Orientation="Horizontal" Width="400"  Name="searchContainer">
             <sdk:Label Content="Search:" Margin="10,0,0,0"  Height="28" Name="label3" />
             <TextBox HorizontalAlignment="Stretch" Width="333">

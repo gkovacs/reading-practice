@@ -77,7 +77,7 @@ namespace ReadingPractice
             return sentences.Where((sent) =>
             {
                 string[] words = segmentation[sent];
-                if (!words.Contains(focusWord))
+                if (focusWord != "" && !words.Contains(focusWord))
                     return false;
                 foreach (string word in words)
                 {

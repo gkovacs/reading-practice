@@ -123,9 +123,20 @@ namespace ReadingPractice
             set
             {
                 _studyFocus = value;
-                StudyFocusForeignWord.Content = _studyFocus;
-                StudyFocusReading.Content = wordDictionary.getReading(_studyFocus);
-                StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus);
+                if (_studyFocus != "")
+                {
+                    StudyFocusForeignWord.Content = _studyFocus;
+                    StudyFocusReading.Content = wordDictionary.getReading(_studyFocus);
+                    StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus);
+                    reviewButton.IsEnabled = true;
+                }
+                else // general review
+                {
+                    StudyFocusForeignWord.Content = "General Review";
+                    StudyFocusReading.Content = "Reviewing all words";
+                    StudyFocusTranslation.Content = "";
+                    reviewButton.IsEnabled = false;
+                }
                 if (focusWordChanged != null)
                     focusWordChanged(_studyFocus);
             }
@@ -138,6 +149,11 @@ namespace ReadingPractice
         public bool isDisplayed(string foreignWord)
         {
             return true;
+        }
+
+        private void reviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.StudyFocus = "";
         }
     }
 }
