@@ -32,7 +32,7 @@ namespace ReadingPractice
         public IList<string> kMatches = null;
         public string kPrevSearchTerm = "";
 
-        double dLineHeight = 20.0;
+        double dLineHeight = 40.0;
 
         /// <summary>
         /// getter returns empty string if no study focus is set (reviewing mode), returns study focus in
@@ -135,9 +135,9 @@ namespace ReadingPractice
 
 
 
-            Label showVocab = new Label();
-            showVocab.Height = 20.0;
-            showVocab.Content = "show all vocab";
+            //Label showVocab = new Label();
+            //showVocab.Height = 20.0;
+            //showVocab.Content = "show all vocab";
             //kMatches = wordDictionary.listWords();
             /*
             IList<UIElement> elementList = new List<UIElement>();
@@ -187,7 +187,7 @@ namespace ReadingPractice
             
             //Search_TextChanged(null,null);
             findMatchingTextSynchronous("");
-            VocabSelectionCanvas.Height = 20.0 + 20.0 * this.kMatches.Count;
+            VocabSelectionCanvas.Height = dLineHeight * this.kMatches.Count;
 
             PropertyChangedCallback onScrollChanged = (s, e) =>
             {
@@ -311,23 +311,47 @@ namespace ReadingPractice
             VocabSelectionCanvas.Children.Clear();
             
             int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
-            int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight) - 1;
+            int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight);
 
             iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
             for (int i = iFirstVisibleItem; i < iLastItemVisible; ++i)
             {
-                CheckBox kCheckBox = new CheckBox();
-                kCheckBox.Height = dLineHeight;
-                kCheckBox.Content = this.kMatches[i];
-                kCheckBox.SetValue(Canvas.LeftProperty, 10.0);
-                kCheckBox.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight);
-                Label kRomanization = new Label();
+                TextBlock kWord = new TextBlock();
+                kWord.Height = dLineHeight;
+                kWord.Width = 70.0;
+                kWord.Text = this.kMatches[i];
+                kWord.TextWrapping = TextWrapping.Wrap;
+                kWord.SetValue(Canvas.LeftProperty, 0.0);
+                kWord.SetValue(Canvas.TopProperty, dLineHeight * i);
+                TextBlock kRomanization = new TextBlock();
                 kRomanization.Height = dLineHeight;
-                kRomanization.Content = wordDictionary.getReading(this.kMatches[i]);
-                kRomanization.SetValue(Canvas.LeftProperty, 200.0);
-                kRomanization.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight);
-                VocabSelectionCanvas.Children.Add(kCheckBox);
+                kRomanization.Width = 100.0;
+                kRomanization.Text = wordDictionary.getReading(this.kMatches[i]);
+                kRomanization.TextWrapping = TextWrapping.Wrap;
+                kRomanization.SetValue(Canvas.LeftProperty, kWord.Width);
+                kRomanization.SetValue(Canvas.TopProperty, dLineHeight * i);
+                TextBlock kTranslation = new TextBlock();
+                kTranslation.Height = dLineHeight;
+                kTranslation.Width = 200.0;
+                kTranslation.Text = wordDictionary.translateToEnglish(this.kMatches[i]);
+                kTranslation.TextWrapping = TextWrapping.Wrap;
+                kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width);
+                kTranslation.SetValue(Canvas.TopProperty, dLineHeight * i);
+                CheckBox kDisplayWord = new CheckBox();
+                kDisplayWord.Height = dLineHeight / 2.0;
+                kDisplayWord.Content = "Display word in sentences?";
+                kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
+                kDisplayWord.SetValue(Canvas.TopProperty, dLineHeight * i);
+                Button kMakeStudyFocus = new Button();
+                kMakeStudyFocus.Height = dLineHeight / 2.0;
+                kMakeStudyFocus.Content = "Make study focus";
+                kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
+                kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight / 2.0);
+                VocabSelectionCanvas.Children.Add(kWord);
                 VocabSelectionCanvas.Children.Add(kRomanization);
+                VocabSelectionCanvas.Children.Add(kTranslation);
+                VocabSelectionCanvas.Children.Add(kDisplayWord);
+                VocabSelectionCanvas.Children.Add(kMakeStudyFocus);
             }
             //});
         }
@@ -358,7 +382,7 @@ namespace ReadingPractice
                 this.kPrevSearchTerm = searchText;
                 VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
                 {
-                    VocabSelectionCanvas.Height = dLineHeight + dLineHeight * kMatches.Count;
+                    VocabSelectionCanvas.Height = dLineHeight * kMatches.Count;
                     this.DrawSearchMatches();
                 });
                 return;
@@ -388,7 +412,7 @@ namespace ReadingPractice
             this.kPrevSearchTerm = searchText;
             VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
             {
-                VocabSelectionCanvas.Height = dLineHeight + dLineHeight * kMatches.Count;
+                VocabSelectionCanvas.Height = dLineHeight * kMatches.Count;
                 this.DrawSearchMatches();
             });
             }
