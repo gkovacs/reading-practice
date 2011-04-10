@@ -307,7 +307,7 @@ namespace ReadingPractice
 
         public void DrawSearchMatches ()
         {
-            Search.Dispatcher.BeginInvoke(() => {
+            //Search.Dispatcher.BeginInvoke(() => {
             VocabSelectionCanvas.Children.Clear();
             
             int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
@@ -323,7 +323,7 @@ namespace ReadingPractice
                 kCheckBox.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight);
                 VocabSelectionCanvas.Children.Add(kCheckBox);
             }
-            });
+            //});
         }
 
         /// <summary>
