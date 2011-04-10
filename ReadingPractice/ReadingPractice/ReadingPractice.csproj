@@ -75,6 +75,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Textbooks.cs" />
     <Compile Include="ContributeSentenceTab.xaml.cs">
       <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
     </Compile>
@@ -156,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="cmn-word-simptotrad.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="textbooks.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
