@@ -4,10 +4,12 @@ Textbook 1
 		word 2
 	chapter 2
 		word 3
-Textbook 2
-	chapter 1
-		word 4
-		word 5
-	chapter 2
 	chapter 3
+	chapter 4
 		word 6
+Textbook two
+	chapter one
+		word one
+		word two
+	chapter two
+		word three

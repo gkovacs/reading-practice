@@ -14,6 +14,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
 using System.Diagnostics;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace ReadingPractice
 {
@@ -136,7 +138,7 @@ namespace ReadingPractice
             Label showVocab = new Label();
             showVocab.Height = 20.0;
             showVocab.Content = "show all vocab";
-            IList<string> allWords = wordDictionary.listWords();
+            //kMatches = wordDictionary.listWords();
             /*
             IList<UIElement> elementList = new List<UIElement>();
             showVocab.SetValue(Canvas.LeftProperty, 0.0);
@@ -183,8 +185,9 @@ namespace ReadingPractice
 
             //int iOffset = 0;
             
-            Search_TextChanged(null,null);
-            VocabSelectionCanvas.Height = 20.0 + 20.0 * allWords.Count;
+            //Search_TextChanged(null,null);
+            findMatchingTextSynchronous("");
+            VocabSelectionCanvas.Height = 20.0 + 20.0 * this.kMatches.Count;
 
             PropertyChangedCallback onScrollChanged = (s, e) =>
             {
@@ -304,6 +307,7 @@ namespace ReadingPractice
 
         public void DrawSearchMatches ()
         {
+            Search.Dispatcher.BeginInvoke(() => {
             VocabSelectionCanvas.Children.Clear();
             
             int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
@@ -319,6 +323,7 @@ namespace ReadingPractice
                 kCheckBox.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight);
                 VocabSelectionCanvas.Children.Add(kCheckBox);
             }
+            });
         }
 
         /// <summary>
@@ -336,20 +341,22 @@ namespace ReadingPractice
             this.StudyFocus = "";
         }
 
-
-        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        private void findMatchingTextSynchronous(string searchText)
         {
             IList<string> kSearchBase;
             // if search text is empty, or current search text is not a substring of the previous search
-            if ( Search.Text == "" )
+            if (searchText == "")
             {
                 this.kMatches = wordDictionary.listWords();
-                this.kPrevSearchTerm = Search.Text;
-                VocabSelectionCanvas.Height = dLineHeight + dLineHeight * kMatches.Count;
-                this.DrawSearchMatches();
+                this.kPrevSearchTerm = searchText;
+                VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
+                {
+                    VocabSelectionCanvas.Height = dLineHeight + dLineHeight * kMatches.Count;
+                    this.DrawSearchMatches();
+                });
                 return;
             }
-            else if ( Search.Text.Contains(kPrevSearchTerm) )
+            else if (searchText.Contains(kPrevSearchTerm))
             {
                 kSearchBase = this.kMatches;
             }
@@ -357,13 +364,13 @@ namespace ReadingPractice
             {
                 kSearchBase = wordDictionary.listWords();
             }
-            
+
             IList<string> kNewMatches = new List<string>();
             foreach (string match in kSearchBase)
             {
-                if ( match.Contains(Search.Text)
-                || wordDictionary.getReading(match).Contains(Search.Text)
-                || wordDictionary.translateToEnglish(match).Contains(Search.Text) )
+                if (match.Contains(searchText)
+                || wordDictionary.getReading(match).Contains(searchText)
+                || wordDictionary.translateToEnglish(match).Contains(searchText))
                 {
                     kNewMatches.Add(match);
                 }
@@ -371,9 +378,22 @@ namespace ReadingPractice
 
             // update the state: kMatches, kPrevSearchTerm
             this.kMatches = kNewMatches;
-            this.kPrevSearchTerm = Search.Text;
-            VocabSelectionCanvas.Height = dLineHeight+dLineHeight*kMatches.Count;
-            this.DrawSearchMatches();
+            this.kPrevSearchTerm = searchText;
+            VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
+            {
+                VocabSelectionCanvas.Height = dLineHeight + dLineHeight * kMatches.Count;
+                this.DrawSearchMatches();
+            });
+        }
+
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = Search.Text;
+            Thread t = new Thread(() =>
+            {
+                findMatchingTextSynchronous(searchText);
+            });
+            t.Start();
         }
     }
 }
