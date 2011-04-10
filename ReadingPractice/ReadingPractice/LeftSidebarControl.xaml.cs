@@ -97,9 +97,23 @@ namespace ReadingPractice
             InitializeComponent();
         }
 
+        Dictionary<string, double> translationStringHeights = new Dictionary<string, double>();
+        Dictionary<string, double> wordStringHeights = new Dictionary<string, double>();
+        Dictionary<string, double> readingStringHeights = new Dictionary<string, double>();
+        double wordColumnWidth = 70.0;
+        double readingColumnWidth = 100.0;
+        double translationColumnWidth = 200.0;
+
         public void performOnStartup()
         {
-
+            foreach (string word in wordDictionary.listWords())
+            {
+                wordStringHeights[word] = measureStringHeight(word, wordColumnWidth);
+                string translated = wordDictionary.translateToEnglish(word);
+                translationStringHeights[translated] = measureStringHeight(translated, translationColumnWidth);
+                string reading = wordDictionary.getReading(word);
+                readingStringHeights[reading] = measureStringHeight(reading, readingColumnWidth);
+            }
             /*
             TreeView tree = new TreeView();
 
@@ -304,6 +318,15 @@ namespace ReadingPractice
 //#endif
         }
 
+        private double measureStringHeight(string str, double width)
+        {
+            TextBlock txt = new TextBlock();
+            txt.Width = width;
+            txt.Text = str;
+            txt.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+            txt.LineHeight = this.dLineHeight / 2.0;
+            return txt.ActualHeight;
+        }
 
         public void DrawSearchMatches ()
         {
@@ -319,23 +342,25 @@ namespace ReadingPractice
                 string word = this.kMatches[i];
                 TextBlock kWord = new TextBlock();
                 kWord.Height = dLineHeight;
-                kWord.Width = 70.0;
+                kWord.Width = wordColumnWidth;
                 kWord.Text = word;
                 kWord.TextWrapping = TextWrapping.Wrap;
                 kWord.SetValue(Canvas.LeftProperty, 0.0);
                 kWord.SetValue(Canvas.TopProperty, dLineHeight * i);
                 TextBlock kRomanization = new TextBlock();
                 kRomanization.Height = dLineHeight;
-                kRomanization.Width = 100.0;
+                kRomanization.Width = readingColumnWidth;
                 kRomanization.Text = wordDictionary.getReading(word);
                 kRomanization.TextWrapping = TextWrapping.Wrap;
                 kRomanization.SetValue(Canvas.LeftProperty, kWord.Width);
                 kRomanization.SetValue(Canvas.TopProperty, dLineHeight * i);
                 TextBlock kTranslation = new TextBlock();
                 kTranslation.Height = dLineHeight;
-                kTranslation.Width = 200.0;
+                kTranslation.Width = translationColumnWidth;
                 kTranslation.Text = wordDictionary.translateToEnglish(word);
                 kTranslation.TextWrapping = TextWrapping.Wrap;
+                kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                kTranslation.LineHeight = dLineHeight / 2.0;
                 kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width);
                 kTranslation.SetValue(Canvas.TopProperty, dLineHeight * i);
                 CheckBox kDisplayWord = new CheckBox();
@@ -387,6 +412,7 @@ namespace ReadingPractice
             this.StudyFocus = "";
         }
 
+        
         private void findMatchingTextSynchronous(string searchText)
         {
             lock(Search) {
