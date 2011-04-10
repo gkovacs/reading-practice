@@ -17,8 +17,8 @@ namespace ReadingPractice
 {
     public class Textbooks
     {
-        Textbook[] textbooks;
-        Dictionary<string, Textbook> textbookDictionary = new Dictionary<string, Textbook>();
+        public Textbook[] textbooks;
+        public Dictionary<string, Textbook> textbookDictionary = new Dictionary<string, Textbook>();
 
         public class Chapter
         {

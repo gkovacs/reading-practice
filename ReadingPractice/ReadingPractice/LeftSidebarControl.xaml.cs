@@ -27,6 +27,10 @@ namespace ReadingPractice
 
         private HashSet<string> kSetAllowedWords;
 
+        public IList<string> kMatches = null;
+        public string kPrevSearchTerm = "";
+
+        double dLineHeight = 20.0;
 
         /// <summary>
         /// getter returns empty string if no study focus is set (reviewing mode), returns study focus in
@@ -75,6 +79,13 @@ namespace ReadingPractice
                 return mainPage.language;
             }
         }
+        public Textbooks textbooks
+        {
+            get
+            {
+                return mainPage.textbooks;
+            }
+        }
 
         /// <summary>
         /// do not add code to the constructor. Put things you want to occur on startup in performOnStartup
@@ -86,24 +97,68 @@ namespace ReadingPractice
 
         public void performOnStartup()
         {
+
+            /*
+            TreeView tree = new TreeView();
+
+            TreeViewItem t = new TreeViewItem();
+
+            tree.Items.Add(t);
+
+            for (int i = 0; i < 50; ++i)
+            {
+                //                CheckBox c = new CheckBox();
+                //                t.Items.Add(c);
+                //            }
+                Polygon p = new Polygon();
+                p.Points.Add(new Point(0, 0));
+                p.Points.Add(new Point(4, 0));
+                p.Points.Add(new Point(0, 4));
+                p.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
+                t.Items.Add(p);
+            }
+
+//            StackPanel s = ;
+ //           tree.Items.Add(obj);
+
+            VocabSelectionScrollViewer.Content = tree;
+            */
             StudyFocus = "地震";
             //StudyFocus = "";
 
             // load books
+            
 
+            //this.kSetAllowedWords = new HashSet<string>();
 
-            this.kSetAllowedWords = new HashSet<string>();
 
 
             Label showVocab = new Label();
             showVocab.Height = 20.0;
             showVocab.Content = "show all vocab";
             IList<string> allWords = wordDictionary.listWords();
+            /*
             IList<UIElement> elementList = new List<UIElement>();
             showVocab.SetValue(Canvas.LeftProperty, 0.0);
             showVocab.SetValue(Canvas.TopProperty, 0.0);
             elementList.Add(showVocab);
+            */
             // going ahead to create an Element List of every possible UI element that could ever be displayed on the canvas
+            
+
+            /*
+            IList<string> allWords = wordDictionary.listWords();
+            IList<UIElement> elementList = new List<UIElement>();
+            TreeView tree = new TreeView();
+
+            VocabSelectionScrollViewer.Content = tree;
+
+            //tree
+            
+            
+
+            */
+            /*
             for (int i = 0; i < allWords.Count; ++i)
             {
                 string word = allWords[i];
@@ -123,20 +178,96 @@ namespace ReadingPractice
                 //newVocab.SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
                 elementList.Add(newVocab);
             }
+            */
+
+
+            //int iOffset = 0;
+            
+            Search_TextChanged(null,null);
+            VocabSelectionCanvas.Height = 20.0 + 20.0 * allWords.Count;
+
+            PropertyChangedCallback onScrollChanged = (s, e) =>
+            {
+                //if (!vocabShownClicked) return;
+                DrawSearchMatches();
+            };
+            // attach onScrolledChanged, so it is called everytime scrolling happens
+            VocabSelectionScrollViewer.AddScrollCallback(onScrollChanged);
+
+
+/*            double dLineHeight = 20.0;
+
+            int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/20.0);
+            int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset+VocabSelectionScrollViewer.Height)/20.0);
+
+            for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
+            {
+                CheckBox kCheckBoxBook = new CheckBox();
+                kCheckBoxBook.Height = dLineHeight;
+                kCheckBoxBook.Content = this.kMatches[i];
+                kCheckBoxBook.SetValue(Canvas.LeftProperty,10.0);
+                kCheckBoxBook.SetValue(Canvas.TopProperty,dLineHeight*i+dLineHeight);
+                VocabSelectionCanvas.Children.Add(kCheckBoxBook);
+            }
+
+ */
+
+            /*
+            // for each book
+            for (int i = 0; i < Textbooks.textbooks.Length; ++i)
+            {
+
+                CheckBox kCheckBoxBook = new CheckBox();
+                kCheckBoxBook.Height = dLineHeight;
+                kCheckBoxBook.Content = textbooks.textbooks[i].textbookName;
+                kCheckBoxBook.SetValue(Canvas.LeftProperty, 10.0);
+                kCheckBoxBook.SetValue(Canvas.TopProperty, 20.0 * iOffset + 20.0);
+                VocabSelectionCanvas.Children.Add(kCheckBoxBook);
+                iOffset += 1;
+                // for each chapter
+                for (int j = 0; j < textbooks[i].Length; ++j)
+                {
+                    CheckBox kCheckBoxChapter = new CheckBox();
+                    elementList.Add(kCheckBoxChapter);
+
+                    iOffset += 1;
+                    // for each word
+                    for (int k = 0; k < textbooks[i][j].Length; ++k)
+                    {
+                        CheckBox kCheckBoxWord = new CheckBox();
+                        elementList.Add(newVocab);
+                        // read in the word
+                        string kWord = "word";
+                        textbooks[i][j][k] = kWord;
+                        iOffset += 1;
+                    }
+                }
+            }
+            */
+
+
+/*
             VocabSelectionCanvas.Children.Add(showVocab);
             // given two input integers, draws the ui elements whos indices are in the list designated by the range indices
             Action<int, int> drawItemsInRange = (int firstItemVisible, int lastItemVisible) =>
             {
                 VocabSelectionCanvas.Children.Clear();
                 int startpos = Math.Max(firstItemVisible - 2, 0);
-                int endpos = Math.Min(lastItemVisible + 2, elementList.Count - 1);
+                int endpos = Math.Min(lastItemVisible + 2, allWords.Count - 1);
                 for (int i = startpos; i < endpos; ++i)
                 {
-                    elementList[i].SetValue(Canvas.LeftProperty, 10.0);
-                    elementList[i].SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
-                    VocabSelectionCanvas.Children.Add(elementList[i]);
+                    //elementList[i].SetValue(Canvas.LeftProperty, 10.0);
+                    //elementList[i].SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
+                    CheckBox newVocab = new CheckBox();
+                    newVocab.Height = 20.0;
+                    newVocab.Content = allWords[i];
+                    newVocab.SetValue(Canvas.LeftProperty, 10.0);
+                    newVocab.SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
+                    VocabSelectionCanvas.Children.Add(newVocab);
                 }
             };
+
+
             bool vocabShownClicked = false;
             showVocab.MouseLeftButtonDown += (s, e) =>
             {
@@ -155,9 +286,10 @@ namespace ReadingPractice
                 int lastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height) / 20.0);
                 drawItemsInRange(firstItemVisible, lastItemVisible);
             };
+
             // attach onScrolledChanged, so it is called everytime scrolling happens
             VocabSelectionScrollViewer.AddScrollCallback(onScrollChanged);
-
+*/
             /*
             foreach (string word in wordDictionary.listWords().Take(50)) // first 50 words in dictionary
             {
@@ -166,11 +298,28 @@ namespace ReadingPractice
                 this.AllVocabList.Items.Add(checkbox);
             }
             */
-
-            Debug.WriteLine("hello");
+//#endif
         }
 
 
+        public void DrawSearchMatches ()
+        {
+            VocabSelectionCanvas.Children.Clear();
+            
+            int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
+            int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight) - 1;
+
+            iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
+            for (int i = iFirstVisibleItem; i < iLastItemVisible; ++i)
+            {
+                CheckBox kCheckBox = new CheckBox();
+                kCheckBox.Height = dLineHeight;
+                kCheckBox.Content = this.kMatches[i];
+                kCheckBox.SetValue(Canvas.LeftProperty, 10.0);
+                kCheckBox.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight);
+                VocabSelectionCanvas.Children.Add(kCheckBox);
+            }
+        }
 
         /// <summary>
         /// TODO
@@ -178,12 +327,53 @@ namespace ReadingPractice
         /// </summary>
         public bool isDisplayed(string foreignWord)
         {
-            return this.kSetAllowedWords.Contains(foreignWord);
+            return true;
+            //return this.kSetAllowedWords.Contains(foreignWord);
         }
 
         private void reviewButton_Click(object sender, RoutedEventArgs e)
         {
             this.StudyFocus = "";
+        }
+
+
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IList<string> kSearchBase;
+            // if search text is empty, or current search text is not a substring of the previous search
+            if ( Search.Text == "" )
+            {
+                this.kMatches = wordDictionary.listWords();
+                this.kPrevSearchTerm = Search.Text;
+                VocabSelectionCanvas.Height = dLineHeight + dLineHeight * kMatches.Count;
+                this.DrawSearchMatches();
+                return;
+            }
+            else if ( Search.Text.Contains(kPrevSearchTerm) )
+            {
+                kSearchBase = this.kMatches;
+            }
+            else
+            {
+                kSearchBase = wordDictionary.listWords();
+            }
+            
+            IList<string> kNewMatches = new List<string>();
+            foreach (string match in kSearchBase)
+            {
+                if ( match.Contains(Search.Text)
+                || wordDictionary.getReading(match).Contains(Search.Text)
+                || wordDictionary.translateToEnglish(match).Contains(Search.Text) )
+                {
+                    kNewMatches.Add(match);
+                }
+            }
+
+            // update the state: kMatches, kPrevSearchTerm
+            this.kMatches = kNewMatches;
+            this.kPrevSearchTerm = Search.Text;
+            VocabSelectionCanvas.Height = dLineHeight+dLineHeight*kMatches.Count;
+            this.DrawSearchMatches();
         }
     }
 }

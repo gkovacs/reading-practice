@@ -13,7 +13,7 @@
         <Button Content="return to general review" Name="reviewButton"  Margin="50,0,50,30" Click="reviewButton_Click"></Button>
         <StackPanel Orientation="Horizontal" Width="400"  Name="searchContainer">
             <sdk:Label Content="Search:" Margin="10,0,0,0"  Height="28" Name="label3" />
-            <TextBox HorizontalAlignment="Stretch" Width="333">
+            <TextBox HorizontalAlignment="Stretch" Width="333" Name="Search" TextChanged="Search_TextChanged">
             </TextBox>
         </StackPanel>
 
@@ -21,7 +21,8 @@
             <Canvas Name="VocabSelectionCanvas">
                 
             </Canvas>
-            <!--<sdk:TreeView>
+            <!--
+            <sdk:TreeView Name="treeview">
                 <sdk:TreeViewItem Name="AllVocabList" IsExpanded="False">
                     <sdk:TreeViewItem.Header>
                         <CheckBox>All Vocab</CheckBox>
@@ -148,6 +149,6 @@
             </sdk:TreeView>-->
 
         </ScrollViewer>
-
+        <sdk:TreeView Height="200" Name="treeView1" Width="120" />
     </StackPanel>
 </UserControl>
