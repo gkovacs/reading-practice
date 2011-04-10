@@ -343,6 +343,7 @@ namespace ReadingPractice
 
         private void findMatchingTextSynchronous(string searchText)
         {
+            lock(Search) {
             IList<string> kSearchBase;
             // if search text is empty, or current search text is not a substring of the previous search
             if (searchText == "")
@@ -384,6 +385,7 @@ namespace ReadingPractice
                 VocabSelectionCanvas.Height = dLineHeight + dLineHeight * kMatches.Count;
                 this.DrawSearchMatches();
             });
+            }
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
