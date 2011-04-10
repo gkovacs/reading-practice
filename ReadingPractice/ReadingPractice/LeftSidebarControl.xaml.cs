@@ -27,7 +27,7 @@ namespace ReadingPractice
 
         private string _studyFocus;
 
-        private HashSet<string> kSetAllowedWords;
+        private HashSet<string> kSetAllowedWords = new HashSet<string>();
 
         public IList<string> kMatches = null;
         public string kPrevSearchTerm = "";
@@ -125,8 +125,8 @@ namespace ReadingPractice
 
             VocabSelectionScrollViewer.Content = tree;
             */
-            StudyFocus = "地震";
-            //StudyFocus = "";
+            //StudyFocus = "地震";
+            StudyFocus = "";
 
             // load books
             
@@ -316,24 +316,25 @@ namespace ReadingPractice
             iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
             for (int i = iFirstVisibleItem; i < iLastItemVisible; ++i)
             {
+                string word = this.kMatches[i];
                 TextBlock kWord = new TextBlock();
                 kWord.Height = dLineHeight;
                 kWord.Width = 70.0;
-                kWord.Text = this.kMatches[i];
+                kWord.Text = word;
                 kWord.TextWrapping = TextWrapping.Wrap;
                 kWord.SetValue(Canvas.LeftProperty, 0.0);
                 kWord.SetValue(Canvas.TopProperty, dLineHeight * i);
                 TextBlock kRomanization = new TextBlock();
                 kRomanization.Height = dLineHeight;
                 kRomanization.Width = 100.0;
-                kRomanization.Text = wordDictionary.getReading(this.kMatches[i]);
+                kRomanization.Text = wordDictionary.getReading(word);
                 kRomanization.TextWrapping = TextWrapping.Wrap;
                 kRomanization.SetValue(Canvas.LeftProperty, kWord.Width);
                 kRomanization.SetValue(Canvas.TopProperty, dLineHeight * i);
                 TextBlock kTranslation = new TextBlock();
                 kTranslation.Height = dLineHeight;
                 kTranslation.Width = 200.0;
-                kTranslation.Text = wordDictionary.translateToEnglish(this.kMatches[i]);
+                kTranslation.Text = wordDictionary.translateToEnglish(word);
                 kTranslation.TextWrapping = TextWrapping.Wrap;
                 kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width);
                 kTranslation.SetValue(Canvas.TopProperty, dLineHeight * i);
@@ -342,11 +343,26 @@ namespace ReadingPractice
                 kDisplayWord.Content = "Display word in sentences?";
                 kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
                 kDisplayWord.SetValue(Canvas.TopProperty, dLineHeight * i);
+                kDisplayWord.Checked += (s, e) =>
+                {
+                    this.kSetAllowedWords.Add(word);
+                    displayedListChanged();
+                };
+                kDisplayWord.Unchecked += (s, e) =>
+                {
+                    this.kSetAllowedWords.Remove(word);
+                    displayedListChanged();
+                };
                 Button kMakeStudyFocus = new Button();
                 kMakeStudyFocus.Height = dLineHeight / 2.0;
                 kMakeStudyFocus.Content = "Make study focus";
                 kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
                 kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight / 2.0);
+                kMakeStudyFocus.Click += (s, e) =>
+                {
+                    this.StudyFocus = word;
+                };
+
                 VocabSelectionCanvas.Children.Add(kWord);
                 VocabSelectionCanvas.Children.Add(kRomanization);
                 VocabSelectionCanvas.Children.Add(kTranslation);
