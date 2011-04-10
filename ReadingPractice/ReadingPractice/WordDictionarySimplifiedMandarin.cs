@@ -68,6 +68,7 @@ namespace ReadingPractice
                     this.foreignToEnglish.Remove(word);
                 }
             }
+            this.allWords.Sort((s1, s2) => getReading(s1).CompareTo(getReading(s2)));
         }
 
         public override string translateToEnglish(string foreignWord)

@@ -321,7 +321,13 @@ namespace ReadingPractice
                 kCheckBox.Content = this.kMatches[i];
                 kCheckBox.SetValue(Canvas.LeftProperty, 10.0);
                 kCheckBox.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight);
+                Label kRomanization = new Label();
+                kRomanization.Height = dLineHeight;
+                kRomanization.Content = wordDictionary.getReading(this.kMatches[i]);
+                kRomanization.SetValue(Canvas.LeftProperty, 200.0);
+                kRomanization.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight);
                 VocabSelectionCanvas.Children.Add(kCheckBox);
+                VocabSelectionCanvas.Children.Add(kRomanization);
             }
             //});
         }
