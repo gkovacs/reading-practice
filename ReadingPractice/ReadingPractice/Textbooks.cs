@@ -11,120 +11,107 @@ using System.Windows.Shapes;
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ReadingPractice
 {
-    public static class Textbooks
+    public class Textbooks
     {
-        // open the textbooks file, and parse it
+        Textbook[] textbooks;
+        Dictionary<string, Textbook> textbookDictionary = new Dictionary<string, Textbook>();
 
-        parseTextbookFile();
-
-        static string[][][] textbooks;
-
-
-        static Textbooks()
+        public class Chapter
         {
-            // read in how many textbooks there are
-            int iNumBooks = 1;
-            textbooks = new string[iNumBooks][][];
-
-            // for each book
-            for (int i = 0; i < iNumBooks; ++i)
+            public readonly string chapterName;
+            public readonly string[] words;
+            public readonly HashSet<string> wordSet = new HashSet<string>();
+            public Chapter(string chapterName, string[] words)
             {
-                //read in number of chapters
-                int iNumChapters = 1;
-
-                textbooks[i] = new string[iNumChapters][];
-                
-                //for each chapter
-                for (int j = 0; j < iNumChapters; ++j)
-                {
-                    //read in the number of words
-                    int iNumWords = 1;
-
-                    textbooks[i][j] = new string[iNumWords];
-
-                    for (int k = 0; k < iNumWords; ++k)
-                    {
-                        // read in the word
-                        string kWord = "word";
-                        textbooks[i][j][k] = kWord;
-                    }
-                }
+                this.chapterName = chapterName;
+                this.words = words;
+                foreach (string word in words)
+                    wordSet.Add(word);
             }
-
         }
 
-        private enum ParseStateType
+        public class Textbook
         {
-            PS_CHAPTER,
-            PS_END,
-            PS_TITLE,
-            PS_WORD,
-            PS_QUANTITY
-        };
-        private enum ParseInputType
-        {
-            PI_CHAPTER,
-            PI_TITLE,
-            PI_WORD,
-            PI_QUANTITY
+            public readonly string textbookName;
+            public readonly Chapter[] chapters;
+            public readonly Dictionary<string, Chapter> chapterDictionary = new Dictionary<string, Chapter>();
+            public Textbook(string textbookName, Chapter[] chapters)
+            {
+                this.textbookName = textbookName;
+                this.chapters = chapters;
+                foreach (Chapter chapter in chapters)
+                    chapterDictionary[chapter.chapterName] = chapter;
+            }
         }
-        private void ParseTextbookFile (string filename)
-        {
-            ParseStateType eState = ParseStateType.PS_TITLE;
 
-            StreamReader kReader = new StreamReader(
+        public Textbooks()
+        {
+            using (StreamReader reader = new StreamReader(
                 Application.GetResourceStream(
                 new Uri(
-                    "ReadingPractice;component/cmn-simp-word-def.txt",
-                    UriKind.Relative)).Stream);
-
-            LinkedList<LinkedList<LinkedList<string>>> textbooks = new LinkedList<LinkedList<LinkedList<string>>>();
-
-            while (eState != ParseStateType.PS_END)
+                    "ReadingPractice;component/textbooks.txt",
+                    UriKind.Relative)).Stream))
             {
-                string kLine = kReader.ReadLine();
+                LinkedList<string> words = new LinkedList<string>();
+                string currentChapterName = "";
+                LinkedList<Chapter> chapters = new LinkedList<Chapter>();
+                string currentTextbookName = "";
+                LinkedList<Textbook> textbooks = new LinkedList<Textbook>();
 
-                string kTrimmed = TrimTabs(kLine);
-                ParseInputType kInputType = GetParseInputType(kLine);
-
-                switch ( eState )
+                Action endChapter = () =>
                 {
-                    case ParseStateType.PS_CHAPTER:
-                        eState = chapterStateParse(type,kName,);
-                        break;
-                    case ParseStateType.PS_TITLE:
-                        eState = titleStateParse(type,kName,);
-                        break;
-                    case ParseStateType.PS_WORD:
-                        eState = wordStateParse(type,kName,);
-                        break;
+                    if (words.Count > 0)
+                    {
+                        chapters.AddLast(new Chapter(currentChapterName, words.ToArray()));
+                        currentChapterName = "";
+                        words.Clear();
+                    }
+                };
+                Action endTextbook = () =>
+                {
+                    if (chapters.Count > 0)
+                    {
+                        textbooks.AddLast(new Textbook(currentTextbookName, chapters.ToArray()));
+                        currentTextbookName = "";
+                        chapters.Clear();
+                    }
+                };
+                while (!reader.EndOfStream)
+                {
+                    string curline = reader.ReadLine();
+                    if (!curline.StartsWith("\t")) // new textbook
+                    {
+                        endChapter();
+                        endTextbook();
+                        currentTextbookName = curline.Trim();
+                    }
+                    else if (!curline.StartsWith("\t\t")) // new chapter
+                    {
+                        endChapter();
+                        currentChapterName = curline.Trim();
+                    }
+                    else // word
+                    {
+                        if (curline.Trim() != "")
+                            words.AddLast(curline.Trim());
+                    }
+                }
+                endChapter();
+                endTextbook();
+                reader.Close();
+                this.textbooks = textbooks.ToArray();
+                foreach (Textbook text in textbooks)
+                {
+                    this.textbookDictionary[text.textbookName] = text;
                 }
             }
-        }
-        private string TrimTabs (string kString)
-        {
-            int i = kString.IndexOf('\t');
-            if ( i == -1 )
-                return kString;
-            return kString.Substring(i+1);
-        }
-        private parseInputType GetParseInputType(kLine)
-
-        private ParseState parseChapter (StreamReader kReader, )
-        {
-            
-        }
-
-        private ParseState parseWord (StreamReader kReader, )
-        {
 
         }
 
     }
-
-
     
 }

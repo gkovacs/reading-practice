@@ -56,6 +56,13 @@ namespace ReadingPractice
                 mainPage.popup = value;
             }
         }
+        public Textbooks textbooks
+        {
+            get
+            {
+                return mainPage.textbooks;
+            }
+        }
 
         public SentenceView(string nativeSentence, string translated, MainPage mainPage)
         {

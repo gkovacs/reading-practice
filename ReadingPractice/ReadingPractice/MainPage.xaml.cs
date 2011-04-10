@@ -42,11 +42,13 @@ namespace ReadingPractice
                 _popup = value;
             }
         }
+        public Textbooks textbooks;
 
         public MainPage()
         {
             sentenceDictionary = new SentenceDictionarySimplifiedMandarin();
             wordDictionary = sentenceDictionary.wordDictionary;
+            textbooks = new Textbooks();
             InitializeComponent();
             this.LeftSidebar.mainPage = this;
             this.RightSidebar.mainPage = this;
