@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="700" d:DesignWidth="600"
+    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="600" d:DesignWidth="600"
     VerticalAlignment="Top">
-    <StackPanel Orientation="Vertical" Width="600" Height="700">
+    <StackPanel Orientation="Vertical" Width="600" Height="600">
         <sdk:Label Content="study focus:" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
         <sdk:Label Name="StudyFocusForeignWord"  Content="someforeignword" HorizontalAlignment="Center" FontSize="30"></sdk:Label>
         <sdk:Label Name="StudyFocusReading"  Content="somereading" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
@@ -17,8 +17,8 @@
             </TextBox>
         </StackPanel>
 
-        <ScrollViewer Name="VocabSelectionScrollViewer" VerticalScrollBarVisibility="Auto" Height="500">
-            <Canvas Name="VocabSelectionCanvas">
+        <ScrollViewer Name="VocabSelectionScrollViewer" VerticalScrollBarVisibility="Auto" Height="400">
+            <Canvas Name="VocabSelectionCanvas" VerticalAlignment="Top">
                 
             </Canvas>
             <!--
@@ -149,6 +149,5 @@
             </sdk:TreeView>-->
 
         </ScrollViewer>
-        <sdk:TreeView Height="200" Name="treeView1" Width="120" />
     </StackPanel>
 </UserControl>

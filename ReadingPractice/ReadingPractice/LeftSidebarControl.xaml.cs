@@ -399,6 +399,7 @@ namespace ReadingPractice
                 VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
                 {
                     VocabSelectionCanvas.Height = dLineHeight * kMatches.Count;
+                    VocabSelectionScrollViewer.ScrollToTop();
                     this.DrawSearchMatches();
                 });
                 return;
@@ -429,6 +430,7 @@ namespace ReadingPractice
             VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
             {
                 VocabSelectionCanvas.Height = dLineHeight * kMatches.Count;
+                VocabSelectionScrollViewer.ScrollToTop();
                 this.DrawSearchMatches();
             });
             }
