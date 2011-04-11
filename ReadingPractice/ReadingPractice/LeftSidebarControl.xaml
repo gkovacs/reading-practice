@@ -26,7 +26,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button Name="allowAll" Click="allowAll_Click">Allow all words below to be displayed in sentences</Button>
-            <Button Name="banAll" Click="banAll_Click">Ban all words below from being displayed in sentences</Button>
+            <Button Name="banAll" Click="banAll_Click" Margin="4,0,0,0">Ban all words below from being displayed in sentences</Button>
         </StackPanel>
 
         <ScrollViewer Name="VocabSelectionScrollViewer" VerticalScrollBarVisibility="Auto" Height="400">
