@@ -83,7 +83,7 @@ namespace ReadingPractice
                     return false;
                 foreach (string word in words)
                 {
-                    if (!isWordAllowedFunc(word))
+                    if (wordDictionary.getReading(word) != "" && !isWordAllowedFunc(word))
                         return false;
                 }
                 return true;

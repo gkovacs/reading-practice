@@ -43,6 +43,7 @@ namespace ReadingPractice
             if (mainPage.LeftSidebar.StudyFocus == foreignWord)
             {
                 this.makeStudyFocus.IsEnabled = false;
+                this.displayedCheckbox.IsEnabled = false;
             }
         }
 
@@ -65,7 +66,12 @@ namespace ReadingPractice
 
         private void displayedCheckbox_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (!displayedCheckbox.IsChecked.HasValue)
+                return;
+            if (displayedCheckbox.IsChecked.Value)
+                mainPage.LeftSidebar.allowWord(this.foreignWord);
+            else
+                mainPage.LeftSidebar.banWord(this.foreignWord);
         }
     }
 }
