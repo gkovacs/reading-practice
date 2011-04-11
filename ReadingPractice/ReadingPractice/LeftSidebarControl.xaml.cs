@@ -32,6 +32,10 @@ namespace ReadingPractice
         public IList<string> kMatches = null;
         public string kPrevSearchTerm = "";
 
+        public string selectedTextbook;
+        public string selectedChapter;
+
+
         double dLineHeight = 40.0;
 
         /// <summary>
@@ -155,7 +159,45 @@ namespace ReadingPractice
             StudyFocus = "";
 
             // load books
-            
+
+            this.textbookSelect.Items.Add(" ");
+            for (int i = 0; i < textbooks.textbooks.Length; ++i)
+            {
+                ComboBoxItem kItem = new ComboBoxItem();
+                kItem.Content = textbooks.textbooks[i].textbookName;
+                this.textbookSelect.Items.Add(textbooks.textbooks[i].textbookName);
+            }
+
+            textbookSelect.SelectionChanged += (s, e) =>
+            {
+                if (this.textbookSelect.SelectedItem.ToString() != this.selectedTextbook)
+                {
+                    this.chapterSelect.Items.Clear();
+                    this.selectedTextbook = this.textbookSelect.SelectedItem.ToString();
+
+                    if (textbooks.textbookDictionary.ContainsKey(textbookSelect.SelectedItem.ToString()))
+                    {
+                        Textbooks.Textbook t = textbooks.textbookDictionary[textbookSelect.SelectedItem.ToString()];
+                        this.chapterSelect.Items.Add("");
+                        for (int i = 0; i < t.chapters.Length; ++i)
+                        {
+                            this.chapterSelect.Items.Add(t.chapters[i].chapterName);
+                        }
+                        Search_TextChanged(null, null);
+                    }
+                }
+            };
+
+            chapterSelect.SelectionChanged += (s, e) =>
+            {
+                if (this.chapterSelect.SelectedItem != null
+                && this.chapterSelect.SelectedItem.ToString() != this.selectedChapter)
+                {
+                    this.selectedChapter = this.chapterSelect.SelectedItem.ToString();
+                    Search_TextChanged(null, null);
+                }
+            };
+
 
             //this.kSetAllowedWords = new HashSet<string>();
 
