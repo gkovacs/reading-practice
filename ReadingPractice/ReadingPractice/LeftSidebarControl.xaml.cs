@@ -29,7 +29,26 @@ namespace ReadingPractice
 
         private string _studyFocus = "";
 
-        private HashSet<string> kSetAllowedWords = new HashSet<string>();
+        public HashSet<string> kSetAllowedWords = new HashSet<string>();
+
+        bool batchChanges = false;
+        public void allowWord(string word)
+        {
+            if (!kSetAllowedWords.Contains(word))
+                this.kSetAllowedWords.Add(word);
+            if (this.wordAllowedCheckboxes.ContainsKey(word))
+                this.wordAllowedCheckboxes[word].IsChecked = true;
+        }
+
+        public void banWord(string word)
+        {
+            if (kSetAllowedWords.Contains(word))
+                this.kSetAllowedWords.Remove(word);
+            if (word == StudyFocus)
+                StudyFocus = "";
+            if (this.wordAllowedCheckboxes.ContainsKey(word))
+                this.wordAllowedCheckboxes[word].IsChecked = false;
+        }
 
         public IList<string> kMatches = null;
         public string kPrevSearchTerm = "";
@@ -511,19 +530,26 @@ namespace ReadingPractice
                 kDisplayWord.Content = "Display word in sentences?";
                 kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
                 kDisplayWord.SetValue(Canvas.TopProperty, position);
+                kDisplayWord.IsChecked = this.isDisplayed(word);
                 kDisplayWord.Checked += (s, e) =>
                 {
                     Debug.WriteLine("checked" + word);
-                    this.kSetAllowedWords.Add(word);
-                    displayedListChanged();
+                    if (!kSetAllowedWords.Contains(word))
+                        this.kSetAllowedWords.Add(word);
+                    if (!batchChanges)
+                        displayedListChanged();
                 };
                 kDisplayWord.Unchecked += (s, e) =>
                 {
                     Debug.WriteLine("unchecked" + word);
-                    this.kSetAllowedWords.Remove(word);
-                    displayedListChanged();
+                    if (kSetAllowedWords.Contains(word))
+                        this.kSetAllowedWords.Remove(word);
+                    if (!batchChanges)
+                        displayedListChanged();
                 };
                 Button kMakeStudyFocus = new Button();
+                if (word == StudyFocus)
+                    kMakeStudyFocus.IsEnabled = false;
                 kMakeStudyFocus.Height = dLineHeight / 2.0;
                 kMakeStudyFocus.Content = "Make study focus";
                 kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
@@ -553,8 +579,8 @@ namespace ReadingPractice
         /// </summary>
         public bool isDisplayed(string foreignWord)
         {
-            return true;
-            //return this.kSetAllowedWords.Contains(foreignWord);
+            //return true;
+            return this.kSetAllowedWords.Contains(foreignWord);
         }
 
         private void reviewButton_Click(object sender, RoutedEventArgs e)
@@ -671,6 +697,26 @@ namespace ReadingPractice
                 findMatchingTextSynchronous(searchText);
             });
             t.Start();
+        }
+
+        private void banAll_Click(object sender, RoutedEventArgs e)
+        {
+            batchChanges = true;
+            foreach (string word in kMatches)
+            {
+                banWord(word);
+            }
+            batchChanges = false;
+        }
+
+        private void allowAll_Click(object sender, RoutedEventArgs e)
+        {
+            batchChanges = true;
+            foreach (string word in kMatches)
+            {
+                allowWord(word);
+            }
+            batchChanges = false;
         }
     }
 }

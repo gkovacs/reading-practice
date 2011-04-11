@@ -19,10 +19,14 @@
             <sdk:Label Content="Chapter:   "></sdk:Label>
             <ComboBox Name="chapterSelect"></ComboBox>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Width="400"  Name="searchContainer">
-            <sdk:Label Content="Search:" Margin="10,0,0,0"  Height="28" Name="label3" />
-            <TextBox HorizontalAlignment="Stretch" Width="333" Name="Search" TextChanged="Search_TextChanged">
+        <StackPanel Orientation="Horizontal"  Name="searchContainer" HorizontalAlignment="Stretch" Width="700">
+            <sdk:Label Content="Search:" Margin="10,0,0,0"  Height="28" Name="label3" HorizontalAlignment="Left"/>
+            <TextBox HorizontalAlignment="Stretch" Width="530" Name="Search" TextChanged="Search_TextChanged">
             </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="allowAll" Click="allowAll_Click">Allow all words below to be displayed in sentences</Button>
+            <Button Name="banAll" Click="banAll_Click">Ban all words below from being displayed in sentences</Button>
         </StackPanel>
 
         <ScrollViewer Name="VocabSelectionScrollViewer" VerticalScrollBarVisibility="Auto" Height="400">
