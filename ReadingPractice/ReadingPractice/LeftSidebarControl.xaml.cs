@@ -97,23 +97,35 @@ namespace ReadingPractice
             InitializeComponent();
         }
 
-        Dictionary<string, double> translationStringHeights = new Dictionary<string, double>();
-        Dictionary<string, double> wordStringHeights = new Dictionary<string, double>();
-        Dictionary<string, double> readingStringHeights = new Dictionary<string, double>();
+        //Dictionary<string, double> translationStringHeights = new Dictionary<string, double>();
+        //Dictionary<string, double> wordStringHeights = new Dictionary<string, double>();
+        //Dictionary<string, double> readingStringHeights = new Dictionary<string, double>();
+        Dictionary<string, double> stringHeights = new Dictionary<string, double>();
         double wordColumnWidth = 70.0;
         double readingColumnWidth = 100.0;
         double translationColumnWidth = 200.0;
+        double[] positions;
 
         public void performOnStartup()
         {
-            foreach (string word in wordDictionary.listWords())
+            var allWords = wordDictionary.listWords();
+            //Debug.WriteLine("start");
+            foreach (string word in allWords)
             {
-                wordStringHeights[word] = measureStringHeight(word, wordColumnWidth);
-                string translated = wordDictionary.translateToEnglish(word);
-                translationStringHeights[translated] = measureStringHeight(translated, translationColumnWidth);
+                double wordStringHeight = measureStringHeight(word, wordColumnWidth);
                 string reading = wordDictionary.getReading(word);
-                readingStringHeights[reading] = measureStringHeight(reading, readingColumnWidth);
+                double readingStringHeight = measureStringHeight(reading, readingColumnWidth);
+                string translated = wordDictionary.translateToEnglish(word);
+                double translationStringHeight = measureStringHeight(translated, translationColumnWidth);
+                stringHeights[word] = Math.Max(Math.Max(wordStringHeight, readingStringHeight), Math.Max(translationStringHeight, this.dLineHeight));
+                //Debug.WriteLine(stringHeights[word]);
             }
+            /*
+            foreach (var x in stringHeights.Take(100))
+            {
+                Debug.WriteLine(x.Key + x.Value);
+            }
+            */
             /*
             TreeView tree = new TreeView();
 
@@ -201,7 +213,8 @@ namespace ReadingPractice
             
             //Search_TextChanged(null,null);
             findMatchingTextSynchronous("");
-            VocabSelectionCanvas.Height = dLineHeight * this.kMatches.Count;
+            //VocabSelectionCanvas.Height = dLineHeight * this.kMatches.Count;
+            VocabSelectionCanvas.Height = canvasHeight;
 
             PropertyChangedCallback onScrollChanged = (s, e) =>
             {
@@ -322,6 +335,9 @@ namespace ReadingPractice
         {
             TextBlock txt = new TextBlock();
             txt.Width = width;
+            txt.MaxWidth = width;
+            txt.MinWidth = width;
+            txt.TextWrapping = TextWrapping.Wrap;
             txt.Text = str;
             txt.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
             txt.LineHeight = this.dLineHeight / 2.0;
@@ -332,42 +348,80 @@ namespace ReadingPractice
         {
             //Search.Dispatcher.BeginInvoke(() => {
             VocabSelectionCanvas.Children.Clear();
-            
-            int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
-            int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight);
 
-            iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
-            for (int i = iFirstVisibleItem; i < iLastItemVisible; ++i)
+            if (positions.Length == 0)
+                return;
+            int first = 0;
+            int last = positions.Length-1;
+            double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
+            double verticalOffsetEnd = verticalOffsetStart + VocabSelectionScrollViewer.Height;
+            while (first < last)
+            {
+                int mid = (first + last) / 2;
+                double curval = positions[mid];
+                if (curval >= verticalOffsetStart && curval <= verticalOffsetEnd)
+                {
+                    break;
+                }
+                else if (curval <= verticalOffsetStart)
+                {
+                    first = mid + 1;
+                }
+                else
+                {
+                    last = mid - 1;
+                }
+            }
+            int iFirstVisibleItem = (first + last) / 2;
+            int iLastItemVisible = (first + last) / 2;
+            while (iFirstVisibleItem > 0 && positions[iFirstVisibleItem] >= verticalOffsetStart)
+            {
+                --iFirstVisibleItem;
+            }
+            while (iLastItemVisible < positions.Length-1 && positions[iLastItemVisible] <= verticalOffsetEnd)
+            {
+                ++iLastItemVisible;
+            }
+            //int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
+            //int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight);
+
+            //iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
+            for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
             {
                 string word = this.kMatches[i];
+                double height = stringHeights[word];
+                double position = positions[i];
                 TextBlock kWord = new TextBlock();
-                kWord.Height = dLineHeight;
+                kWord.Height = height;
+                kWord.MinHeight = height;
                 kWord.Width = wordColumnWidth;
                 kWord.Text = word;
                 kWord.TextWrapping = TextWrapping.Wrap;
                 kWord.SetValue(Canvas.LeftProperty, 0.0);
-                kWord.SetValue(Canvas.TopProperty, dLineHeight * i);
+                kWord.SetValue(Canvas.TopProperty, position);
                 TextBlock kRomanization = new TextBlock();
-                kRomanization.Height = dLineHeight;
+                kRomanization.Height = height;
+                kRomanization.MinHeight = height;
                 kRomanization.Width = readingColumnWidth;
                 kRomanization.Text = wordDictionary.getReading(word);
                 kRomanization.TextWrapping = TextWrapping.Wrap;
                 kRomanization.SetValue(Canvas.LeftProperty, kWord.Width);
-                kRomanization.SetValue(Canvas.TopProperty, dLineHeight * i);
+                kRomanization.SetValue(Canvas.TopProperty, position);
                 TextBlock kTranslation = new TextBlock();
-                kTranslation.Height = dLineHeight;
+                kTranslation.Height = height;
+                kTranslation.MinHeight = height;
                 kTranslation.Width = translationColumnWidth;
                 kTranslation.Text = wordDictionary.translateToEnglish(word);
                 kTranslation.TextWrapping = TextWrapping.Wrap;
                 kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
                 kTranslation.LineHeight = dLineHeight / 2.0;
                 kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width);
-                kTranslation.SetValue(Canvas.TopProperty, dLineHeight * i);
+                kTranslation.SetValue(Canvas.TopProperty, position);
                 CheckBox kDisplayWord = new CheckBox();
                 kDisplayWord.Height = dLineHeight / 2.0;
                 kDisplayWord.Content = "Display word in sentences?";
                 kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
-                kDisplayWord.SetValue(Canvas.TopProperty, dLineHeight * i);
+                kDisplayWord.SetValue(Canvas.TopProperty, position);
                 kDisplayWord.Checked += (s, e) =>
                 {
                     this.kSetAllowedWords.Add(word);
@@ -382,7 +436,7 @@ namespace ReadingPractice
                 kMakeStudyFocus.Height = dLineHeight / 2.0;
                 kMakeStudyFocus.Content = "Make study focus";
                 kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
-                kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight * i + dLineHeight / 2.0);
+                kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight/2.0 + position);
                 kMakeStudyFocus.Click += (s, e) =>
                 {
                     this.StudyFocus = word;
@@ -412,53 +466,70 @@ namespace ReadingPractice
             this.StudyFocus = "";
         }
 
-        
+        private double canvasHeight;
+
+        private void computeOffsets()
+        {
+            positions = new double[kMatches.Count];
+            double total = 0.0;
+            for (int i = 0; i < positions.Length; ++i)
+            {
+                double currentWordHeight = stringHeights[kMatches[i]];
+                positions[i] = total;
+                total += currentWordHeight;
+            }
+            canvasHeight = total;
+        }
+
         private void findMatchingTextSynchronous(string searchText)
         {
-            lock(Search) {
-            IList<string> kSearchBase;
-            // if search text is empty, or current search text is not a substring of the previous search
-            if (searchText == "")
+            lock (Search)
             {
-                this.kMatches = wordDictionary.listWords();
+                IList<string> kSearchBase;
+                // if search text is empty, or current search text is not a substring of the previous search
+                if (searchText == "")
+                {
+                    this.kMatches = wordDictionary.listWords();
+                    this.kPrevSearchTerm = searchText;
+                    computeOffsets();
+                    VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
+                    {
+                        VocabSelectionCanvas.Height = canvasHeight; //dLineHeight * kMatches.Count;
+                        VocabSelectionScrollViewer.ScrollToTop();
+                        this.DrawSearchMatches();
+                    });
+                    return;
+                }
+                else if (searchText.Contains(kPrevSearchTerm))
+                {
+                    kSearchBase = this.kMatches;
+                }
+                else
+                {
+                    kSearchBase = wordDictionary.listWords();
+                }
+
+                IList<string> kNewMatches = new List<string>();
+                foreach (string match in kSearchBase)
+                {
+                    if (match.Contains(searchText)
+                    || wordDictionary.getReading(match).Contains(searchText)
+                    || wordDictionary.translateToEnglish(match).Contains(searchText))
+                    {
+                        kNewMatches.Add(match);
+                    }
+                }
+
+                // update the state: kMatches, kPrevSearchTerm
+                this.kMatches = kNewMatches;
                 this.kPrevSearchTerm = searchText;
+                computeOffsets();
                 VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
                 {
-                    VocabSelectionCanvas.Height = dLineHeight * kMatches.Count;
+                    VocabSelectionCanvas.Height = canvasHeight;
                     VocabSelectionScrollViewer.ScrollToTop();
                     this.DrawSearchMatches();
                 });
-                return;
-            }
-            else if (searchText.Contains(kPrevSearchTerm))
-            {
-                kSearchBase = this.kMatches;
-            }
-            else
-            {
-                kSearchBase = wordDictionary.listWords();
-            }
-
-            IList<string> kNewMatches = new List<string>();
-            foreach (string match in kSearchBase)
-            {
-                if (match.Contains(searchText)
-                || wordDictionary.getReading(match).Contains(searchText)
-                || wordDictionary.translateToEnglish(match).Contains(searchText))
-                {
-                    kNewMatches.Add(match);
-                }
-            }
-
-            // update the state: kMatches, kPrevSearchTerm
-            this.kMatches = kNewMatches;
-            this.kPrevSearchTerm = searchText;
-            VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
-            {
-                VocabSelectionCanvas.Height = dLineHeight * kMatches.Count;
-                VocabSelectionScrollViewer.ScrollToTop();
-                this.DrawSearchMatches();
-            });
             }
         }
 
