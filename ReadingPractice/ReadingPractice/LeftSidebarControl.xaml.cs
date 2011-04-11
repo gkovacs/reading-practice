@@ -75,7 +75,7 @@ namespace ReadingPractice
                 {
                     StudyFocusForeignWord.Content = "General Review";
                     StudyFocusReading.Content = "Reviewing all words";
-                    StudyFocusTranslation.Content = "";
+                    StudyFocusTranslation.Content = " ";
                     reviewButton.IsEnabled = false;
                 }
                 if (focusWordChanged != null)
