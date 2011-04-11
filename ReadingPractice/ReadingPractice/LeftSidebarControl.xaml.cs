@@ -121,6 +121,9 @@ namespace ReadingPractice
         double translationColumnWidth = 200.0;
         double[] positions;
 
+        string allTextbooks = "Show All Vocabulary (don't filter by textbook)";
+        string allChapters = "Show Vocab from All Chapters";
+
         public void performOnStartup()
         {
             /*
@@ -194,14 +197,17 @@ namespace ReadingPractice
 
             // load books
 
-            this.textbookSelect.Items.Add(" ");
+            selectedTextbook = allTextbooks;
+            selectedChapter = allChapters;
+            this.textbookSelect.Items.Add(allTextbooks);
+
             for (int i = 0; i < textbooks.textbooks.Length; ++i)
             {
                 ComboBoxItem kItem = new ComboBoxItem();
                 kItem.Content = textbooks.textbooks[i].textbookName;
                 this.textbookSelect.Items.Add(textbooks.textbooks[i].textbookName);
             }
-
+            this.textbookSelect.SelectedIndex = 0;
             textbookSelect.SelectionChanged += (s, e) =>
             {
                 this.kPrevSearchTerm = "";
@@ -213,13 +219,13 @@ namespace ReadingPractice
                     if (textbooks.textbookDictionary.ContainsKey(textbookSelect.SelectedItem.ToString()))
                     {
                         Textbooks.Textbook t = textbooks.textbookDictionary[textbookSelect.SelectedItem.ToString()];
-                        this.chapterSelect.Items.Add("");
+                        this.chapterSelect.Items.Add(allChapters);
                         for (int i = 0; i < t.chapters.Length; ++i)
                         {
                             this.chapterSelect.Items.Add(t.chapters[i].chapterName);
                         }
-                        Search_TextChanged(null, null);
                     }
+                    Search_TextChanged(null, null);
                 }
             };
 
@@ -573,7 +579,7 @@ namespace ReadingPractice
 
         private IList<string> filterToTextbookAndChapter(IList<string> wordList)
         {
-            if (this.selectedTextbook == "")
+            if (this.selectedTextbook == allTextbooks || this.selectedTextbook == "")
                 return wordList;
             Textbooks.Textbook currentTextbook = textbooks.textbookDictionary[selectedTextbook];
             List<string> list = new List<string>();
@@ -586,7 +592,7 @@ namespace ReadingPractice
                 }
                 return false;
             };
-            if (this.selectedChapter == "") // everything in the textbook
+            if (this.selectedChapter == allChapters || this.selectedChapter == "") // everything in the textbook
             {
                 foreach (string word in wordList)
                 {
