@@ -26,7 +26,6 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button Name="allowAll" Click="allowAll_Click">Allow all words below to be displayed in sentences</Button>
-            <sdk:Label Content="    "></sdk:Label>
             <Button Name="banAll" Click="banAll_Click">Ban all words below from being displayed in sentences</Button>
         </StackPanel>
 

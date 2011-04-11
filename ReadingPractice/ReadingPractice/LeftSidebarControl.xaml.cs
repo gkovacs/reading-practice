@@ -244,6 +244,8 @@ namespace ReadingPractice
                             this.chapterSelect.Items.Add(t.chapters[i].chapterName);
                         }
                     }
+                    if (this.chapterSelect.Items.Count > 0)
+                        this.chapterSelect.SelectedIndex = 0;
                     Search_TextChanged(null, null);
                 }
             };
