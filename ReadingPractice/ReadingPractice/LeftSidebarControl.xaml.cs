@@ -580,6 +580,7 @@ namespace ReadingPractice
         public bool isDisplayed(string foreignWord)
         {
             //return true;
+            //Debug.WriteLine(foreignWord + ":" + this.kSetAllowedWords.Contains(foreignWord));
             return this.kSetAllowedWords.Contains(foreignWord);
         }
 
@@ -706,6 +707,7 @@ namespace ReadingPractice
             {
                 banWord(word);
             }
+            displayedListChanged();
             batchChanges = false;
         }
 
@@ -716,6 +718,7 @@ namespace ReadingPractice
             {
                 allowWord(word);
             }
+            displayedListChanged();
             batchChanges = false;
         }
     }
