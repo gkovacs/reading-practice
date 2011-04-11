@@ -86,16 +86,27 @@ namespace ReadingPractice
         private void noMoreSentencesAvailable()
         {
             this.FetchNextSentenceButton.IsEnabled = false;
+            this.Warnings.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
+            if (StudyFocus == "")
+            {
+                this.Warnings.Content = "You must select more words that can be displayed in sentences";
+            }
+            else
+            {
+                this.Warnings.Content = "No more sentences are available containing " + StudyFocus;
+            }
         }
 
         private void haveSentencesAvailable()
         {
             this.FetchNextSentenceButton.IsEnabled = true;
+            this.Warnings.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+            this.Warnings.Content = "";
         }
 
         private bool isAlreadyPresent(string sentence)
         {
-            foreach (var x in SentenceListViewer.Children.Skip(1))
+            foreach (var x in SentenceListViewer.Children.Skip(2))
             {
                 SentenceView sen = (SentenceView)x;
                 if (sentence == sen.nativeSentence)
@@ -115,7 +126,7 @@ namespace ReadingPractice
             string sent = sentencesToBeAdded.First();
             string tranlatedSentence = sentenceDictionary.translateToEnglish(sent);
             sentencesToBeAdded.RemoveFirst();
-            SentenceListViewer.Children.Insert(1, new SentenceView(sent, tranlatedSentence, mainPage));
+            SentenceListViewer.Children.Insert(2, new SentenceView(sent, tranlatedSentence, mainPage));
         }
     }
 }

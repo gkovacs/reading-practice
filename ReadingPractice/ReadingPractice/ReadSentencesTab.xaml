@@ -9,6 +9,7 @@
     d:DesignWidth="503" d:DesignHeight="555">
             <StackPanel Orientation="Vertical" Name="SentenceListViewer">
                 <Button Name="FetchNextSentenceButton" Click="FetchNextSentenceButton_Click">Fetch next sentence</Button>
-            </StackPanel>
+        <sdk:Label Name="Warnings" HorizontalAlignment="Center">Warning Text</sdk:Label>
+    </StackPanel>
 
 </UserControl>
