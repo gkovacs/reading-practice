@@ -25,7 +25,7 @@ namespace ReadingPractice
         public event Action<string> focusWordChanged;
         public event Action displayedListChanged;
 
-        private string _studyFocus;
+        private string _studyFocus = "";
 
         private HashSet<string> kSetAllowedWords = new HashSet<string>();
 
@@ -52,8 +52,17 @@ namespace ReadingPractice
             }
             set
             {
+                string prevStudyFocus = _studyFocus;
+                if (this.wordAllowedCheckboxes.ContainsKey(prevStudyFocus))
+                {
+                    this.wordAllowedCheckboxes[prevStudyFocus].IsEnabled = true;
+                }
+                if (this.wordMakeStudyFocusButtons.ContainsKey(prevStudyFocus))
+                {
+                    this.wordMakeStudyFocusButtons[prevStudyFocus].IsEnabled = true;
+                }
                 _studyFocus = value;
-                if (_studyFocus != "")
+                if (value != "")
                 {
                     StudyFocusForeignWord.Content = _studyFocus;
                     StudyFocusReading.Content = wordDictionary.getReading(_studyFocus);
@@ -155,7 +164,7 @@ namespace ReadingPractice
 
             VocabSelectionScrollViewer.Content = tree;
             */
-            //StudyFocus = "地震";
+            StudyFocus = "地震";
             StudyFocus = "";
 
             // load books
@@ -386,8 +395,13 @@ namespace ReadingPractice
             return txt.ActualHeight;
         }
 
+        public Dictionary<string, CheckBox> wordAllowedCheckboxes = new Dictionary<string, CheckBox>();
+        public Dictionary<string, Button> wordMakeStudyFocusButtons = new Dictionary<string, Button>();
+
         public void DrawSearchMatches ()
         {
+            wordAllowedCheckboxes.Clear();
+            wordMakeStudyFocusButtons.Clear();
             //Search.Dispatcher.BeginInvoke(() => {
             VocabSelectionCanvas.Children.Clear();
 
@@ -466,11 +480,13 @@ namespace ReadingPractice
                 kDisplayWord.SetValue(Canvas.TopProperty, position);
                 kDisplayWord.Checked += (s, e) =>
                 {
+                    Debug.WriteLine("checked" + word);
                     this.kSetAllowedWords.Add(word);
                     displayedListChanged();
                 };
                 kDisplayWord.Unchecked += (s, e) =>
                 {
+                    Debug.WriteLine("unchecked" + word);
                     this.kSetAllowedWords.Remove(word);
                     displayedListChanged();
                 };
@@ -482,8 +498,12 @@ namespace ReadingPractice
                 kMakeStudyFocus.Click += (s, e) =>
                 {
                     this.StudyFocus = word;
+                    kDisplayWord.IsChecked = true;
+                    kDisplayWord.IsEnabled = false;
                 };
 
+                wordAllowedCheckboxes.Add(word, kDisplayWord);
+                wordMakeStudyFocusButtons.Add(word, kMakeStudyFocus);
                 VocabSelectionCanvas.Children.Add(kWord);
                 VocabSelectionCanvas.Children.Add(kRomanization);
                 VocabSelectionCanvas.Children.Add(kTranslation);

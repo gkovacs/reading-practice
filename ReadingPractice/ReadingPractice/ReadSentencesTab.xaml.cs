@@ -88,9 +88,10 @@ namespace ReadingPractice
         {
             this.FetchNextSentenceButton.IsEnabled = false;
             this.Warnings.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
+            this.Warnings.FontWeight = FontWeights.Bold;
             if (StudyFocus == "")
             {
-                this.Warnings.Content = "You must select more words that can be displayed in sentences";
+                this.Warnings.Content = "You must select words that can be displayed in sentences";
             }
             else
             {

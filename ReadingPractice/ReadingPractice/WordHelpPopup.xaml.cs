@@ -52,6 +52,15 @@ namespace ReadingPractice
             this.makeStudyFocus.IsEnabled = false;
             this.displayedCheckbox.IsChecked = true;
             this.displayedCheckbox.IsEnabled = false;
+            if (mainPage.LeftSidebar.wordMakeStudyFocusButtons.ContainsKey(this.foreignWord))
+            {
+                mainPage.LeftSidebar.wordMakeStudyFocusButtons[foreignWord].IsEnabled = false;
+            }
+            if (mainPage.LeftSidebar.wordAllowedCheckboxes.ContainsKey(this.foreignWord))
+            {
+                mainPage.LeftSidebar.wordAllowedCheckboxes[foreignWord].IsChecked = true;
+                mainPage.LeftSidebar.wordAllowedCheckboxes[foreignWord].IsEnabled = false;
+            }
         }
 
         private void displayedCheckbox_Click(object sender, RoutedEventArgs e)
