@@ -34,8 +34,8 @@ namespace ReadingPractice
         public IList<string> kMatches = null;
         public string kPrevSearchTerm = "";
 
-        public string selectedTextbook;
-        public string selectedChapter;
+        public string selectedTextbook = "";
+        public string selectedChapter = "";
 
 
         double dLineHeight = 40.0;
@@ -204,6 +204,7 @@ namespace ReadingPractice
 
             textbookSelect.SelectionChanged += (s, e) =>
             {
+                this.kPrevSearchTerm = "";
                 if (this.textbookSelect.SelectedItem.ToString() != this.selectedTextbook)
                 {
                     this.chapterSelect.Items.Clear();
@@ -224,6 +225,7 @@ namespace ReadingPractice
 
             chapterSelect.SelectionChanged += (s, e) =>
             {
+                this.kPrevSearchTerm = "";
                 if (this.chapterSelect.SelectedItem != null
                 && this.chapterSelect.SelectedItem.ToString() != this.selectedChapter)
                 {
@@ -568,7 +570,7 @@ namespace ReadingPractice
             }
             canvasHeight = total;
         }
-        /*
+
         private IList<string> filterToTextbookAndChapter(IList<string> wordList)
         {
             if (this.selectedTextbook == "")
@@ -588,15 +590,21 @@ namespace ReadingPractice
             {
                 foreach (string word in wordList)
                 {
-                    foreach (Textbooks.Chapter chapter in currentTextbook.chapters)
-                    {
-
-                    }
+                    if (wordAllowed(word, currentTextbook.chapters))
+                        list.Add(word);
                 }
+                return list;
             }
-            
+            Textbooks.Chapter currentChapter = currentTextbook.chapterDictionary[selectedChapter];
+            Textbooks.Chapter[] allowedChapters = new Textbooks.Chapter[] { currentChapter };
+            foreach (string word in wordList)
+            {
+                if (wordAllowed(word, allowedChapters))
+                    list.Add(word);
+            }
+            return list;
         }
-        */
+
         private void findMatchingTextSynchronous(string searchText)
         {
             lock (Search)
@@ -605,7 +613,7 @@ namespace ReadingPractice
                 // if search text is empty, or current search text is not a substring of the previous search
                 if (searchText == "")
                 {
-                    this.kMatches = wordDictionary.listWords();
+                    this.kMatches = filterToTextbookAndChapter(wordDictionary.listWords());
                     this.kPrevSearchTerm = searchText;
                     computeOffsets();
                     VocabSelectionCanvas.Dispatcher.BeginInvoke(() =>
@@ -616,13 +624,13 @@ namespace ReadingPractice
                     });
                     return;
                 }
-                else if (searchText.Contains(kPrevSearchTerm))
+                else if (searchText.Contains(kPrevSearchTerm) && kPrevSearchTerm != "")
                 {
-                    kSearchBase = this.kMatches;
+                    kSearchBase = filterToTextbookAndChapter(this.kMatches);
                 }
                 else
                 {
-                    kSearchBase = wordDictionary.listWords();
+                    kSearchBase = filterToTextbookAndChapter(wordDictionary.listWords());
                 }
 
                 IList<string> kNewMatches = new List<string>();
