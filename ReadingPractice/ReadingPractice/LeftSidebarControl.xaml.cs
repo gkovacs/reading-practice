@@ -176,7 +176,7 @@ namespace ReadingPractice
                     string[] parts = line.Split('\t');
                     if (parts.Length != 2)
                         throw new Exception();
-                    stringHeights[parts[0]] = double.Parse(parts[1]);
+                    stringHeights[parts[0]] = double.Parse(parts[1]) + 20.0;
                 }
                 reader.Close();
             }
@@ -513,7 +513,7 @@ namespace ReadingPractice
                 kRomanization.Width = readingColumnWidth;
                 kRomanization.Text = wordDictionary.getReading(word);
                 kRomanization.TextWrapping = TextWrapping.Wrap;
-                kRomanization.SetValue(Canvas.LeftProperty, kWord.Width);
+                kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
                 kRomanization.SetValue(Canvas.TopProperty, position);
                 TextBlock kTranslation = new TextBlock();
                 kTranslation.Height = height;
@@ -523,12 +523,12 @@ namespace ReadingPractice
                 kTranslation.TextWrapping = TextWrapping.Wrap;
                 kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
                 kTranslation.LineHeight = dLineHeight / 2.0;
-                kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width);
+                kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
                 kTranslation.SetValue(Canvas.TopProperty, position);
                 CheckBox kDisplayWord = new CheckBox();
                 kDisplayWord.Height = dLineHeight / 2.0;
                 kDisplayWord.Content = "Display word in sentences?";
-                kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
+                kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
                 kDisplayWord.SetValue(Canvas.TopProperty, position);
                 kDisplayWord.IsChecked = this.isDisplayed(word);
                 kDisplayWord.Checked += (s, e) =>
@@ -552,7 +552,7 @@ namespace ReadingPractice
                     kMakeStudyFocus.IsEnabled = false;
                 kMakeStudyFocus.Height = dLineHeight / 2.0;
                 kMakeStudyFocus.Content = "Make study focus";
-                kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
+                kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
                 kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight/2.0 + position);
                 kMakeStudyFocus.Click += (s, e) =>
                 {

@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="600" d:DesignWidth="600"
+    mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="680" d:DesignWidth="600"
     VerticalAlignment="Top">
-    <StackPanel Orientation="Vertical" Width="600" Height="600">
+    <StackPanel Orientation="Vertical" Width="600" Height="680">
         <sdk:Label Content="study focus:" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
         <sdk:Label Name="StudyFocusForeignWord"  Content="someforeignword" HorizontalAlignment="Center" FontSize="30"></sdk:Label>
         <sdk:Label Name="StudyFocusReading"  Content="somereading" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
@@ -16,16 +16,17 @@
             <ComboBox Name="textbookSelect"></ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <sdk:Label Content="Chapter:   "></sdk:Label>
-            <ComboBox Name="chapterSelect"></ComboBox>
+            <sdk:Label Content="Chapter:  "></sdk:Label>
+            <ComboBox Name="chapterSelect" Margin="2,0,0,0"></ComboBox>
         </StackPanel>
-        <StackPanel Orientation="Horizontal"  Name="searchContainer" HorizontalAlignment="Stretch" Width="700">
-            <sdk:Label Content="Search:" Margin="10,0,0,0"  Height="28" Name="label3" HorizontalAlignment="Left"/>
-            <TextBox HorizontalAlignment="Stretch" Width="530" Name="Search" TextChanged="Search_TextChanged">
+        <StackPanel Orientation="Horizontal"  Name="searchContainer">
+            <sdk:Label Content="Search:"  Height="28" Name="label3"/>
+            <TextBox HorizontalAlignment="Stretch" Margin="15,0,0,0" Width="530" Name="Search" TextChanged="Search_TextChanged">
             </TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button Name="allowAll" Click="allowAll_Click">Allow all words below to be displayed in sentences</Button>
+            <sdk:Label Content="    "></sdk:Label>
             <Button Name="banAll" Click="banAll_Click">Ban all words below from being displayed in sentences</Button>
         </StackPanel>
 
