@@ -19,7 +19,7 @@ namespace ReadingPractice
     public class SentenceDictionarySimplifiedMandarin : SentenceDictionary
     {
         List<string> sentences = new List<string>();
-        Dictionary<string, string[]> segmentation = new Dictionary<string, string[]>();
+        //Dictionary<string, string[]> segmentation = new Dictionary<string, string[]>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         readonly WordDictionary _wordDictionary;
@@ -54,6 +54,7 @@ namespace ReadingPractice
                 }
                 reader.Close();
             }
+            /*
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-seg.txt", UriKind.Relative)).Stream))
             {
                 while (!reader.EndOfStream)
@@ -66,6 +67,7 @@ namespace ReadingPractice
                 }
                 reader.Close();
             }
+            */
             foreach (string sent in foreignToEnglish.Keys)
             {
                 sentences.Add(sent);
@@ -76,7 +78,7 @@ namespace ReadingPractice
         {
             return sentences.Where((sent) =>
             {
-                string[] words = segmentation[sent];
+                string[] words = getWords(sent);
                 if (focusWord != "" && !words.Contains(focusWord))
                     return false;
                 foreach (string word in words)

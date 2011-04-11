@@ -16,6 +16,8 @@ using System.Windows.Data;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Threading;
+using System.IO;
+using System.IO.IsolatedStorage;
 
 namespace ReadingPractice
 {
@@ -121,8 +123,15 @@ namespace ReadingPractice
 
         public void performOnStartup()
         {
+            /*
             var allWords = wordDictionary.listWords();
             //Debug.WriteLine("start");
+            IsolatedStorageFile isoFile = IsolatedStorageFile.GetUserStoreForApplication();
+            //isoFile.IncreaseQuotaTo(1024*1024*10);
+
+            FileStream f = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\gezaSpecialFile.txt", FileMode.Create);
+            //IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("gezaFileSilverlight.txt", FileMode.Create, isoFile);
+            StreamWriter sw = new StreamWriter(f);
             foreach (string word in allWords)
             {
                 double wordStringHeight = measureStringHeight(word, wordColumnWidth);
@@ -131,7 +140,23 @@ namespace ReadingPractice
                 string translated = wordDictionary.translateToEnglish(word);
                 double translationStringHeight = measureStringHeight(translated, translationColumnWidth);
                 stringHeights[word] = Math.Max(Math.Max(wordStringHeight, readingStringHeight), Math.Max(translationStringHeight, this.dLineHeight));
-                //Debug.WriteLine(stringHeights[word]);
+                
+                sw.WriteLine(word+"\t"+stringHeights[word]);
+            }
+            sw.Close();
+            f.Close();
+            */
+            using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/wordheights.txt", UriKind.Relative)).Stream))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    string[] parts = line.Split('\t');
+                    if (parts.Length != 2)
+                        throw new Exception();
+                    stringHeights[parts[0]] = double.Parse(parts[1]);
+                }
+                reader.Close();
             }
             /*
             foreach (var x in stringHeights.Take(100))
@@ -543,7 +568,35 @@ namespace ReadingPractice
             }
             canvasHeight = total;
         }
+        /*
+        private IList<string> filterToTextbookAndChapter(IList<string> wordList)
+        {
+            if (this.selectedTextbook == "")
+                return wordList;
+            Textbooks.Textbook currentTextbook = textbooks.textbookDictionary[selectedTextbook];
+            List<string> list = new List<string>();
+            Func<string, Textbooks.Chapter[], bool> wordAllowed = (word, chapters) =>
+            {
+                foreach (var chapter in chapters)
+                {
+                    if (chapter.wordSet.Contains(word))
+                        return true;
+                }
+                return false;
+            };
+            if (this.selectedChapter == "") // everything in the textbook
+            {
+                foreach (string word in wordList)
+                {
+                    foreach (Textbooks.Chapter chapter in currentTextbook.chapters)
+                    {
 
+                    }
+                }
+            }
+            
+        }
+        */
         private void findMatchingTextSynchronous(string searchText)
         {
             lock (Search)
