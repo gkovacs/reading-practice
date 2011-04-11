@@ -50,6 +50,13 @@ namespace ReadingPractice
         {
             mainPage.LeftSidebar.StudyFocus = this.foreignWord;
             this.makeStudyFocus.IsEnabled = false;
+            this.displayedCheckbox.IsChecked = true;
+            this.displayedCheckbox.IsEnabled = false;
+        }
+
+        private void displayedCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

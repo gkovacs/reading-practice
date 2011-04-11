@@ -60,6 +60,7 @@ namespace ReadingPractice
 
         public void performOnStartup()
         {
+            noMoreSentencesAvailable();
             Action<string> newSentences = (focusWord) =>
             {
                 this.sentencesToBeAdded = new LinkedList<string>(
