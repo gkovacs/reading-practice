@@ -500,6 +500,7 @@ namespace ReadingPractice
                     this.StudyFocus = word;
                     kDisplayWord.IsChecked = true;
                     kDisplayWord.IsEnabled = false;
+                    kMakeStudyFocus.IsEnabled = false;
                 };
 
                 wordAllowedCheckboxes.Add(word, kDisplayWord);
