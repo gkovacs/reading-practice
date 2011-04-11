@@ -454,123 +454,128 @@ namespace ReadingPractice
 
         public void DrawSearchMatches ()
         {
-            wordAllowedCheckboxes.Clear();
-            wordMakeStudyFocusButtons.Clear();
-            //Search.Dispatcher.BeginInvoke(() => {
-            VocabSelectionCanvas.Children.Clear();
+            lock (VocabSelectionCanvas)
+            {
+                wordAllowedCheckboxes.Clear();
+                wordMakeStudyFocusButtons.Clear();
+                //Search.Dispatcher.BeginInvoke(() => {
+                VocabSelectionCanvas.Children.Clear();
 
-            if (positions.Length == 0)
-                return;
-            int first = 0;
-            int last = positions.Length-1;
-            double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
-            double verticalOffsetEnd = verticalOffsetStart + VocabSelectionScrollViewer.Height;
-            while (first < last)
-            {
-                int mid = (first + last) / 2;
-                double curval = positions[mid];
-                if (curval >= verticalOffsetStart && curval <= verticalOffsetEnd)
+                if (positions.Length == 0)
+                    return;
+                int first = 0;
+                int last = positions.Length - 1;
+                double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
+                double verticalOffsetEnd = verticalOffsetStart + VocabSelectionScrollViewer.Height;
+                while (first < last)
                 {
-                    break;
+                    int mid = (first + last) / 2;
+                    double curval = positions[mid];
+                    if (curval >= verticalOffsetStart && curval <= verticalOffsetEnd)
+                    {
+                        break;
+                    }
+                    else if (curval <= verticalOffsetStart)
+                    {
+                        first = mid + 1;
+                    }
+                    else
+                    {
+                        last = mid - 1;
+                    }
                 }
-                else if (curval <= verticalOffsetStart)
+                int iFirstVisibleItem = (first + last) / 2;
+                int iLastItemVisible = (first + last) / 2;
+                while (iFirstVisibleItem > 0 && positions[iFirstVisibleItem] >= verticalOffsetStart)
                 {
-                    first = mid + 1;
+                    --iFirstVisibleItem;
                 }
-                else
+                while (iLastItemVisible < positions.Length - 1 && positions[iLastItemVisible] <= verticalOffsetEnd)
                 {
-                    last = mid - 1;
+                    ++iLastItemVisible;
                 }
-            }
-            int iFirstVisibleItem = (first + last) / 2;
-            int iLastItemVisible = (first + last) / 2;
-            while (iFirstVisibleItem > 0 && positions[iFirstVisibleItem] >= verticalOffsetStart)
-            {
-                --iFirstVisibleItem;
-            }
-            while (iLastItemVisible < positions.Length-1 && positions[iLastItemVisible] <= verticalOffsetEnd)
-            {
-                ++iLastItemVisible;
-            }
-            //int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
-            //int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight);
+                iFirstVisibleItem = Math.Max(iFirstVisibleItem, 0);
+                iLastItemVisible = Math.Min(iLastItemVisible, kMatches.Count - 1);
+                //int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/dLineHeight);
+                //int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight);
 
-            //iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
-            for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
-            {
-                string word = this.kMatches[i];
-                double height = stringHeights[word];
-                double position = positions[i];
-                TextBlock kWord = new TextBlock();
-                kWord.Height = height;
-                kWord.MinHeight = height;
-                kWord.Width = wordColumnWidth;
-                kWord.Text = word;
-                kWord.TextWrapping = TextWrapping.Wrap;
-                kWord.SetValue(Canvas.LeftProperty, 0.0);
-                kWord.SetValue(Canvas.TopProperty, position);
-                TextBlock kRomanization = new TextBlock();
-                kRomanization.Height = height;
-                kRomanization.MinHeight = height;
-                kRomanization.Width = readingColumnWidth;
-                kRomanization.Text = wordDictionary.getReading(word);
-                kRomanization.TextWrapping = TextWrapping.Wrap;
-                kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
-                kRomanization.SetValue(Canvas.TopProperty, position);
-                TextBlock kTranslation = new TextBlock();
-                kTranslation.Height = height;
-                kTranslation.MinHeight = height;
-                kTranslation.Width = translationColumnWidth;
-                kTranslation.Text = wordDictionary.translateToEnglish(word);
-                kTranslation.TextWrapping = TextWrapping.Wrap;
-                kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
-                kTranslation.LineHeight = dLineHeight / 2.0;
-                kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
-                kTranslation.SetValue(Canvas.TopProperty, position);
-                CheckBox kDisplayWord = new CheckBox();
-                kDisplayWord.Height = dLineHeight / 2.0;
-                kDisplayWord.Content = "Display word in sentences?";
-                kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
-                kDisplayWord.SetValue(Canvas.TopProperty, position);
-                kDisplayWord.IsChecked = this.isDisplayed(word);
-                kDisplayWord.Checked += (s, e) =>
+                //iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
+                for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
                 {
-                    Debug.WriteLine("checked" + word);
-                    if (!kSetAllowedWords.Contains(word))
-                        this.kSetAllowedWords.Add(word);
-                    if (!batchChanges)
-                        displayedListChanged();
-                };
-                kDisplayWord.Unchecked += (s, e) =>
-                {
-                    Debug.WriteLine("unchecked" + word);
-                    if (kSetAllowedWords.Contains(word))
-                        this.kSetAllowedWords.Remove(word);
-                    if (!batchChanges)
-                        displayedListChanged();
-                };
-                Button kMakeStudyFocus = new Button();
-                if (word == StudyFocus)
-                    kMakeStudyFocus.IsEnabled = false;
-                kMakeStudyFocus.Height = dLineHeight / 2.0;
-                kMakeStudyFocus.Content = "Make study focus";
-                kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
-                kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight/2.0 + position);
-                kMakeStudyFocus.Click += (s, e) =>
-                {
-                    this.StudyFocus = word;
-                    kDisplayWord.IsChecked = true;
-                    kDisplayWord.IsEnabled = false;
-                    kMakeStudyFocus.IsEnabled = false;
-                };
+                    string word = this.kMatches[i];
+                    double height = stringHeights[word];
+                    double position = positions[i];
+                    TextBlock kWord = new TextBlock();
+                    kWord.Height = height;
+                    kWord.MinHeight = height;
+                    kWord.Width = wordColumnWidth;
+                    kWord.Text = word;
+                    kWord.TextWrapping = TextWrapping.Wrap;
+                    kWord.SetValue(Canvas.LeftProperty, 0.0);
+                    kWord.SetValue(Canvas.TopProperty, position);
+                    TextBlock kRomanization = new TextBlock();
+                    kRomanization.Height = height;
+                    kRomanization.MinHeight = height;
+                    kRomanization.Width = readingColumnWidth;
+                    kRomanization.Text = wordDictionary.getReading(word);
+                    kRomanization.TextWrapping = TextWrapping.Wrap;
+                    kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
+                    kRomanization.SetValue(Canvas.TopProperty, position);
+                    TextBlock kTranslation = new TextBlock();
+                    kTranslation.Height = height;
+                    kTranslation.MinHeight = height;
+                    kTranslation.Width = translationColumnWidth;
+                    kTranslation.Text = wordDictionary.translateToEnglish(word);
+                    kTranslation.TextWrapping = TextWrapping.Wrap;
+                    kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                    kTranslation.LineHeight = dLineHeight / 2.0;
+                    kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
+                    kTranslation.SetValue(Canvas.TopProperty, position);
+                    CheckBox kDisplayWord = new CheckBox();
+                    kDisplayWord.Height = dLineHeight / 2.0;
+                    kDisplayWord.Content = "Display word in sentences?";
+                    kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
+                    kDisplayWord.SetValue(Canvas.TopProperty, position);
+                    kDisplayWord.IsChecked = this.isDisplayed(word);
+                    kDisplayWord.Checked += (s, e) =>
+                    {
+                        Debug.WriteLine("checked" + word);
+                        if (!kSetAllowedWords.Contains(word))
+                            this.kSetAllowedWords.Add(word);
+                        if (!batchChanges)
+                            displayedListChanged();
+                    };
+                    kDisplayWord.Unchecked += (s, e) =>
+                    {
+                        Debug.WriteLine("unchecked" + word);
+                        if (kSetAllowedWords.Contains(word))
+                            this.kSetAllowedWords.Remove(word);
+                        if (!batchChanges)
+                            displayedListChanged();
+                    };
+                    Button kMakeStudyFocus = new Button();
+                    if (word == StudyFocus)
+                        kMakeStudyFocus.IsEnabled = false;
+                    kMakeStudyFocus.Height = dLineHeight / 2.0;
+                    kMakeStudyFocus.Content = "Make study focus";
+                    kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
+                    kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight / 2.0 + position);
+                    kMakeStudyFocus.Click += (s, e) =>
+                    {
+                        this.StudyFocus = word;
+                        kDisplayWord.IsChecked = true;
+                        kDisplayWord.IsEnabled = false;
+                        kMakeStudyFocus.IsEnabled = false;
+                    };
 
-                wordAllowedCheckboxes.Add(word, kDisplayWord);
-                wordMakeStudyFocusButtons.Add(word, kMakeStudyFocus);
-                VocabSelectionCanvas.Children.Add(kWord);
-                VocabSelectionCanvas.Children.Add(kRomanization);
-                VocabSelectionCanvas.Children.Add(kTranslation);
-                VocabSelectionCanvas.Children.Add(kDisplayWord);
-                VocabSelectionCanvas.Children.Add(kMakeStudyFocus);
+                    wordAllowedCheckboxes.Add(word, kDisplayWord);
+                    wordMakeStudyFocusButtons.Add(word, kMakeStudyFocus);
+                    VocabSelectionCanvas.Children.Add(kWord);
+                    VocabSelectionCanvas.Children.Add(kRomanization);
+                    VocabSelectionCanvas.Children.Add(kTranslation);
+                    VocabSelectionCanvas.Children.Add(kDisplayWord);
+                    VocabSelectionCanvas.Children.Add(kMakeStudyFocus);
+                }
             }
             //});
         }
