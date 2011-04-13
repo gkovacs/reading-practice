@@ -52,6 +52,7 @@ namespace ReadingPractice
             mainPage.LeftSidebar.StudyFocus = this.foreignWord;
             this.makeStudyFocus.IsEnabled = false;
             this.displayedCheckbox.IsChecked = true;
+            mainPage.LeftSidebar.allowWord(this.foreignWord);
             this.displayedCheckbox.IsEnabled = false;
             if (mainPage.LeftSidebar.wordMakeStudyFocusButtons.ContainsKey(this.foreignWord))
             {

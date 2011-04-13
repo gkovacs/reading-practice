@@ -590,7 +590,10 @@ namespace ReadingPractice
                     };
                     Button kMakeStudyFocus = new Button();
                     if (word == StudyFocus)
+                    {
                         kMakeStudyFocus.IsEnabled = false;
+                        kDisplayWord.IsEnabled = false;
+                    }
                     kMakeStudyFocus.Height = dLineHeight / 2.0;
                     kMakeStudyFocus.Content = "Make study focus";
                     kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
@@ -599,6 +602,7 @@ namespace ReadingPractice
                     {
                         this.StudyFocus = word;
                         kDisplayWord.IsChecked = true;
+                        this.allowWord(word);
                         kDisplayWord.IsEnabled = false;
                         kMakeStudyFocus.IsEnabled = false;
                     };
