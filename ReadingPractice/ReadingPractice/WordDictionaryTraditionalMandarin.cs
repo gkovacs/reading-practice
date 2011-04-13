@@ -19,6 +19,7 @@ namespace ReadingPractice
     public class WordDictionaryTraditionalMandarin : WordDictionary
     {
         List<string> allWords = new List<string>();
+        List<string> wordsByFrequency = new List<string>();
         Dictionary<string, string> readings = new Dictionary<string, string>();
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
@@ -90,6 +91,16 @@ namespace ReadingPractice
             if (!readings.ContainsKey(foreignWord))
                 return "";
             return readings[foreignWord];
+        }
+
+        public override int getWordcountInSentences(string word)
+        {
+            return 1; // TODO
+        }
+
+        public override IList<string> listWordsByFrequency()
+        {
+            return new List<string>(); // TODO
         }
 
         public override IList<string> listWords()

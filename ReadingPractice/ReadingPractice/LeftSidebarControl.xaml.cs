@@ -246,6 +246,11 @@ namespace ReadingPractice
             f.Close();
             */
 
+            foreach (string word in wordDictionary.listWordsByFrequency().Take(2000))
+            {
+                this.kSetAllowedWords.Add(word);
+            }
+
             selectedTextbook = allTextbooks;
             selectedChapter = allChapters;
             this.textbookSelect.Items.Add(allTextbooks);
