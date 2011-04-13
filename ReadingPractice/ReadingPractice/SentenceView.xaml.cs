@@ -87,6 +87,10 @@ namespace ReadingPractice
                     {
                         button.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
                     }
+                    else if (!mainPage.LeftSidebar.isDisplayed(currentWord) && wordDictionary.translateToEnglish(currentWord) != "")
+                    {
+                        button.Background = new SolidColorBrush(Color.FromArgb(255, 255, 0, 255));
+                    }
                     button.FontSize = 20.0;
                     button.Click += (s, e) =>
                     {
@@ -134,6 +138,10 @@ namespace ReadingPractice
                     if (StudyFocus == currentWord)
                     {
                         label.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+                    }
+                    else if (!mainPage.LeftSidebar.isDisplayed(currentWord) && wordDictionary.translateToEnglish(currentWord) != "")
+                    {
+                        label.Background = new SolidColorBrush(Color.FromArgb(255, 255, 0, 255));
                     }
                     label.FontSize = 20.0;
                     this.NativeLanguageSentenceDisplay.Children.Add(label);

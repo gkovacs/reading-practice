@@ -86,16 +86,24 @@ namespace ReadingPractice
 
         private void noMoreSentencesAvailable()
         {
-            this.FetchNextSentenceButton.IsEnabled = false;
             this.Warnings.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
             this.Warnings.FontWeight = FontWeights.Bold;
             if (StudyFocus == "")
             {
                 this.Warnings.Content = "You must select words that can be displayed in sentences";
+                this.FetchNextSentenceButton.IsEnabled = false;
+                return;
+            }
+            this.sentencesToBeAdded = new LinkedList<string>(this.sentenceDictionary.getSentences(StudyFocus, q => true).Where(sent => !isAlreadyPresent(sent)));
+            if (sentencesToBeAdded.Count == 0)
+            {
+                this.Warnings.Content = "No more sentences are available containing " + StudyFocus;
+                this.FetchNextSentenceButton.IsEnabled = false;
             }
             else
             {
-                this.Warnings.Content = "No more sentences are available containing " + StudyFocus;
+                this.Warnings.Content = "Remaining sentences containing " + StudyFocus + " contain words you may not know";
+                this.FetchNextSentenceButton.IsEnabled = true;
             }
         }
 
@@ -121,14 +129,14 @@ namespace ReadingPractice
         {
             if (sentencesToBeAdded.Count == 0)
                 return;
-            else if (sentencesToBeAdded.Count == 1)
-            {
-                noMoreSentencesAvailable();
-            }
             string sent = sentencesToBeAdded.First();
             string tranlatedSentence = sentenceDictionary.translateToEnglish(sent);
             sentencesToBeAdded.RemoveFirst();
             SentenceListViewer.Children.Insert(2, new SentenceView(sent, tranlatedSentence, mainPage));
+            if (sentencesToBeAdded.Count == 0)
+            {
+                noMoreSentencesAvailable();
+            }
         }
     }
 }
