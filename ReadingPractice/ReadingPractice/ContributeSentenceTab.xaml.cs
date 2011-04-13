@@ -23,7 +23,7 @@ namespace ReadingPractice
 
         public void performOnStartup()
         {
-
+            ContributeButton.IsEnabled = false;
         }
 
         private void ContributeButton_Click(object sender, RoutedEventArgs e)
@@ -31,6 +31,32 @@ namespace ReadingPractice
             string nativeSentence = this.NativeSentenceTextBox.Text;
             string translatedSentence = this.TranslatedSentenceTextBox.Text;
             this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, translatedSentence, mainPage));
+            this.NativeSentenceTextBox.Text = "";
+            this.TranslatedSentenceTextBox.Text = "";
+        }
+
+        private void NativeSentenceTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (NativeSentenceTextBox.Text != "" && TranslatedSentenceTextBox.Text != "")
+            {
+                ContributeButton.IsEnabled = true;
+            }
+            else
+            {
+                ContributeButton.IsEnabled = false;
+            }
+        }
+
+        private void TranslatedSentenceTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (NativeSentenceTextBox.Text != "" && TranslatedSentenceTextBox.Text != "")
+            {
+                ContributeButton.IsEnabled = true;
+            }
+            else
+            {
+                ContributeButton.IsEnabled = false;
+            }
         }
     }
 }

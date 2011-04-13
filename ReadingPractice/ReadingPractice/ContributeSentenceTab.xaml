@@ -11,9 +11,9 @@
     <StackPanel Orientation="Vertical" Name="ContributedSentenceListViewer">
     <Grid x:Name="LayoutRoot" Background="White">
         <sdk:Label Content="Sentence" Height="28" HorizontalAlignment="Left" Margin="12,16,0,0" Name="label1" VerticalAlignment="Top" Width="120" />
-        <TextBox Height="81" HorizontalAlignment="Left" Margin="90,16,0,0" Name="NativeSentenceTextBox" VerticalAlignment="Top" Width="272" />
+        <TextBox Height="81" HorizontalAlignment="Left" Margin="90,16,0,0" Name="NativeSentenceTextBox" VerticalAlignment="Top" Width="272" TextChanged="NativeSentenceTextBox_TextChanged" />
         <sdk:Label Content="Translation" Height="28" HorizontalAlignment="Left" Margin="12,103,0,0" Name="label2" VerticalAlignment="Top" Width="120" />
-        <TextBox Height="81" HorizontalAlignment="Left" Margin="90,103,0,0" Name="TranslatedSentenceTextBox" VerticalAlignment="Top" Width="272" />
+        <TextBox Height="81" HorizontalAlignment="Left" Margin="90,103,0,0" Name="TranslatedSentenceTextBox" VerticalAlignment="Top" Width="272" TextChanged="TranslatedSentenceTextBox_TextChanged" />
         <Button Content="Contribute Sentence" Height="23" HorizontalAlignment="Left" Margin="90,190,0,0" Name="ContributeButton" VerticalAlignment="Top" Width="272" Click="ContributeButton_Click" />
     </Grid>
         
