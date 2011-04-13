@@ -215,6 +215,36 @@ namespace ReadingPractice
             StudyFocus = "";
 
             // load books
+            /*
+            Dictionary<string, int> wordFreqs = new Dictionary<string,int>();
+            foreach (var y in mainPage.sentenceDictionary.getSentences("", q => true))
+            {
+                foreach (var x in mainPage.sentenceDictionary.getWords(y))
+                {
+                    if (!wordFreqs.ContainsKey(x))
+                    {
+                        wordFreqs[x] = 0;
+                    }
+                    ++wordFreqs[x];
+                }
+            }
+            List<Tuple<int, string>> wordFreqsL = new List<Tuple<int, string>>();
+            foreach (var x in wordFreqs)
+            {
+                wordFreqsL.Add(Tuple.Create(x.Value, x.Key));
+            }
+            wordFreqsL.Sort();
+            wordFreqsL.Reverse();
+            FileStream f = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\gezaSpecialFile2.txt", FileMode.Create);
+            //IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("gezaFileSilverlight.txt", FileMode.Create, isoFile);
+            StreamWriter sw = new StreamWriter(f);
+            foreach (var x in wordFreqsL)
+            {
+                sw.WriteLine(x.Item2 + "\t" + x.Item1);
+            }
+            sw.Close();
+            f.Close();
+            */
 
             selectedTextbook = allTextbooks;
             selectedChapter = allChapters;
