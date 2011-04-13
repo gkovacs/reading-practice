@@ -22,6 +22,7 @@ namespace ReadingPractice
         Dictionary<string, string> readings = new Dictionary<string, string>();
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
+        Dictionary<string, int> wordFreqs = new Dictionary<string, int>();
         public override Languages language
         {
             get
@@ -57,8 +58,22 @@ namespace ReadingPractice
                 }
                 reader.Close();
             }
+            using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-word-freqs.txt", UriKind.Relative)).Stream))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    string[] parts = line.Split('\t');
+                    if (parts.Length != 2)
+                        throw new Exception();
+                    wordFreqs[parts[0]] = int.Parse(parts[1]);
+                }
+                reader.Close();
+            }
             foreach (string word in readings.Keys)
             {
+                if (!wordFreqs.ContainsKey(word))
+                    continue;
                 if (this.foreignToEnglish.ContainsKey(word))
                 {
                     this.allWords.Add(word);
