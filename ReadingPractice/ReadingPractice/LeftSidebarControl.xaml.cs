@@ -34,20 +34,30 @@ namespace ReadingPractice
         bool batchChanges = false;
         public void allowWord(string word)
         {
-            if (!kSetAllowedWords.Contains(word))
+            bool alreadyAllowed = kSetAllowedWords.Contains(word);
+            if (!alreadyAllowed)
                 this.kSetAllowedWords.Add(word);
             if (this.wordAllowedCheckboxes.ContainsKey(word))
                 this.wordAllowedCheckboxes[word].IsChecked = true;
+            if (alreadyAllowed)
+                return;
+            if (displayedListChanged != null)
+                displayedListChanged();
         }
 
         public void banWord(string word)
         {
-            if (kSetAllowedWords.Contains(word))
+            bool alreadyBanned = !kSetAllowedWords.Contains(word);
+            if (!alreadyBanned)
                 this.kSetAllowedWords.Remove(word);
             if (word == StudyFocus)
                 StudyFocus = "";
             if (this.wordAllowedCheckboxes.ContainsKey(word))
                 this.wordAllowedCheckboxes[word].IsChecked = false;
+            if (alreadyBanned)
+                return;
+            if (displayedListChanged != null)
+                displayedListChanged();
         }
 
         public IList<string> kMatches = null;
@@ -89,6 +99,8 @@ namespace ReadingPractice
                     StudyFocusReading.Content = wordDictionary.getReading(_studyFocus);
                     StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus);
                     reviewButton.IsEnabled = true;
+                    if (focusWordChanged != null)
+                        focusWordChanged(_studyFocus);
                 }
                 else // general review
                 {
@@ -96,9 +108,11 @@ namespace ReadingPractice
                     StudyFocusReading.Content = "Reviewing all words";
                     StudyFocusTranslation.Content = " ";
                     reviewButton.IsEnabled = false;
+                    if (!isDisplayed(StudyFocus))
+                        allowWord(StudyFocus); // does changing already
+                    else if (focusWordChanged != null)
+                        focusWordChanged(_studyFocus);
                 }
-                if (focusWordChanged != null)
-                    focusWordChanged(_studyFocus);
             }
         }
         public WordDictionary wordDictionary
