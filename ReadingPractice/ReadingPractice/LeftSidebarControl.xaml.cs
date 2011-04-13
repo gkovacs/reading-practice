@@ -39,7 +39,7 @@ namespace ReadingPractice
                 this.kSetAllowedWords.Add(word);
             if (this.wordAllowedCheckboxes.ContainsKey(word))
                 this.wordAllowedCheckboxes[word].IsChecked = true;
-            if (alreadyAllowed)
+            if (alreadyAllowed || batchChanges)
                 return;
             if (displayedListChanged != null)
                 displayedListChanged();
@@ -54,7 +54,7 @@ namespace ReadingPractice
                 StudyFocus = "";
             if (this.wordAllowedCheckboxes.ContainsKey(word))
                 this.wordAllowedCheckboxes[word].IsChecked = false;
-            if (alreadyBanned)
+            if (alreadyBanned || batchChanges)
                 return;
             if (displayedListChanged != null)
                 displayedListChanged();
