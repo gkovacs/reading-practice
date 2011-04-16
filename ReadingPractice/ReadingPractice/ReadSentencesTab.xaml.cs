@@ -88,13 +88,23 @@ namespace ReadingPractice
         {
             this.Warnings.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
             this.Warnings.FontWeight = FontWeights.Bold;
+            this.sentencesToBeAdded = new LinkedList<string>(this.sentenceDictionary.getSentences(StudyFocus, q => true).Where(sent => !isAlreadyPresent(sent)).OrderBy(q => sentenceDictionary.getWords(q).Select(v => wordDictionary.translateToEnglish(v) != "" && !mainPage.LeftSidebar.isDisplayed(q) ? 1 : 0).Sum()));
             if (StudyFocus == "")
             {
-                this.Warnings.Content = "You must select words that can be displayed in sentences";
-                this.FetchNextSentenceButton.IsEnabled = false;
-                return;
+                if (sentencesToBeAdded.Count > 0)
+                {
+                    this.Warnings.Content = "Please select words that can be displayed in sentences";
+                    this.FetchNextSentenceButton.IsEnabled = true;
+                    return;
+                }
+                else
+                {
+                    this.Warnings.Content = "No more sentences are available";
+                    this.FetchNextSentenceButton.IsEnabled = false;
+                    return;
+                }
+
             }
-            this.sentencesToBeAdded = new LinkedList<string>(this.sentenceDictionary.getSentences(StudyFocus, q => true).Where(sent => !isAlreadyPresent(sent)));
             if (sentencesToBeAdded.Count == 0)
             {
                 this.Warnings.Content = "No more sentences are available containing " + StudyFocus;
