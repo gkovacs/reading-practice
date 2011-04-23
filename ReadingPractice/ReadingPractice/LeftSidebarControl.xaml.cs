@@ -367,6 +367,7 @@ namespace ReadingPractice
             
             //Search_TextChanged(null,null);
             findMatchingTextSynchronous("");
+            sortPinYin(null,null);
             //VocabSelectionCanvas.Height = dLineHeight * this.kMatches.Count;
             VocabSelectionCanvas.Height = canvasHeight;
 
