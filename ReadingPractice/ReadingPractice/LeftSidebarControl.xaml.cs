@@ -582,7 +582,7 @@ namespace ReadingPractice
                     kTranslation.SetValue(Canvas.TopProperty, position);
                     CheckBox kDisplayWord = new CheckBox();
                     kDisplayWord.Height = dLineHeight / 2.0;
-                    kDisplayWord.Content = "Display word in sentences?";
+                    kDisplayWord.Content = "May appear in sentences";
                     kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
                     kDisplayWord.SetValue(Canvas.TopProperty, position);
                     kDisplayWord.IsChecked = this.isDisplayed(word);
@@ -822,6 +822,7 @@ namespace ReadingPractice
 
             List<string> k = (List<string>)(kMatches);//.sort
             k.Sort(PinyinCompare);
+            computeOffsets();
 
             resetSortButtonColors();
             sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
@@ -834,9 +835,12 @@ namespace ReadingPractice
         {
             if ( kMatches == null )
                 return;
+            
+            computeOffsets();
 
             List<string> k = (List<string>)(kMatches);//.sort
             k.Sort(EnglishCompare);
+            computeOffsets();
 
             resetSortButtonColors();
             sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
@@ -852,6 +856,7 @@ namespace ReadingPractice
 
             List<string> k = (List<string>)(kMatches);//.sort
             k.Sort(DisplayedCompare);
+            computeOffsets();
 
             resetSortButtonColors();
             sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
