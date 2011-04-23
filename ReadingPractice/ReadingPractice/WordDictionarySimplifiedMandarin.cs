@@ -124,7 +124,9 @@ namespace ReadingPractice
 
         public override IList<string> listWords()
         {
-            return this.allWords.AsReadOnly();
+            return new List<string>(this.allWords);
+
+            //return this.allWords.AsReadOnly();
         }
     }
 }

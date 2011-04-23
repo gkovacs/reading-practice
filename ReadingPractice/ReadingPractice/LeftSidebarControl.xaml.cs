@@ -706,6 +706,7 @@ namespace ReadingPractice
                 // if search text is empty, or current search text is not a substring of the previous search
                 if (searchText == "")
                 {
+                    Debug.WriteLine("findMatchingTextSynchronous");
                     this.kMatches = filterToTextbookAndChapter(wordDictionary.listWords());
                     this.kPrevSearchTerm = searchText;
                     computeOffsets();
@@ -781,5 +782,83 @@ namespace ReadingPractice
             displayedListChanged();
             batchChanges = false;
         }
+
+
+        int PinyinCompare(string x, string y)
+        {
+            return wordDictionary.getReading(x).CompareTo(wordDictionary.getReading(y));
+        }
+
+        int EnglishCompare(string x, string y)
+        {
+            return wordDictionary.translateToEnglish(x).CompareTo(wordDictionary.translateToEnglish(y));
+        }
+
+        int DisplayedCompare(string x, string y)
+        {
+            bool containsX = this.kSetAllowedWords.Contains(x);
+            bool containsY = this.kSetAllowedWords.Contains(y);
+
+            if ( (containsX && containsY) || (!containsX && !containsY))
+            {
+                return EnglishCompare(x,y);
+            }
+
+
+            return containsX && !containsY ? -1 : 1;
+        }
+
+        void resetSortButtonColors ()
+        {
+            sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+        }
+
+        private void sortPinYin(object sender, RoutedEventArgs e)
+        {
+            if ( kMatches == null )
+                return;
+
+            List<string> k = (List<string>)(kMatches);//.sort
+            k.Sort(PinyinCompare);
+
+            resetSortButtonColors();
+            sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+
+            // then issue re-display
+            DrawSearchMatches();
+        }
+
+        private void sortEnglish(object sender, RoutedEventArgs e)
+        {
+            if ( kMatches == null )
+                return;
+
+            List<string> k = (List<string>)(kMatches);//.sort
+            k.Sort(EnglishCompare);
+
+            resetSortButtonColors();
+            sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+
+            // then issue re-display
+            DrawSearchMatches();
+        }
+
+        private void sortDisplayed(object sender, RoutedEventArgs e)
+        {
+            if (kMatches == null)
+                return;
+
+            List<string> k = (List<string>)(kMatches);//.sort
+            k.Sort(DisplayedCompare);
+
+            resetSortButtonColors();
+            sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+
+            // then issue re-display
+            DrawSearchMatches();
+        }
+
     }
 }
