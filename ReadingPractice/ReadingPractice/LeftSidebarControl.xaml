@@ -7,9 +7,9 @@
     VerticalAlignment="Top">
     <StackPanel Orientation="Vertical" Width="600" Height="680">
         <sdk:Label Content="study focus:" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
-        <ComboBox Name="StudyFocusForeignWord" HorizontalAlignment="Center" FontSize="30" SelectionChanged="StudyFocusForeignWord_SelectionChanged"></ComboBox>
+        <ComboBox Name="StudyFocusForeignWord" HorizontalAlignment="Center" FontSize="24" SelectionChanged="StudyFocusForeignWord_SelectionChanged"></ComboBox>
         <sdk:Label Name="StudyFocusReading"  Content="somereading" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
-        <sdk:Label Name="StudyFocusTranslation"  Content="to eat" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
+        <sdk:Label Name="StudyFocusTranslation"  Content="sometranslation" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
         <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
             <sdk:Label Content="Textbook: " ></sdk:Label>
             <ComboBox Name="textbookSelect"></ComboBox>

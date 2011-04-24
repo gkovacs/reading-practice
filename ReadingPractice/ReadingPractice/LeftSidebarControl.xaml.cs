@@ -69,6 +69,8 @@ namespace ReadingPractice
 
         double dLineHeight = 40.0;
 
+        private Brush defaultBrush = null;
+
         /// <summary>
         /// getter returns empty string if no study focus is set (reviewing mode), returns study focus in
         /// the foreign language being studied otherwise.
@@ -109,6 +111,7 @@ namespace ReadingPractice
                     StudyFocusReading.Content = wordDictionary.getReading(_studyFocus);
                     StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus);
                     //reviewButton.IsEnabled = true;
+                    StudyFocusForeignWord.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
                     if (focusWordChanged != null)
                         focusWordChanged(_studyFocus);
                 }
@@ -118,6 +121,7 @@ namespace ReadingPractice
                     StudyFocusReading.Content = "Reviewing all words";
                     StudyFocusTranslation.Content = " ";
                     //reviewButton.IsEnabled = false;
+                    StudyFocusForeignWord.Background = defaultBrush;
                     if (!isDisplayed(StudyFocus))
                         allowWord(StudyFocus); // does changing already
                     else if (focusWordChanged != null)
@@ -169,6 +173,7 @@ namespace ReadingPractice
 
         public void performOnStartup()
         {
+            defaultBrush = StudyFocusForeignWord.Background;
             StudyFocusForeignWord.Items.Add("General Review");
             StudyFocusForeignWord.SelectedIndex = 0;
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/wordheights.txt", UriKind.Relative)).Stream))
