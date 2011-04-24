@@ -95,19 +95,29 @@ namespace ReadingPractice
                 _studyFocus = value;
                 if (value != "")
                 {
-                    StudyFocusForeignWord.Content = _studyFocus;
+                    int existingIdx = StudyFocusForeignWord.Items.IndexOf(_studyFocus);
+                    if (existingIdx >= 0)
+                    {
+                        //StudyFocusForeignWord.Items.RemoveAt(existingIdx);
+                        StudyFocusForeignWord.SelectedIndex = existingIdx;
+                    }
+                    else
+                    {
+                        StudyFocusForeignWord.Items.Insert(1, _studyFocus);
+                        StudyFocusForeignWord.SelectedIndex = 1;
+                    }
                     StudyFocusReading.Content = wordDictionary.getReading(_studyFocus);
                     StudyFocusTranslation.Content = wordDictionary.translateToEnglish(_studyFocus);
-                    reviewButton.IsEnabled = true;
+                    //reviewButton.IsEnabled = true;
                     if (focusWordChanged != null)
                         focusWordChanged(_studyFocus);
                 }
                 else // general review
                 {
-                    StudyFocusForeignWord.Content = "General Review";
+                    StudyFocusForeignWord.SelectedIndex = 0;
                     StudyFocusReading.Content = "Reviewing all words";
                     StudyFocusTranslation.Content = " ";
-                    reviewButton.IsEnabled = false;
+                    //reviewButton.IsEnabled = false;
                     if (!isDisplayed(StudyFocus))
                         allowWord(StudyFocus); // does changing already
                     else if (focusWordChanged != null)
@@ -159,29 +169,8 @@ namespace ReadingPractice
 
         public void performOnStartup()
         {
-            /*
-            var allWords = wordDictionary.listWords();
-            //Debug.WriteLine("start");
-            IsolatedStorageFile isoFile = IsolatedStorageFile.GetUserStoreForApplication();
-            //isoFile.IncreaseQuotaTo(1024*1024*10);
-
-            FileStream f = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+"\\gezaSpecialFile.txt", FileMode.Create);
-            //IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream("gezaFileSilverlight.txt", FileMode.Create, isoFile);
-            StreamWriter sw = new StreamWriter(f);
-            foreach (string word in allWords)
-            {
-                double wordStringHeight = measureStringHeight(word, wordColumnWidth);
-                string reading = wordDictionary.getReading(word);
-                double readingStringHeight = measureStringHeight(reading, readingColumnWidth);
-                string translated = wordDictionary.translateToEnglish(word);
-                double translationStringHeight = measureStringHeight(translated, translationColumnWidth);
-                stringHeights[word] = Math.Max(Math.Max(wordStringHeight, readingStringHeight), Math.Max(translationStringHeight, this.dLineHeight));
-                
-                sw.WriteLine(word+"\t"+stringHeights[word]);
-            }
-            sw.Close();
-            f.Close();
-            */
+            StudyFocusForeignWord.Items.Add("General Review");
+            StudyFocusForeignWord.SelectedIndex = 0;
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/wordheights.txt", UriKind.Relative)).Stream))
             {
                 while (!reader.EndOfStream)
@@ -225,7 +214,6 @@ namespace ReadingPractice
 
             VocabSelectionScrollViewer.Content = tree;
             */
-            StudyFocus = "地震";
             StudyFocus = "";
 
             // load books
@@ -864,6 +852,14 @@ namespace ReadingPractice
 
             // then issue re-display
             DrawSearchMatches();
+        }
+
+        private void StudyFocusForeignWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StudyFocusForeignWord.SelectedIndex == 0)
+                StudyFocus = "";
+            else
+                StudyFocus = (string)StudyFocusForeignWord.SelectedValue;
         }
 
     }
