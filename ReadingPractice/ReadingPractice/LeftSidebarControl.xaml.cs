@@ -743,9 +743,9 @@ namespace ReadingPractice
                 IList<string> kNewMatches = new List<string>();
                 foreach (string match in kSearchBase)
                 {
-                    if (match.Contains(searchText)
-                    || wordDictionary.getReading(match).Contains(searchText)
-                    || wordDictionary.translateToEnglish(match).Contains(searchText))
+                    if (match.IndexOf(searchText, 0, StringComparison.OrdinalIgnoreCase) >= 0
+                    || wordDictionary.getReading(match).IndexOf(searchText, 0, StringComparison.OrdinalIgnoreCase) >= 0
+                    || wordDictionary.translateToEnglish(match).IndexOf(searchText, 0, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
                         kNewMatches.Add(match);
                     }
