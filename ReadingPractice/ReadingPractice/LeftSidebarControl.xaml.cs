@@ -504,12 +504,31 @@ namespace ReadingPractice
                 //Search.Dispatcher.BeginInvoke(() => {
                 VocabSelectionCanvas.Children.Clear();
 
+                double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
+                double scrollViewerHeight = VocabSelectionScrollViewer.Height;
+                double verticalOffsetEnd = verticalOffsetStart + scrollViewerHeight;
+
+                Rectangle wordColumnColor = new Rectangle();
+                wordColumnColor.Fill = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));
+                wordColumnColor.Height = scrollViewerHeight;
+                wordColumnColor.Width = wordColumnWidth - 10.0;
+                wordColumnColor.SetValue(Canvas.LeftProperty, 0.0);
+                wordColumnColor.SetValue(Canvas.TopProperty, verticalOffsetStart);
+                Rectangle translationColumnColor = new Rectangle();
+                translationColumnColor.Fill = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));
+                translationColumnColor.Height = scrollViewerHeight;
+                translationColumnColor.Width = translationColumnWidth + 10.0;
+                translationColumnColor.SetValue(Canvas.LeftProperty, wordColumnWidth + readingColumnWidth);
+                translationColumnColor.SetValue(Canvas.TopProperty, verticalOffsetStart);
+
+                VocabSelectionCanvas.Children.Add(wordColumnColor);
+                VocabSelectionCanvas.Children.Add(translationColumnColor);
+
                 if (positions.Length == 0)
                     return;
                 int first = 0;
                 int last = positions.Length - 1;
-                double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
-                double verticalOffsetEnd = verticalOffsetStart + VocabSelectionScrollViewer.Height;
+                
                 while (first < last)
                 {
                     int mid = (first + last) / 2;
