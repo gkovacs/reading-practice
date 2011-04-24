@@ -506,23 +506,8 @@ namespace ReadingPractice
 
                 double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
                 double scrollViewerHeight = VocabSelectionScrollViewer.Height;
+                double scrollViewerWidth = VocabSelectionScrollViewer.ActualWidth;
                 double verticalOffsetEnd = verticalOffsetStart + scrollViewerHeight;
-
-                Rectangle wordColumnColor = new Rectangle();
-                wordColumnColor.Fill = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));
-                wordColumnColor.Height = scrollViewerHeight;
-                wordColumnColor.Width = wordColumnWidth - 10.0;
-                wordColumnColor.SetValue(Canvas.LeftProperty, 0.0);
-                wordColumnColor.SetValue(Canvas.TopProperty, verticalOffsetStart);
-                Rectangle translationColumnColor = new Rectangle();
-                translationColumnColor.Fill = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));
-                translationColumnColor.Height = scrollViewerHeight;
-                translationColumnColor.Width = translationColumnWidth + 10.0;
-                translationColumnColor.SetValue(Canvas.LeftProperty, wordColumnWidth + readingColumnWidth);
-                translationColumnColor.SetValue(Canvas.TopProperty, verticalOffsetStart);
-
-                VocabSelectionCanvas.Children.Add(wordColumnColor);
-                VocabSelectionCanvas.Children.Add(translationColumnColor);
 
                 if (positions.Length == 0)
                     return;
@@ -562,11 +547,24 @@ namespace ReadingPractice
                 //int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight);
 
                 //iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
+                SolidColorBrush highlightColor = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));;
                 for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
                 {
                     string word = this.kMatches[i];
                     double height = stringHeights[word];
                     double position = positions[i];
+
+                    if (i % 2 == 0)
+                    {
+                        Rectangle highlightColumn = new Rectangle();
+                        highlightColumn.Fill = highlightColor;
+                        highlightColumn.Height = height;
+                        highlightColumn.Width = scrollViewerWidth;
+                        highlightColumn.SetValue(Canvas.LeftProperty, 0.0);
+                        highlightColumn.SetValue(Canvas.TopProperty, position);
+                        VocabSelectionCanvas.Children.Add(highlightColumn);
+                    }
+                    
                     TextBlock kWord = new TextBlock();
                     kWord.Height = height;
                     kWord.MinHeight = height;
