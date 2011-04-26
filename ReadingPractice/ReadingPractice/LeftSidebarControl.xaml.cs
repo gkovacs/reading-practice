@@ -13,6 +13,8 @@ using System.Reflection;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
+using System.Globalization;
+
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Threading;
@@ -830,6 +832,10 @@ namespace ReadingPractice
             batchChanges = false;
         }
 
+        int StrokeCountCompare(string x, string y)
+        {
+            return CompareInfo.GetCompareInfo("zh-CN_stroke").Compare(x, y);
+        }
 
         int PinyinCompare(string x, string y)
         {
