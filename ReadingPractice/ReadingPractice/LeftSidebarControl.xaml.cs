@@ -492,6 +492,32 @@ namespace ReadingPractice
             return txt.ActualHeight;
         }
 
+        private Paragraph toParagraphHighlighting(string text, string highlight)
+        {
+            Paragraph par = new Paragraph();
+            if (highlight != "")
+            {
+                int idx = 0;
+                while (idx < text.Length)
+                {
+                    int nextMatch = text.IndexOf(highlight, idx, StringComparison.OrdinalIgnoreCase);
+                    if (nextMatch < 0)
+                    {
+                        par.Inlines.Add(new Run { Text = text.Substring(idx) });
+                        break;
+                    }
+                    par.Inlines.Add(new Run { Text = text.Substring(idx, nextMatch - idx) });
+                    par.Inlines.Add(new Run { Text = text.Substring(nextMatch, highlight.Length), FontWeight = FontWeights.Bold });
+                    idx = nextMatch + highlight.Length;
+                }
+            }
+            else
+            {
+                par.Inlines.Add(new Run { Text = text });
+            }
+            return par;
+        }
+
         public Dictionary<string, CheckBox> wordAllowedCheckboxes = new Dictionary<string, CheckBox>();
         public Dictionary<string, Button> wordMakeStudyFocusButtons = new Dictionary<string, Button>();
 
@@ -499,6 +525,7 @@ namespace ReadingPractice
         {
             lock (VocabSelectionCanvas)
             {
+                string searchText = Search.Text;
                 wordAllowedCheckboxes.Clear();
                 wordMakeStudyFocusButtons.Clear();
                 //Search.Dispatcher.BeginInvoke(() => {
@@ -554,7 +581,7 @@ namespace ReadingPractice
                     double height = stringHeights[word];
                     double position = positions[i];
 
-                    if (i % 2 == 0)
+                    if (i % 2 == 1)
                     {
                         Rectangle highlightColumn = new Rectangle();
                         highlightColumn.Fill = highlightColor;
@@ -564,31 +591,40 @@ namespace ReadingPractice
                         highlightColumn.SetValue(Canvas.TopProperty, position);
                         VocabSelectionCanvas.Children.Add(highlightColumn);
                     }
-                    
-                    TextBlock kWord = new TextBlock();
+
+                    RichTextBox kWord = new RichTextBox();
                     kWord.Height = height;
                     kWord.MinHeight = height;
                     kWord.Width = wordColumnWidth;
-                    kWord.Text = word;
+                    kWord.Blocks.Add(toParagraphHighlighting(word, searchText));
+                    kWord.Background = new SolidColorBrush(Colors.Transparent);
+                    kWord.BorderThickness = new Thickness(0.0);
+                    kWord.IsReadOnly = true;
                     kWord.TextWrapping = TextWrapping.Wrap;
                     kWord.SetValue(Canvas.LeftProperty, 0.0);
                     kWord.SetValue(Canvas.TopProperty, position);
-                    TextBlock kRomanization = new TextBlock();
+                    RichTextBox kRomanization = new RichTextBox();
                     kRomanization.Height = height;
                     kRomanization.MinHeight = height;
                     kRomanization.Width = readingColumnWidth;
-                    kRomanization.Text = wordDictionary.getReading(word);
+                    kRomanization.Blocks.Add(toParagraphHighlighting(wordDictionary.getReading(word), searchText));
+                    kRomanization.Background = new SolidColorBrush(Colors.Transparent);
+                    kRomanization.BorderThickness = new Thickness(0.0);
+                    kRomanization.IsReadOnly = true;
                     kRomanization.TextWrapping = TextWrapping.Wrap;
                     kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
                     kRomanization.SetValue(Canvas.TopProperty, position);
-                    TextBlock kTranslation = new TextBlock();
+                    RichTextBox kTranslation = new RichTextBox();
                     kTranslation.Height = height;
                     kTranslation.MinHeight = height;
                     kTranslation.Width = translationColumnWidth;
-                    kTranslation.Text = wordDictionary.translateToEnglish(word);
+                    kTranslation.Blocks.Add(toParagraphHighlighting(wordDictionary.translateToEnglish(word), searchText));
                     kTranslation.TextWrapping = TextWrapping.Wrap;
-                    kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
-                    kTranslation.LineHeight = dLineHeight / 2.0;
+                    //kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
+                    //kTranslation.LineHeight = dLineHeight / 2.0;
+                    kTranslation.Background = new SolidColorBrush(Colors.Transparent);
+                    kTranslation.BorderThickness = new Thickness(0.0);
+                    kTranslation.IsReadOnly = true;
                     kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
                     kTranslation.SetValue(Canvas.TopProperty, position);
                     CheckBox kDisplayWord = new CheckBox();
