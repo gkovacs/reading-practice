@@ -66,8 +66,10 @@ namespace ReadingPractice
                     performOnStartup();
                 };
                 wc.OpenReadAsync(new Uri(baseurl + "listsentences.aspx?listMe=yes"));
+                //wc.OpenReadAsync(new Uri("http://mit.edu/~gkovacs/www/reading-practice/sentences.txt"));
             };
-            wc1.OpenReadAsync(new Uri(baseurl + "listwords.aspx?listMe=yes"));
+            //wc1.OpenReadAsync(new Uri(baseurl + "listwords.aspx?listMe=yes"));
+            wc1.OpenReadAsync(new Uri("http://mit.edu/~gkovacs/www/reading-practice/words.txt"));
         }
 
         public void performOnStartup()

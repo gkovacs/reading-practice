@@ -81,7 +81,6 @@
     </Compile>
     <Compile Include="EnumHelper.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="WordMapSimplifiedToTraditional.cs" />
     <Compile Include="SentenceDictionary.cs" />
     <Compile Include="SentenceDictionarySimplifiedMandarin.cs" />
     <Compile Include="WordDictionary.cs" />
@@ -145,17 +144,17 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="cmn-simp-eng.txt" />
-    <Resource Include="cmn-simp-seg.txt" />
-    <Resource Include="cmn-simp-word-def.txt" />
-    <Resource Include="cmn-simp-word-reading.txt" />
+    <None Include="cmn-simp-eng.txt" />
+    <None Include="cmn-simp-seg.txt" />
+    <None Include="cmn-simp-word-def.txt" />
+    <None Include="cmn-simp-word-reading.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="cmn-trad-word-def.txt" />
-    <Resource Include="cmn-trad-word-reading.txt" />
+    <None Include="cmn-trad-word-def.txt" />
+    <None Include="cmn-trad-word-reading.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="cmn-word-simptotrad.txt" />
+    <None Include="cmn-word-simptotrad.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="textbooks.txt" />
@@ -167,7 +166,7 @@
     <Resource Include="wordheights.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="cmn-simp-word-freqs.txt" />
+    <None Include="cmn-simp-word-freqs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
