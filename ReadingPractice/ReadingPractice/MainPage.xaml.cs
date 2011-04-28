@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
 using System.IO;
+using System.Diagnostics;
 
 namespace ReadingPractice
 {
@@ -109,9 +110,38 @@ namespace ReadingPractice
             //HtmlPage.RegisterScriptableObject("mainPage", this);
             //HtmlPage.RegisterScriptableObject("sentenceDictionary", sentenceDictionary);
             //HtmlPage.RegisterScriptableObject("wordDictionary", wordDictionary);
+            
+            getDisplayedWords();
+        }
+
+        private void getDisplayedWords()
+        {
+            WebClient wc5 = new WebClient();
+            wc5.OpenReadCompleted += (o5, e5) =>
+            {
+                Debug.WriteLine("reading displayed words complete");
+                StreamReader dispWords = new StreamReader(e5.Result);
+                LeftSidebar.batchChanges = true;
+                while (!dispWords.EndOfStream)
+                {
+                    string currentWord = dispWords.ReadLine();
+                    
+                    LeftSidebar.allowWord(currentWord, false);
+                    //System.Diagnostics.Debug.WriteLine(currentWord);
+                }
+                LeftSidebar.batchChanges = false;
+                //LeftSidebar.updateDisplayedWords();
+                getStudyHistory();
+            };
+            wc5.OpenReadAsync(new Uri(baseurl + "getDisplayedWords.cgi.py?userName=" + username));
+        }
+
+        private void getStudyHistory()
+        {
             WebClient wc2 = new WebClient();
             wc2.OpenReadCompleted += (o2, e2) =>
             {
+                Debug.WriteLine("reading study focus history complete");
                 StreamReader studyFocusHistory = new StreamReader(e2.Result);
                 while (!studyFocusHistory.EndOfStream)
                 {
@@ -121,6 +151,7 @@ namespace ReadingPractice
                 WebClient wc3 = new WebClient();
                 wc3.OpenReadCompleted += (o3, e3) =>
                 {
+                    Debug.WriteLine("reading study focus complete");
                     StreamReader studyFocusReader = new StreamReader(e3.Result);
                     while (!studyFocusReader.EndOfStream)
                     {
@@ -133,19 +164,29 @@ namespace ReadingPractice
                 };
                 wc3.OpenReadAsync(new Uri(baseurl + "getStudyFocus.cgi.py?userName=" + username));
             };
-            wc2.OpenReadAsync(new Uri(baseurl + "getStudyHistory.cgi.py?userName="+username));
+            wc2.OpenReadAsync(new Uri(baseurl + "getStudyHistory.cgi.py?userName=" + username));
         }
 
         public void sendMessage(string message)
         {
             WebClient wc = new WebClient();
-            //wc.OpenReadCompleted += (o, e) => {};
+            wc.OpenReadCompleted += (o, e) => {};
             wc.OpenReadAsync(new Uri(baseurl + message));
         }
 
         public void sendNewStudyFocus(string text)
         {
             sendMessage("setStudyFocus.cgi.py?userName=" + username + ";studyFocus=" + text);
+        }
+
+        public void sendAllowWord(string text)
+        {
+            sendMessage("addDisplayedWord.cgi.py?userName=" + username + ";displayedWord=" + text);
+        }
+
+        public void sendBanWord(string text)
+        {
+            sendMessage("rmDisplayedWord.cgi.py?userName=" + username + ";displayedWord=" + text);
         }
 
         /*

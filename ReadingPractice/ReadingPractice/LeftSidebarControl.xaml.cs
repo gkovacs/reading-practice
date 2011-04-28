@@ -33,9 +33,16 @@ namespace ReadingPractice
 
         public HashSet<string> kSetAllowedWords = new HashSet<string>();
 
-        bool batchChanges = false;
-        public void allowWord(string word)
+        public void updateDisplayedWords()
         {
+            displayedListChanged();
+        }
+
+        public bool batchChanges = false;
+        public void allowWord(string word, bool sendupdate=true)
+        {
+            if (sendupdate)
+                mainPage.sendAllowWord(word);
             bool alreadyAllowed = kSetAllowedWords.Contains(word);
             if (!alreadyAllowed)
                 this.kSetAllowedWords.Add(word);
@@ -47,8 +54,10 @@ namespace ReadingPractice
                 displayedListChanged();
         }
 
-        public void banWord(string word)
+        public void banWord(string word, bool sendupdate=true)
         {
+            if (sendupdate)
+                mainPage.sendBanWord(word);
             bool alreadyBanned = !kSetAllowedWords.Contains(word);
             if (!alreadyBanned)
                 this.kSetAllowedWords.Remove(word);
@@ -243,10 +252,12 @@ namespace ReadingPractice
             f.Close();
             */
 
+            /*
             foreach (string word in wordDictionary.listWordsByFrequency().Take(2000))
             {
                 this.kSetAllowedWords.Add(word);
             }
+            */
 
             selectedTextbook = allTextbooks;
             selectedChapter = allChapters;
