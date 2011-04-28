@@ -15,7 +15,7 @@ using System.Windows.Browser;
 
 namespace ReadingPractice
 {
-    [ScriptableType]
+    //[ScriptableType]
     public class SentenceDictionarySimplifiedMandarin : SentenceDictionary
     {
         List<string> sentences = new List<string>();

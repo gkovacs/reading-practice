@@ -15,7 +15,7 @@ using System.Windows.Browser;
 
 namespace ReadingPractice
 {
-    [ScriptableType]
+    //[ScriptableType]
     public abstract class SentenceDictionary
     {
         public abstract IList<string> getSentences(string focusWord, Func<string, bool> isWordAllowedFunc);

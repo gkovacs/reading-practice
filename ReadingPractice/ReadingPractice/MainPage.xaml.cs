@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
+using System.IO;
 
 namespace ReadingPractice
 {
@@ -45,11 +46,19 @@ namespace ReadingPractice
         public Textbooks textbooks;
         private string server = "gkovacs.xvm.mit.edu";
         private string folder = "reading-practice";
-        private string baseurl
+        public string baseurl
         {
             get
             {
                 return "http://" + server + "/" + folder + "/";
+            }
+        }
+
+        public string username
+        {
+            get
+            {
+                return "gkovacs";
             }
         }
 
@@ -97,17 +106,58 @@ namespace ReadingPractice
             };
             this.AddHandler(UIElement.MouseLeftButtonDownEvent, closePopupIfClickedOutside, true);
             PopupShield.AddHandler(UIElement.MouseLeftButtonDownEvent, closePopupIfClickedOutside, true);
-            HtmlPage.RegisterScriptableObject("mainPage", this);
-            HtmlPage.RegisterScriptableObject("sentenceDictionary", sentenceDictionary);
-            HtmlPage.RegisterScriptableObject("wordDictionary", wordDictionary);
+            //HtmlPage.RegisterScriptableObject("mainPage", this);
+            //HtmlPage.RegisterScriptableObject("sentenceDictionary", sentenceDictionary);
+            //HtmlPage.RegisterScriptableObject("wordDictionary", wordDictionary);
+            WebClient wc2 = new WebClient();
+            wc2.OpenReadCompleted += (o2, e2) =>
+            {
+                StreamReader studyFocusHistory = new StreamReader(e2.Result);
+                while (!studyFocusHistory.EndOfStream)
+                {
+                    string currentWord = studyFocusHistory.ReadLine();
+                    LeftSidebar.StudyFocusForeignWord.Items.Add(currentWord);
+                }
+                WebClient wc3 = new WebClient();
+                wc3.OpenReadCompleted += (o3, e3) =>
+                {
+                    StreamReader studyFocusReader = new StreamReader(e3.Result);
+                    while (!studyFocusReader.EndOfStream)
+                    {
+                        LeftSidebar.StudyFocus = studyFocusReader.ReadLine();
+                        break;
+                    }
+                    LeftSidebar.focusWordChanged += sendNewStudyFocus;
+                    LeftSidebar.Opacity = 100.0;
+                    RightSidebar.Opacity = 100.0;
+                };
+                wc3.OpenReadAsync(new Uri(baseurl + "getStudyFocus.cgi.py?userName=" + username));
+            };
+            wc2.OpenReadAsync(new Uri(baseurl + "getStudyHistory.cgi.py?userName="+username));
         }
 
+        public void sendMessage(string message)
+        {
+            WebClient wc = new WebClient();
+            wc.OpenReadCompleted += (o, e) =>
+            {
+
+            };
+            wc.OpenReadAsync(new Uri(baseurl + message));
+        }
+
+        public void sendNewStudyFocus(string text)
+        {
+            sendMessage("setStudyFocus.cgi.py?userName=" + username + ";studyFocus=" + text);
+        }
+
+        /*
         public void htmlMouseDown()
         {
             System.Diagnostics.Debug.WriteLine("stuff pressed");
             popup = null;
         }
-
+        */
         public void setStudyFocus(string text)
         {
             LeftSidebar.StudyFocus = text;

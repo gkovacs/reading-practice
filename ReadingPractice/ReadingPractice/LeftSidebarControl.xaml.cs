@@ -158,6 +158,7 @@ namespace ReadingPractice
         /// </summary>
         public LeftSidebarControl()
         {
+            Opacity = 0.0;
             InitializeComponent();
         }
 

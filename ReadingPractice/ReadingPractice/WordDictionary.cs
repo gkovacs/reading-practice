@@ -15,7 +15,7 @@ using System.Windows.Browser;
 
 namespace ReadingPractice
 {
-    [ScriptableType]
+    //[ScriptableType]
     public abstract class WordDictionary
     {
         public abstract string translateToEnglish(string foreignWord);

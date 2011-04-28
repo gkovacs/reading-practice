@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace ReadingPractice
 {
-    [ScriptableType]
+    //[ScriptableType]
     public class WordDictionarySimplifiedMandarin : WordDictionary
     {
         List<string> allWords = new List<string>();
