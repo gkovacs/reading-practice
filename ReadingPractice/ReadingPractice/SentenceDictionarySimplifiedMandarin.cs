@@ -22,7 +22,7 @@ namespace ReadingPractice
         //Dictionary<string, string[]> segmentation = new Dictionary<string, string[]>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
-        readonly WordDictionary _wordDictionary;
+        readonly WordDictionarySimplifiedMandarin _wordDictionary;
         public override WordDictionary wordDictionary
         {
             get
@@ -38,10 +38,11 @@ namespace ReadingPractice
             }
         }
 
-        public SentenceDictionarySimplifiedMandarin()
+        public SentenceDictionarySimplifiedMandarin(Stream stream, WordDictionarySimplifiedMandarin wordDict)
         {
-            _wordDictionary = new WordDictionarySimplifiedMandarin();
-            using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-eng.txt", UriKind.Relative)).Stream))
+            _wordDictionary = wordDict;
+            using (StreamReader reader = new StreamReader(stream))
+            //using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-eng.txt", UriKind.Relative)).Stream))
             {
                 while (!reader.EndOfStream)
                 {
@@ -113,7 +114,7 @@ namespace ReadingPractice
                 {
                     return remaining;
                 }
-                string asSimplified = WordMapSimplifiedToTraditional.toSimplified(remaining);
+                string asSimplified = _wordDictionary.toSimplified(remaining);
                 if (remaining.Length == 1)
                 {
                     if (asSimplified != "")

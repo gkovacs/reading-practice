@@ -21,7 +21,8 @@ namespace ReadingPractice
         List<string> allWords = new List<string>();
         List<string> wordsByFrequency = new List<string>();
         Dictionary<string, string> readings = new Dictionary<string, string>();
-        Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
+        //Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
+        Dictionary<string, string> traditionalToSimplified = new Dictionary<string, string>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         Dictionary<string, int> wordFreqs = new Dictionary<string, int>();
         public override Languages language
@@ -32,8 +33,9 @@ namespace ReadingPractice
             }
         }
 
-        public WordDictionarySimplifiedMandarin()
+        public WordDictionarySimplifiedMandarin(Stream stream)
         {
+            /*
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-simp-word-def.txt", UriKind.Relative)).Stream))
             {
                 while (!reader.EndOfStream)
@@ -73,6 +75,25 @@ namespace ReadingPractice
                 }
                 reader.Close();
             }
+            */
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    string[] parts = line.Split('\t');
+                    if (parts.Length != 6)
+                        throw new Exception();
+                    foreach (string x in parts[1].Split('|'))
+                    {
+                        traditionalToSimplified[x] = parts[0];
+                    }
+                    readings[parts[0]] = parts[2];
+                    foreignToEnglish[parts[0]] = parts[3];
+                    wordFreqs[parts[0]] = int.Parse(parts[4]);
+                }
+                reader.Close();
+            }
             foreach (string word in readings.Keys)
             {
                 if (!wordFreqs.ContainsKey(word))
@@ -96,13 +117,14 @@ namespace ReadingPractice
             return foreignToEnglish[foreignWord];
         }
 
+        /*
         public override string translateToForeign(string englishWord)
         {
             if (!englishToForeign.ContainsKey(englishWord))
                 return "";
             return englishToForeign[englishWord];
         }
-
+        */
         public override string getReading(string foreignWord)
         {
             if (!readings.ContainsKey(foreignWord))
@@ -120,6 +142,14 @@ namespace ReadingPractice
         public override IList<string> listWordsByFrequency()
         {
             return this.wordsByFrequency.AsReadOnly();
+        }
+
+        public string toSimplified(string word)
+        {
+            if (!traditionalToSimplified.ContainsKey(word))
+                return "";
+            return traditionalToSimplified[word];
+            //return WordMapSimplifiedToTraditional.toSimplified(word);
         }
 
         public override IList<string> listWords()

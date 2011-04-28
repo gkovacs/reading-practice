@@ -19,7 +19,6 @@ namespace ReadingPractice
     public abstract class WordDictionary
     {
         public abstract string translateToEnglish(string foreignWord);
-        public abstract string translateToForeign(string englishWord);
         public abstract string getReading(string foreignWord);
         public abstract IList<string> listWords();
         public abstract Languages language { get; }

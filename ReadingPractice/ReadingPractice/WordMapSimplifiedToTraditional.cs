@@ -20,6 +20,7 @@ namespace ReadingPractice
 
         static WordMapSimplifiedToTraditional()
         {
+            /*
             using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/cmn-word-simptotrad.txt", UriKind.Relative)).Stream))
             {
                 while (!reader.EndOfStream)
@@ -33,6 +34,7 @@ namespace ReadingPractice
                 }
                 reader.Close();
             }
+            */
         }
 
         public static string toSimplified(string word)

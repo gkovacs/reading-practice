@@ -43,10 +43,35 @@ namespace ReadingPractice
             }
         }
         public Textbooks textbooks;
+        private string server = "gkovacs.xvm.mit.edu";
+        private string folder = "reading-practice";
+        private string baseurl
+        {
+            get
+            {
+                return "http://" + server + "/" + folder + "/";
+            }
+        }
 
         public MainPage()
         {
-            sentenceDictionary = new SentenceDictionarySimplifiedMandarin();
+            WebClient wc1 = new WebClient();
+            wc1.OpenReadCompleted += (o1, webReadEventArgs1) =>
+            {
+                WordDictionarySimplifiedMandarin wordDict = new WordDictionarySimplifiedMandarin(webReadEventArgs1.Result);
+                WebClient wc = new WebClient();
+                wc.OpenReadCompleted += (o, webReadEventArgs) =>
+                {
+                    sentenceDictionary = new SentenceDictionarySimplifiedMandarin(webReadEventArgs.Result, wordDict);
+                    performOnStartup();
+                };
+                wc.OpenReadAsync(new Uri(baseurl + "listsentences.aspx?listMe=yes"));
+            };
+            wc1.OpenReadAsync(new Uri(baseurl + "listwords.aspx?listMe=yes"));
+        }
+
+        public void performOnStartup()
+        {
             wordDictionary = sentenceDictionary.wordDictionary;
             textbooks = new Textbooks();
             InitializeComponent();

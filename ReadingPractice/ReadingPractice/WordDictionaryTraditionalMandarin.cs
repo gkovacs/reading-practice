@@ -21,7 +21,6 @@ namespace ReadingPractice
         List<string> allWords = new List<string>();
         List<string> wordsByFrequency = new List<string>();
         Dictionary<string, string> readings = new Dictionary<string, string>();
-        Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         public override Languages language
         {
@@ -42,7 +41,6 @@ namespace ReadingPractice
                     if (parts.Length != 2)
                         throw new Exception();
                     foreignToEnglish[parts[0]] = parts[1];
-                    englishToForeign[parts[1]] = parts[0];
                 }
                 reader.Close();
             }
@@ -77,13 +75,6 @@ namespace ReadingPractice
             if (!foreignToEnglish.ContainsKey(foreignWord))
                 return "";
             return foreignToEnglish[foreignWord];
-        }
-
-        public override string translateToForeign(string englishWord)
-        {
-            if (!englishToForeign.ContainsKey(englishWord))
-                return "";
-            return englishToForeign[englishWord];
         }
 
         public override string getReading(string foreignWord)
