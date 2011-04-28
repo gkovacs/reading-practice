@@ -65,6 +65,7 @@ namespace ReadingPractice
             }
         }
         private Queue<string> sendMessageQueue = new Queue<string>();
+        private Queue<IEnumerable<string>> dataQueue = new Queue<IEnumerable<string>>();
 
         public MainPage()
         {
@@ -180,11 +181,21 @@ namespace ReadingPractice
                     if (sendMessageQueue.Count > 0)
                     {
                         string curval = null;
+                        IEnumerable<string> data = null;
                         lock (sendMessageQueue)
                         {
                             curval = sendMessageQueue.Dequeue();
+                            if (curval[0] == '@')
+                                data = dataQueue.Dequeue();
                         }
-                        sendMessageActual(curval);
+                        if (data == null)
+                        {
+                            sendMessageActual(curval);
+                        }
+                        else
+                        {
+                            sendMessageWithDataActual(curval.Substring(1), data);
+                        }
 
                     }
                     else
@@ -206,6 +217,31 @@ namespace ReadingPractice
             {
                 Thread.Sleep(50);
             }
+            Debug.WriteLine("done sending message " + message);
+        }
+
+        public void sendMessageWithDataActual(string message, IEnumerable<string> data)
+        {
+            Debug.WriteLine("sending message with data " + message);
+            bool lockVar = false;
+            WebClient wc = new WebClient();
+            wc.OpenWriteCompleted += (o, e) =>
+            {
+                using (StreamWriter st = new StreamWriter(e.Result))
+                {
+                    foreach (string x in data)
+                    {
+                        st.WriteLine(x);
+                    }
+                }
+                lockVar = true;
+            };
+            wc.OpenWriteAsync(new Uri(baseurl + message));
+            while (!lockVar)
+            {
+                Thread.Sleep(200);
+            }
+            Debug.WriteLine("done sending message with data " + message);
         }
 
         public void sendMessage(string message)
@@ -213,6 +249,15 @@ namespace ReadingPractice
             lock (sendMessageQueue)
             {
                 sendMessageQueue.Enqueue(message);
+            }
+        }
+
+        public void sendMessageWithData(string message, IEnumerable<string> data)
+        {
+            lock (sendMessageQueue)
+            {
+                sendMessageQueue.Enqueue("@" + message);
+                dataQueue.Enqueue(data);
             }
         }
 
@@ -233,12 +278,14 @@ namespace ReadingPractice
 
         public void sendAllowWordGroup(IEnumerable<string> words)
         {
-            sendMessage("postpage.cgi.py?userName=" + username + "&page=addDisplayedWordMany.cgi.py&postdata=" + String.Join("%0A", words));
+            sendMessageWithData("addDisplayedWordMany.cgi.py?userName=" + username, words);
+            //sendMessage("postpage.cgi.py?userName=" + username + "&page=addDisplayedWordMany.cgi.py&postdata=" + String.Join("%0A", words));
         }
 
         public void sendBanWordGroup(IEnumerable<string> words)
         {
-            sendMessage("postpage.cgi.py?userName=" + username + "&page=rmDisplayedWordMany.cgi.py&postdata=" + String.Join("%0A", words));
+            sendMessageWithData("rmDisplayedWordMany.cgi.py?userName=" + username, words);
+            //sendMessage("postpage.cgi.py?userName=" + username + "&page=rmDisplayedWordMany.cgi.py&postdata=" + String.Join("%0A", words));
         }
 
         /*

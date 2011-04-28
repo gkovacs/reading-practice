@@ -814,24 +814,26 @@ namespace ReadingPractice
 
         private void banAll_Click(object sender, RoutedEventArgs e)
         {
+            string[] tmpw = kMatches.ToArray();
             batchChanges = true;
-            foreach (string word in kMatches)
+            foreach (string word in tmpw)
             {
                 banWord(word, false, false);
             }
-            mainPage.sendBanWordGroup(kMatches);
+            mainPage.sendBanWordGroup(tmpw);
             displayedListChanged();
             batchChanges = false;
         }
 
         private void allowAll_Click(object sender, RoutedEventArgs e)
         {
+            string[] tmpw = kMatches.ToArray();
             batchChanges = true;
-            foreach (string word in kMatches)
+            foreach (string word in tmpw)
             {
                 allowWord(word, false, false);
             }
-            mainPage.sendAllowWordGroup(kMatches);
+            mainPage.sendAllowWordGroup(tmpw);
             displayedListChanged();
             batchChanges = false;
         }
