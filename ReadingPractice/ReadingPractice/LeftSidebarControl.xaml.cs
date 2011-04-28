@@ -88,17 +88,17 @@ namespace ReadingPractice
             set
             {
                 string prevStudyFocus = _studyFocus;
-                if (this.wordAllowedCheckboxes.ContainsKey(prevStudyFocus))
-                {
-                    this.wordAllowedCheckboxes[prevStudyFocus].IsEnabled = true;
-                }
                 if (this.wordMakeStudyFocusButtons.ContainsKey(prevStudyFocus))
                 {
                     this.wordMakeStudyFocusButtons[prevStudyFocus].IsEnabled = true;
                 }
                 _studyFocus = value;
-                if (value != "")
+                if (_studyFocus != "")
                 {
+                    bool oldBatchChanges = batchChanges;
+                    batchChanges = true;
+                    allowWord(_studyFocus);
+                    batchChanges = oldBatchChanges;
                     int existingIdx = StudyFocusForeignWord.Items.IndexOf(_studyFocus);
                     if (existingIdx >= 0)
                     {
@@ -625,19 +625,25 @@ namespace ReadingPractice
                     kDisplayWord.IsChecked = this.isDisplayed(word);
                     kDisplayWord.Checked += (s, e) =>
                     {
+                        allowWord(word);
+                        /*
                         Debug.WriteLine("checked" + word);
                         if (!kSetAllowedWords.Contains(word))
                             this.kSetAllowedWords.Add(word);
                         if (!batchChanges)
                             displayedListChanged();
+                        */
                     };
                     kDisplayWord.Unchecked += (s, e) =>
                     {
+                        banWord(word);
+                        /*
                         Debug.WriteLine("unchecked" + word);
                         if (kSetAllowedWords.Contains(word))
                             this.kSetAllowedWords.Remove(word);
                         if (!batchChanges)
                             displayedListChanged();
+                       */
                     };
                     Button kMakeStudyFocus = new Button();
                     if (word == StudyFocus)

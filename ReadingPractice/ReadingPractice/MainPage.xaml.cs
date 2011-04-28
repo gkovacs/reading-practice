@@ -139,10 +139,7 @@ namespace ReadingPractice
         public void sendMessage(string message)
         {
             WebClient wc = new WebClient();
-            wc.OpenReadCompleted += (o, e) =>
-            {
-
-            };
+            //wc.OpenReadCompleted += (o, e) => {};
             wc.OpenReadAsync(new Uri(baseurl + message));
         }
 
