@@ -120,6 +120,7 @@ namespace ReadingPractice
 
         private void getDisplayedWords()
         {
+            Debug.WriteLine("getting displayed words");
             WebClient wc5 = new WebClient();
             wc5.OpenReadCompleted += (o5, e5) =>
             {
@@ -142,6 +143,7 @@ namespace ReadingPractice
 
         private void getStudyHistory()
         {
+            Debug.WriteLine("getting study history");
             WebClient wc2 = new WebClient();
             wc2.OpenReadCompleted += (o2, e2) =>
             {
@@ -172,6 +174,7 @@ namespace ReadingPractice
 
         public void finishedDownloading()
         {
+            Debug.WriteLine("finished downloading");
             LeftSidebar.Opacity = 100.0;
             RightSidebar.Opacity = 100.0;
             new Thread(() =>
