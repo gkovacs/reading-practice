@@ -39,9 +39,9 @@ namespace ReadingPractice
         }
 
         public bool batchChanges = false;
-        public void allowWord(string word, bool sendupdate=true)
+        public void allowWord(string word, bool sendupdate=true, bool displayListChange=true)
         {
-            if (sendupdate)
+            if (sendupdate && !batchChanges)
                 mainPage.sendAllowWord(word);
             bool alreadyAllowed = kSetAllowedWords.Contains(word);
             if (!alreadyAllowed)
@@ -50,13 +50,13 @@ namespace ReadingPractice
                 this.wordAllowedCheckboxes[word].IsChecked = true;
             if (alreadyAllowed || batchChanges)
                 return;
-            if (displayedListChanged != null)
+            if (displayListChange && displayedListChanged != null)
                 displayedListChanged();
         }
 
-        public void banWord(string word, bool sendupdate=true)
+        public void banWord(string word, bool sendupdate = true, bool displayListChange = true)
         {
-            if (sendupdate)
+            if (sendupdate && !batchChanges)
                 mainPage.sendBanWord(word);
             bool alreadyBanned = !kSetAllowedWords.Contains(word);
             if (!alreadyBanned)
@@ -67,7 +67,7 @@ namespace ReadingPractice
                 this.wordAllowedCheckboxes[word].IsChecked = false;
             if (alreadyBanned || batchChanges)
                 return;
-            if (displayedListChanged != null)
+            if (displayListChange && displayedListChanged != null)
                 displayedListChanged();
         }
 
@@ -104,10 +104,7 @@ namespace ReadingPractice
                 _studyFocus = value;
                 if (_studyFocus != "")
                 {
-                    bool oldBatchChanges = batchChanges;
-                    batchChanges = true;
-                    allowWord(_studyFocus);
-                    batchChanges = oldBatchChanges;
+                    allowWord(_studyFocus, true, false);
                     int existingIdx = StudyFocusForeignWord.Items.IndexOf(_studyFocus);
                     if (existingIdx >= 0)
                     {
@@ -820,8 +817,9 @@ namespace ReadingPractice
             batchChanges = true;
             foreach (string word in kMatches)
             {
-                banWord(word);
+                banWord(word, false, false);
             }
+            mainPage.sendBanWordGroup(kMatches);
             displayedListChanged();
             batchChanges = false;
         }
@@ -831,8 +829,9 @@ namespace ReadingPractice
             batchChanges = true;
             foreach (string word in kMatches)
             {
-                allowWord(word);
+                allowWord(word, false, false);
             }
+            mainPage.sendAllowWordGroup(kMatches);
             displayedListChanged();
             batchChanges = false;
         }

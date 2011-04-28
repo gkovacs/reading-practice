@@ -197,6 +197,7 @@ namespace ReadingPractice
 
         public void sendMessageActual(string message)
         {
+            Debug.WriteLine("sending message " + message);
             bool lockVar = false;
             WebClient wc = new WebClient();
             wc.OpenReadCompleted += (o, e) => { lockVar = true; };
@@ -217,17 +218,27 @@ namespace ReadingPractice
 
         public void sendNewStudyFocus(string text)
         {
-            sendMessage("setStudyFocus.cgi.py?userName=" + username + ";studyFocus=" + text);
+            sendMessage("setStudyFocus.cgi.py?userName=" + username + "&studyFocus=" + text);
         }
 
         public void sendAllowWord(string text)
         {
-            sendMessage("addDisplayedWord.cgi.py?userName=" + username + ";displayedWord=" + text);
+            sendMessage("addDisplayedWord.cgi.py?userName=" + username + "&displayedWord=" + text);
         }
 
         public void sendBanWord(string text)
         {
-            sendMessage("rmDisplayedWord.cgi.py?userName=" + username + ";displayedWord=" + text);
+            sendMessage("rmDisplayedWord.cgi.py?userName=" + username + "&displayedWord=" + text);
+        }
+
+        public void sendAllowWordGroup(IEnumerable<string> words)
+        {
+            sendMessage("postpage.cgi.py?userName=" + username + "&page=addDisplayedWordMany.cgi.py&postdata=" + String.Join("%0A", words));
+        }
+
+        public void sendBanWordGroup(IEnumerable<string> words)
+        {
+            sendMessage("postpage.cgi.py?userName=" + username + "&page=rmDisplayedWordMany.cgi.py&postdata=" + String.Join("%0A", words));
         }
 
         /*
