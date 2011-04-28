@@ -13,6 +13,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Browser;
 using System.IO;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace ReadingPractice
 {
@@ -62,6 +64,7 @@ namespace ReadingPractice
                 return "gkovacs";
             }
         }
+        private Queue<string> sendMessageQueue = new Queue<string>();
 
         public MainPage()
         {
@@ -159,19 +162,57 @@ namespace ReadingPractice
                         break;
                     }
                     LeftSidebar.focusWordChanged += sendNewStudyFocus;
-                    LeftSidebar.Opacity = 100.0;
-                    RightSidebar.Opacity = 100.0;
+                    finishedDownloading();
                 };
                 wc3.OpenReadAsync(new Uri(baseurl + "getStudyFocus.cgi.py?userName=" + username));
             };
             wc2.OpenReadAsync(new Uri(baseurl + "getStudyHistory.cgi.py?userName=" + username));
         }
 
+        public void finishedDownloading()
+        {
+            LeftSidebar.Opacity = 100.0;
+            RightSidebar.Opacity = 100.0;
+            new Thread(() =>
+            {
+                while (true)
+                {
+                    if (sendMessageQueue.Count > 0)
+                    {
+                        string curval = null;
+                        lock (sendMessageQueue)
+                        {
+                            curval = sendMessageQueue.Dequeue();
+                        }
+                        sendMessageActual(curval);
+
+                    }
+                    else
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+            }).Start();
+        }
+
+        public void sendMessageActual(string message)
+        {
+            bool lockVar = false;
+            WebClient wc = new WebClient();
+            wc.OpenReadCompleted += (o, e) => { lockVar = true; };
+            wc.OpenReadAsync(new Uri(baseurl + message));
+            while (!lockVar)
+            {
+                Thread.Sleep(50);
+            }
+        }
+
         public void sendMessage(string message)
         {
-            WebClient wc = new WebClient();
-            wc.OpenReadCompleted += (o, e) => {};
-            wc.OpenReadAsync(new Uri(baseurl + message));
+            lock (sendMessageQueue)
+            {
+                sendMessageQueue.Enqueue(message);
+            }
         }
 
         public void sendNewStudyFocus(string text)
