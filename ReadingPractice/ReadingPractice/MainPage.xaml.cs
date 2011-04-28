@@ -58,7 +58,7 @@ namespace ReadingPractice
             WebClient wc1 = new WebClient();
             wc1.OpenReadCompleted += (o1, webReadEventArgs1) =>
             {
-                WordDictionarySimplifiedMandarin wordDict = new WordDictionarySimplifiedMandarin(webReadEventArgs1.Result);
+                WordDictionary wordDict = new WordDictionarySimplifiedMandarin(webReadEventArgs1.Result);
                 WebClient wc = new WebClient();
                 wc.OpenReadCompleted += (o, webReadEventArgs) =>
                 {

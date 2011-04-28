@@ -164,7 +164,6 @@ namespace ReadingPractice
         //Dictionary<string, double> translationStringHeights = new Dictionary<string, double>();
         //Dictionary<string, double> wordStringHeights = new Dictionary<string, double>();
         //Dictionary<string, double> readingStringHeights = new Dictionary<string, double>();
-        Dictionary<string, double> stringHeights = new Dictionary<string, double>();
         double wordColumnWidth = 70.0;
         double readingColumnWidth = 100.0;
         double translationColumnWidth = 200.0;
@@ -178,18 +177,6 @@ namespace ReadingPractice
             defaultBrush = StudyFocusForeignWord.Background;
             StudyFocusForeignWord.Items.Add("General Review");
             StudyFocusForeignWord.SelectedIndex = 0;
-            using (StreamReader reader = new StreamReader(Application.GetResourceStream(new Uri("ReadingPractice;component/wordheights.txt", UriKind.Relative)).Stream))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    string[] parts = line.Split('\t');
-                    if (parts.Length != 2)
-                        throw new Exception();
-                    stringHeights[parts[0]] = double.Parse(parts[1]) + 20.0;
-                }
-                reader.Close();
-            }
             /*
             foreach (var x in stringHeights.Take(100))
             {
@@ -580,7 +567,7 @@ namespace ReadingPractice
                 for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
                 {
                     string word = this.kMatches[i];
-                    double height = stringHeights[word];
+                    double height = wordDictionary.getWordHeight(word);
                     double position = positions[i];
 
                     if (i % 2 == 1)
@@ -706,7 +693,7 @@ namespace ReadingPractice
             double total = 0.0;
             for (int i = 0; i < positions.Length; ++i)
             {
-                double currentWordHeight = stringHeights[kMatches[i]];
+                double currentWordHeight = wordDictionary.getWordHeight(kMatches[i]);
                 positions[i] = total;
                 total += currentWordHeight;
             }

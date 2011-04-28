@@ -23,6 +23,8 @@ namespace ReadingPractice
         public abstract IList<string> listWords();
         public abstract Languages language { get; }
         public abstract int getWordcountInSentences(string foreignWord);
+        public abstract int getWordHeight(string word);
+        public abstract string toSimplified(string word);
         public abstract IList<string> listWordsByFrequency();
     }
 }

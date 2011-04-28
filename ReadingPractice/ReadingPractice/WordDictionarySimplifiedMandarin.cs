@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Windows.Resources;
 using System.IO;
 using System.Windows.Browser;
+using System.Linq;
 
 namespace ReadingPractice
 {
@@ -25,6 +26,7 @@ namespace ReadingPractice
         Dictionary<string, string> traditionalToSimplified = new Dictionary<string, string>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         Dictionary<string, int> wordFreqs = new Dictionary<string, int>();
+        Dictionary<string, int> wordHeights = new Dictionary<string, int>();
         public override Languages language
         {
             get
@@ -90,10 +92,15 @@ namespace ReadingPractice
                     }
                     readings[parts[0]] = parts[2];
                     foreignToEnglish[parts[0]] = parts[3];
+                    wordHeights[parts[0]] = int.Parse(parts[5]) + 20;
                     wordFreqs[parts[0]] = int.Parse(parts[4]);
+                    if (wordFreqs[parts[0]] > 0)
+                        this.allWords.Add(parts[0]);
                 }
                 reader.Close();
             }
+            wordsByFrequency = this.allWords.OrderByDescending(x => wordFreqs[x]).ToList();
+            /*
             foreach (string word in readings.Keys)
             {
                 if (!wordFreqs.ContainsKey(word))
@@ -107,6 +114,7 @@ namespace ReadingPractice
                     this.foreignToEnglish.Remove(word);
                 }
             }
+            */
             this.allWords.Sort((s1, s2) => getReading(s1).CompareTo(getReading(s2)));
         }
 
@@ -134,8 +142,8 @@ namespace ReadingPractice
 
         public override int getWordcountInSentences(string word)
         {
-            if (!wordFreqs.ContainsKey(word))
-                return 0;
+            //if (!wordFreqs.ContainsKey(word))
+            //    return 0;
             return wordFreqs[word];
         }
 
@@ -144,12 +152,19 @@ namespace ReadingPractice
             return this.wordsByFrequency.AsReadOnly();
         }
 
-        public string toSimplified(string word)
+        public override string toSimplified(string word)
         {
             if (!traditionalToSimplified.ContainsKey(word))
                 return "";
             return traditionalToSimplified[word];
             //return WordMapSimplifiedToTraditional.toSimplified(word);
+        }
+
+        public override int getWordHeight(string word)
+        {
+            //if (!wordHeights.ContainsKey(word))
+            //    return 0;
+            return wordHeights[word];
         }
 
         public override IList<string> listWords()

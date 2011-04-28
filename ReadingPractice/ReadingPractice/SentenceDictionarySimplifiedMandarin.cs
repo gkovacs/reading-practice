@@ -22,7 +22,7 @@ namespace ReadingPractice
         //Dictionary<string, string[]> segmentation = new Dictionary<string, string[]>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
         Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
-        readonly WordDictionarySimplifiedMandarin _wordDictionary;
+        readonly WordDictionary _wordDictionary;
         public override WordDictionary wordDictionary
         {
             get
@@ -38,7 +38,7 @@ namespace ReadingPractice
             }
         }
 
-        public SentenceDictionarySimplifiedMandarin(Stream stream, WordDictionarySimplifiedMandarin wordDict)
+        public SentenceDictionarySimplifiedMandarin(Stream stream, WordDictionary wordDict)
         {
             _wordDictionary = wordDict;
             using (StreamReader reader = new StreamReader(stream))
