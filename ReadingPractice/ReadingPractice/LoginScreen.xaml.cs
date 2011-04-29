@@ -66,6 +66,8 @@ namespace ReadingPractice
             this.createAccountButton.IsEnabled = false;
             this.loginErrors.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
             this.createAccountErrors.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+            this.loginErrors.FontWeight = FontWeights.Bold;
+            this.createAccountErrors.FontWeight = FontWeights.Bold;
             this.serverCommunication = serverCommunication;
         }
 
