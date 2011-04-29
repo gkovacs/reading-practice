@@ -23,11 +23,11 @@
             <Grid>
                 <sdk:Label Content="Username" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
                 <sdk:Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" VerticalAlignment="Top" />
-                <TextBox Height="23" HorizontalAlignment="Stretch" Margin="117,6,0,0" Name="createAccountUsername" VerticalAlignment="Top" />
-                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,40,0,0" Name="createAccountPassword" VerticalAlignment="Top" />
-                <Button Content="Login" Height="23" HorizontalAlignment="Right" Margin="0,113,0,0" Name="createAccountButton" VerticalAlignment="Top" Width="75" />
+                <TextBox Height="23" HorizontalAlignment="Stretch" Margin="117,6,0,0" Name="createAccountUsername" VerticalAlignment="Top" TextChanged="createAccountUsername_TextChanged" />
+                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,40,0,0" Name="createAccountPassword" VerticalAlignment="Top" PasswordChanged="createAccountPassword_PasswordChanged" />
+                <Button Content="Create Account" Height="23" HorizontalAlignment="Right" Margin="0,113,0,0" Name="createAccountButton" VerticalAlignment="Top" Width="103" Click="createAccountButton_Click" />
                 <sdk:Label Content=""  Height="23" HorizontalAlignment="Left" Margin="6,113,0,0" Name="createAccountErrors" VerticalAlignment="Top" Width="199" />
-                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,74,0,0" Name="createAccountPassword2" VerticalAlignment="Top" />
+                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,74,0,0" Name="createAccountPassword2" VerticalAlignment="Top" PasswordChanged="createAccountPassword2_PasswordChanged" />
                 <sdk:Label Content="Re-enter Password" Height="28" HorizontalAlignment="Left" Margin="6,74,0,0" VerticalAlignment="Top" />
             </Grid>
         </sdk:TabItem>

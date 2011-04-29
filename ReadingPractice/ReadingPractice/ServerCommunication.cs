@@ -203,5 +203,15 @@ namespace ReadingPractice
             };
             wc.OpenReadAsync(new Uri(baseurl + "isPasswordCorrect.cgi.py?userName=" + username + "&password=" + password));
         }
+
+        public void createAccount(string username, string password, Action doAfter)
+        {
+            WebClient wc = new WebClient();
+            wc.OpenReadCompleted += (o, e) =>
+            {
+                doAfter();
+            };
+            wc.OpenReadAsync(new Uri(baseurl + "addUser.cgi.py?userName=" + username + "&password=" + password));
+        }
     }
 }
