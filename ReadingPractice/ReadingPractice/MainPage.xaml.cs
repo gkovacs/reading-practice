@@ -138,7 +138,7 @@ namespace ReadingPractice
                 //LeftSidebar.updateDisplayedWords();
                 getStudyHistory();
             };
-            wc5.OpenReadAsync(new Uri(baseurl + "getDisplayedWords.cgi.py?userName=" + username));
+            wc5.OpenReadAsync(new Uri(baseurl + "getDisplayedWords.aspx?userName=" + username));
         }
 
         private void getStudyHistory()
@@ -274,9 +274,19 @@ namespace ReadingPractice
             sendMessage("addDisplayedWord.cgi.py?userName=" + username + "&displayedWord=" + text);
         }
 
+        public void sendAllowAllWord()
+        {
+            sendMessage("addAllDisplayedWord.aspx?userName=" + username);
+        }
+
         public void sendBanWord(string text)
         {
             sendMessage("rmDisplayedWord.cgi.py?userName=" + username + "&displayedWord=" + text);
+        }
+
+        public void sendBanAllWord()
+        {
+            sendMessage("rmAllDisplayedWord.aspx?userName=" + username);
         }
 
         public void sendAllowWordGroup(IEnumerable<string> words)

@@ -820,7 +820,14 @@ namespace ReadingPractice
             {
                 banWord(word, false, false);
             }
-            mainPage.sendBanWordGroup(tmpw);
+            if (this.textbookSelect.SelectedIndex == 0 /*&& this.chapterSelect.SelectedIndex == 0*/)
+            {
+                mainPage.sendBanAllWord();
+            }
+            else
+            {
+                mainPage.sendBanWordGroup(tmpw);
+            }
             displayedListChanged();
             batchChanges = false;
         }
@@ -833,7 +840,14 @@ namespace ReadingPractice
             {
                 allowWord(word, false, false);
             }
-            mainPage.sendAllowWordGroup(tmpw);
+            if (this.textbookSelect.SelectedIndex == 0 /*&& this.chapterSelect.SelectedIndex == 0*/)
+            {
+                mainPage.sendAllowAllWord();
+            }
+            else
+            {
+                mainPage.sendAllowWordGroup(tmpw);
+            }
             displayedListChanged();
             batchChanges = false;
         }
