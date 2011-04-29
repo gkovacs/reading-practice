@@ -13,12 +13,12 @@
         <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0" Name="tabControl1" VerticalAlignment="Top" Width="503">
             <sdk:TabItem Header="Read Sentences" Name="readTab">
                 <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
-                    <rp:ReadSentencesTab Name="readSentencesTab" />
+                    <rp:ReadSentencesTab x:Name="readSentencesTab" />
                 </ScrollViewer>
             </sdk:TabItem>
             <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
                 <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
-                    <rp:ContributeSentenceTab Name="contributeSentencesTab" />
+                    <rp:ContributeSentenceTab x:Name="contributeSentencesTab" />
                 </ScrollViewer>
             </sdk:TabItem>
         </sdk:TabControl>
@@ -26,7 +26,7 @@
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="70,32,0,0" Name="LanguageSelector" VerticalAlignment="Top" Width="209">
 
         </ComboBox>
-        <Button Content="Logout" Height="23" HorizontalAlignment="Left" Margin="433,32,0,0" Name="button1" VerticalAlignment="Top" Width="67" />
-        <sdk:Label Content="Logged in as gkovacs"  Height="28" HorizontalAlignment="Left" Margin="310,35,0,0" Name="label2" VerticalAlignment="Top" Width="125" />
+        <Button Content="Logout" Height="23" HorizontalAlignment="Left" Margin="433,32,0,0" Name="logoutButton" VerticalAlignment="Top" Width="67" Click="logoutButton_Click" />
+        <TextBlock Text="Logged in as gkovacs"  Height="28" HorizontalAlignment="Left" TextAlignment="Right" Margin="285,35,0,0" Name="loggedInAs" VerticalAlignment="Top" Width="142" />
     </Grid>
 </UserControl>

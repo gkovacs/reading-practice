@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Browser;
 
 namespace ReadingPractice
 {
@@ -42,6 +43,23 @@ namespace ReadingPractice
             this.contributeSentencesTab.mainPage = mainPage;
             this.readSentencesTab.performOnStartup();
             this.contributeSentencesTab.performOnStartup();
+        }
+
+        public void userLoggedIn(string username)
+        {
+            this.loggedInAs.Text = "Logged in as " + username;
+        }
+
+        private void logoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HtmlPage.Window.Navigate(HtmlPage.Document.DocumentUri);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

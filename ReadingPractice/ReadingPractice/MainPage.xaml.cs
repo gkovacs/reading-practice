@@ -81,6 +81,7 @@ namespace ReadingPractice
             waitingScreen = new WaitingScreen();
             loginScreen.userLoggedIn += () =>
             {
+                this.RightSidebar.userLoggedIn(username);
                 this.mainPageContents.Children.Remove(loginScreen);
                 this.mainPageContents.Children.Add(waitingScreen);
                 this.isLoggedIn = true;
