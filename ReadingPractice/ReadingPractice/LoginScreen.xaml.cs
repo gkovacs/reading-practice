@@ -14,9 +14,18 @@ namespace ReadingPractice
 {
     public partial class LoginScreen : UserControl
     {
-        public LoginScreen()
+        private ServerCommunication serverCommunication;
+        public event Action userLoggedIn;
+
+        public LoginScreen(ServerCommunication serverCommunication)
         {
             InitializeComponent();
+            this.serverCommunication = serverCommunication;
+            this.loginButton.Click += (o, e) =>
+            {
+                serverCommunication.username = "gkovacs";
+                userLoggedIn();
+            };
         }
     }
 }

@@ -26,6 +26,13 @@ namespace ReadingPractice
     public partial class LeftSidebarControl : UserControl
     {
         public MainPage mainPage;
+        public ServerCommunication serverCommunication
+        {
+            get
+            {
+                return mainPage.serverCommunication;
+            }
+        }
         public event Action<string> focusWordChanged;
         public event Action displayedListChanged;
 
@@ -42,7 +49,7 @@ namespace ReadingPractice
         public void allowWord(string word, bool sendupdate=true, bool displayListChange=true)
         {
             if (sendupdate && !batchChanges)
-                mainPage.sendAllowWord(word);
+                serverCommunication.sendAllowWord(word);
             bool alreadyAllowed = kSetAllowedWords.Contains(word);
             if (!alreadyAllowed)
                 this.kSetAllowedWords.Add(word);
@@ -57,7 +64,7 @@ namespace ReadingPractice
         public void banWord(string word, bool sendupdate = true, bool displayListChange = true)
         {
             if (sendupdate && !batchChanges)
-                mainPage.sendBanWord(word);
+                serverCommunication.sendBanWord(word);
             bool alreadyBanned = !kSetAllowedWords.Contains(word);
             if (!alreadyBanned)
                 this.kSetAllowedWords.Remove(word);
@@ -822,11 +829,11 @@ namespace ReadingPractice
             }
             if (this.textbookSelect.SelectedIndex == 0 /*&& this.chapterSelect.SelectedIndex == 0*/)
             {
-                mainPage.sendBanAllWord();
+                serverCommunication.sendBanAllWord();
             }
             else
             {
-                mainPage.sendBanWordGroup(tmpw);
+                serverCommunication.sendBanWordGroup(tmpw);
             }
             displayedListChanged();
             batchChanges = false;
@@ -842,11 +849,11 @@ namespace ReadingPractice
             }
             if (this.textbookSelect.SelectedIndex == 0 /*&& this.chapterSelect.SelectedIndex == 0*/)
             {
-                mainPage.sendAllowAllWord();
+                serverCommunication.sendAllowAllWord();
             }
             else
             {
-                mainPage.sendAllowWordGroup(tmpw);
+                serverCommunication.sendAllowWordGroup(tmpw);
             }
             displayedListChanged();
             batchChanges = false;

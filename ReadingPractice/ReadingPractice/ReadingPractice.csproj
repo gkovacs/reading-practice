@@ -80,6 +80,7 @@
     <Compile Include="LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerCommunication.cs" />
     <Compile Include="Textbooks.cs" />
     <Compile Include="ContributeSentenceTab.xaml.cs">
       <DependentUpon>ContributeSentenceTab.xaml</DependentUpon>
