@@ -171,5 +171,37 @@ namespace ReadingPractice
             sendMessageWithData("rmDisplayedWordMany.cgi.py?userName=" + username, words);
             //sendMessage("postpage.cgi.py?userName=" + username + "&page=rmDisplayedWordMany.cgi.py&postdata=" + String.Join("%0A", words));
         }
+
+        public void doesUserExist(string username, Action<bool> doAfter)
+        {
+            WebClient wc = new WebClient();
+            wc.OpenReadCompleted += (o, e) => 
+            {
+                string result = new StreamReader(e.Result).ReadToEnd().Trim();
+                if (result == "True")
+                    doAfter(true);
+                else
+                    doAfter(false);
+            };
+            wc.OpenReadAsync(new Uri(baseurl + "doesUserExist.cgi.py?userName=" + username));
+        }
+
+        // first bool: does the user exist?
+        // second bool: is the password correct?
+        public void doesUserExistAndIsPasswordCorrect(string username, string password, Action<bool, bool> doAfter)
+        {
+            WebClient wc = new WebClient();
+            wc.OpenReadCompleted += (o, e) =>
+            {
+                string result = new StreamReader(e.Result).ReadToEnd().Trim();
+                if (result == "no such user")
+                    doAfter(false, false);
+                else if (result == "True")
+                    doAfter(true, true);
+                else
+                    doAfter(true, false);
+            };
+            wc.OpenReadAsync(new Uri(baseurl + "isPasswordCorrect.cgi.py?userName=" + username + "&password=" + password));
+        }
     }
 }

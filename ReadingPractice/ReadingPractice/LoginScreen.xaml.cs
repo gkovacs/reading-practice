@@ -20,12 +20,58 @@ namespace ReadingPractice
         public LoginScreen(ServerCommunication serverCommunication)
         {
             InitializeComponent();
+            this.loginButton.IsEnabled = false;
+            this.createAccountButton.IsEnabled = false;
             this.serverCommunication = serverCommunication;
-            this.loginButton.Click += (o, e) =>
+        }
+
+        private void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = loginUserNameTextBox.Text;
+            string password = loginPasswordTextBox.Password;
+            serverCommunication.doesUserExistAndIsPasswordCorrect(username, password,
+            (doesUserExist, isPasswordCorrect) =>
             {
-                serverCommunication.username = "gkovacs";
-                userLoggedIn();
-            };
+                if (!doesUserExist)
+                {
+                    loginErrors.Content = "user " + username + " does not exist";
+                    loginErrors.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
+                }
+                else if (!isPasswordCorrect)
+                {
+                    loginErrors.Content = "password for " + username + " is not correct";
+                    loginErrors.Background = new SolidColorBrush(Color.FromArgb(255, 255, 255, 0));
+                }
+                else
+                {
+                    serverCommunication.username = username;
+                    userLoggedIn();
+                }
+            });
+        }
+
+        private void loginUserNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (loginUserNameTextBox.Text == "" || loginPasswordTextBox.Password == "")
+            {
+                loginButton.IsEnabled = false;
+            }
+            else
+            {
+                loginButton.IsEnabled = true;
+            }
+        }
+
+        private void loginPasswordTextBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (loginUserNameTextBox.Text == "" || loginPasswordTextBox.Password == "")
+            {
+                loginButton.IsEnabled = false;
+            }
+            else
+            {
+                loginButton.IsEnabled = true;
+            }
         }
     }
 }
