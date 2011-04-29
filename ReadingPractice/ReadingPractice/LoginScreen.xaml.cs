@@ -14,7 +14,14 @@ namespace ReadingPractice
 {
     public partial class LoginScreen : UserControl
     {
-        private ServerCommunication serverCommunication;
+        public ServerCommunication serverCommunication
+        {
+            get
+            {
+                return mainPage.serverCommunication;
+            }
+        }
+        private MainPage mainPage;
         public event Action userLoggedIn;
 
         public string loginError
@@ -59,7 +66,7 @@ namespace ReadingPractice
             }
         }
 
-        public LoginScreen(ServerCommunication serverCommunication)
+        public LoginScreen(MainPage mainPage)
         {
             InitializeComponent();
             this.loginButton.IsEnabled = false;
@@ -68,7 +75,7 @@ namespace ReadingPractice
             this.createAccountErrors.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
             this.loginErrors.FontWeight = FontWeights.Bold;
             this.createAccountErrors.FontWeight = FontWeights.Bold;
-            this.serverCommunication = serverCommunication;
+            this.mainPage = mainPage;
         }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
@@ -127,8 +134,7 @@ namespace ReadingPractice
                 serverCommunication.username = username;
                 userLoggedIn();
             });
-            this.IsEnabled = false;
-            createAccountError = "Account being created, please wait";
+            mainPage.closeLoginScreen();
         }
 
         bool createValidUserNameEntered = false;

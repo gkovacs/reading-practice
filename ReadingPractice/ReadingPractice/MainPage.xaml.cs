@@ -73,17 +73,24 @@ namespace ReadingPractice
             }
         }
 
+        public void closeLoginScreen()
+        {
+            if (this.mainPageContents.Children.Contains(loginScreen))
+                this.mainPageContents.Children.Remove(loginScreen);
+            if (!this.mainPageContents.Children.Contains(waitingScreen))
+                this.mainPageContents.Children.Add(waitingScreen);
+        }
+
         public MainPage()
         {
             InitializeComponent();
             _serverCommunication = new ServerCommunication();
-            loginScreen = new LoginScreen(serverCommunication);
+            loginScreen = new LoginScreen(this);
             waitingScreen = new WaitingScreen();
             loginScreen.userLoggedIn += () =>
             {
                 this.RightSidebar.userLoggedIn(username);
-                this.mainPageContents.Children.Remove(loginScreen);
-                this.mainPageContents.Children.Add(waitingScreen);
+                closeLoginScreen();
                 this.isLoggedIn = true;
             };
             this.mainPageContents.Children.Add(loginScreen);
