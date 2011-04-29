@@ -48,7 +48,7 @@ namespace ReadingPractice
         }
         public Textbooks textbooks;
         private string server = "gkovacs.xvm.mit.edu";
-        private string folder = "reading-practice";
+        private string folder = "reading-practice/secret-backend-path";
         public string baseurl
         {
             get
@@ -82,8 +82,8 @@ namespace ReadingPractice
                 wc.OpenReadAsync(new Uri(baseurl + "listsentences.aspx?listMe=yes"));
                 //wc.OpenReadAsync(new Uri("http://mit.edu/~gkovacs/www/reading-practice/sentences.txt"));
             };
-            //wc1.OpenReadAsync(new Uri(baseurl + "listwords.aspx?listMe=yes"));
-            wc1.OpenReadAsync(new Uri("http://mit.edu/~gkovacs/www/reading-practice/words.txt"));
+            wc1.OpenReadAsync(new Uri(baseurl + "listwords.aspx?listMe=yes"));
+            //wc1.OpenReadAsync(new Uri("http://mit.edu/~gkovacs/www/reading-practice/words.txt"));
         }
 
         public void performOnStartup()
