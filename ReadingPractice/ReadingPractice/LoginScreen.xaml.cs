@@ -66,6 +66,24 @@ namespace ReadingPractice
             }
         }
 
+        public bool allowCreateAccount
+        {
+            set
+            {
+                if (value)
+                {
+                    if (this.createValidUserNameEntered && this.createAccountPassword.Password != "" && this.createAccountPassword.Password == this.createAccountPassword2.Password && createAccountError == "")
+                        this.createAccountButton.IsEnabled = true;
+                    else
+                        this.createAccountButton.IsEnabled = false;
+                }
+                else
+                {
+                    this.createAccountButton.IsEnabled = false;
+                }
+            }
+        }
+
         public LoginScreen(MainPage mainPage)
         {
             InitializeComponent();
@@ -144,11 +162,11 @@ namespace ReadingPractice
         {
             if (createAccountUsername.Text == "" || createAccountPassword.Password == "" || createAccountPassword2.Password == "")
             {
-                createAccountButton.IsEnabled = false;
+                allowCreateAccount = false;
             }
             else
             {
-                createAccountButton.IsEnabled = true;
+                allowCreateAccount = true;
             }
             string username = createAccountUsername.Text;
             if (username != "")
@@ -167,13 +185,12 @@ namespace ReadingPractice
             if (!createValidUserNameEntered)
             {
                 createAccountError = "user " + createUserNameProposed + " already exists";
-                createAccountButton.IsEnabled = false;
+                allowCreateAccount = false;
             }
             else
             {
                 createAccountError = "";
-                if (createAccountPassword.Password != "" && createAccountPassword2.Password != "")
-                    createAccountButton.IsEnabled = true;
+                allowCreateAccount = true;
             }
         }
 
@@ -184,7 +201,7 @@ namespace ReadingPractice
                 if (createAccountPassword.Password != createAccountPassword2.Password)
                 {
                     createAccountError = "entered passwords don't match";
-                    createAccountButton.IsEnabled = false;
+                    allowCreateAccount = false;
                     return;
                 }
                 else
@@ -199,11 +216,11 @@ namespace ReadingPractice
         {
             if (createAccountUsername.Text == "" || createAccountPassword.Password == "" || createAccountPassword2.Password == "")
             {
-                createAccountButton.IsEnabled = false;
+                allowCreateAccount = false;
             }
             else
             {
-                createAccountButton.IsEnabled = true;
+                allowCreateAccount = true;
             }
             passwordMatchCheck();
         }
@@ -212,11 +229,11 @@ namespace ReadingPractice
         {
             if (createAccountUsername.Text == "" || createAccountPassword.Password == "" || createAccountPassword2.Password == "")
             {
-                createAccountButton.IsEnabled = false;
+                allowCreateAccount = false;
             }
             else
             {
-                createAccountButton.IsEnabled = true;
+                allowCreateAccount = true;
             }
             passwordMatchCheck();
         }
