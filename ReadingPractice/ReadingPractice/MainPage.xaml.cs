@@ -57,16 +57,22 @@ namespace ReadingPractice
             }
         }
 
+        private string _username = "gkovacs";
         public string username
         {
             get
             {
-                return "gkovacs";
+                return _username;
+            }
+            private set
+            {
+                _username = value;
             }
         }
         private Queue<string> sendMessageQueue = new Queue<string>();
         private Queue<IEnumerable<string>> dataQueue = new Queue<IEnumerable<string>>();
         private LoginScreen loginScreen;
+        private WaitingScreen waitingScreen;
         private bool isLoggedIn = false;
 
         public MainPage()
@@ -74,9 +80,11 @@ namespace ReadingPractice
             InitializeComponent();
             new Thread(sendMessageLoop).Start();
             loginScreen = new LoginScreen();
+            waitingScreen = new WaitingScreen();
             loginScreen.loginButton.Click += (o, e) =>
             {
                 this.mainPageContents.Children.Remove(loginScreen);
+                this.mainPageContents.Children.Add(waitingScreen);
                 this.isLoggedIn = true;
             };
             this.mainPageContents.Children.Add(loginScreen);
@@ -133,7 +141,10 @@ namespace ReadingPractice
                 {
                     Thread.Sleep(10);
                 }
-                this.Dispatcher.BeginInvoke(getDisplayedWords);
+                this.Dispatcher.BeginInvoke(() =>
+                {
+                    getDisplayedWords();
+                });
             }).Start();
         }
 
@@ -193,6 +204,7 @@ namespace ReadingPractice
 
         private void finishedDownloading()
         {
+            this.mainPageContents.Children.Remove(waitingScreen);
             LeftSidebar.Visibility = Visibility.Visible;
             RightSidebar.Visibility = Visibility.Visible;
         }

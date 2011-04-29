@@ -88,6 +88,9 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="SentenceDictionary.cs" />
     <Compile Include="SentenceDictionarySimplifiedMandarin.cs" />
+    <Compile Include="WaitingScreen.xaml.cs">
+      <DependentUpon>WaitingScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WordDictionary.cs" />
     <Compile Include="WordDictionarySimplifiedMandarin.cs" />
     <Compile Include="Languages.cs" />
@@ -141,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SentenceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WaitingScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
