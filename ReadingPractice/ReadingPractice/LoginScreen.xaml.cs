@@ -167,10 +167,13 @@ namespace ReadingPractice
             if (!createValidUserNameEntered)
             {
                 createAccountError = "user " + createUserNameProposed + " already exists";
+                createAccountButton.IsEnabled = false;
             }
             else
             {
                 createAccountError = "";
+                if (createAccountPassword.Password != "" && createAccountPassword2.Password != "")
+                    createAccountButton.IsEnabled = true;
             }
         }
 
