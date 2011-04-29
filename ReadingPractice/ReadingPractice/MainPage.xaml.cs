@@ -66,9 +66,20 @@ namespace ReadingPractice
         }
         private Queue<string> sendMessageQueue = new Queue<string>();
         private Queue<IEnumerable<string>> dataQueue = new Queue<IEnumerable<string>>();
+        private LoginScreen loginScreen;
+        private bool isLoggedIn = false;
 
         public MainPage()
         {
+            InitializeComponent();
+            new Thread(sendMessageLoop).Start();
+            loginScreen = new LoginScreen();
+            loginScreen.loginButton.Click += (o, e) =>
+            {
+                this.mainPageContents.Children.Remove(loginScreen);
+                this.isLoggedIn = true;
+            };
+            this.mainPageContents.Children.Add(loginScreen);
             WebClient wc1 = new WebClient();
             wc1.OpenReadCompleted += (o1, webReadEventArgs1) =>
             {
@@ -91,7 +102,6 @@ namespace ReadingPractice
         {
             wordDictionary = sentenceDictionary.wordDictionary;
             textbooks = new Textbooks();
-            InitializeComponent();
             this.LeftSidebar.mainPage = this;
             this.RightSidebar.mainPage = this;
             this.LeftSidebar.performOnStartup();
@@ -116,7 +126,15 @@ namespace ReadingPractice
             //HtmlPage.RegisterScriptableObject("sentenceDictionary", sentenceDictionary);
             //HtmlPage.RegisterScriptableObject("wordDictionary", wordDictionary);
             
-            getDisplayedWords();
+            //getDisplayedWords();
+            new Thread(() =>
+            {
+                while (!isLoggedIn)
+                {
+                    Thread.Sleep(10);
+                }
+                this.Dispatcher.BeginInvoke(getDisplayedWords);
+            }).Start();
         }
 
         private void getDisplayedWords()
@@ -173,41 +191,41 @@ namespace ReadingPractice
             wc2.OpenReadAsync(new Uri(baseurl + "getStudyHistory.cgi.py?userName=" + username));
         }
 
-        public void finishedDownloading()
+        private void finishedDownloading()
         {
-            Debug.WriteLine("finished downloading");
-            LeftSidebar.Opacity = 100.0;
-            RightSidebar.Opacity = 100.0;
-            new Thread(() =>
-            {
-                while (true)
-                {
-                    if (sendMessageQueue.Count > 0)
-                    {
-                        string curval = null;
-                        IEnumerable<string> data = null;
-                        lock (sendMessageQueue)
-                        {
-                            curval = sendMessageQueue.Dequeue();
-                            if (curval[0] == '@')
-                                data = dataQueue.Dequeue();
-                        }
-                        if (data == null)
-                        {
-                            sendMessageActual(curval);
-                        }
-                        else
-                        {
-                            sendMessageWithDataActual(curval.Substring(1), data);
-                        }
+            LeftSidebar.Visibility = Visibility.Visible;
+            RightSidebar.Visibility = Visibility.Visible;
+        }
 
+        private void sendMessageLoop()
+        {
+            while (true)
+            {
+                if (sendMessageQueue.Count > 0)
+                {
+                    string curval = null;
+                    IEnumerable<string> data = null;
+                    lock (sendMessageQueue)
+                    {
+                        curval = sendMessageQueue.Dequeue();
+                        if (curval[0] == '@')
+                            data = dataQueue.Dequeue();
+                    }
+                    if (data == null)
+                    {
+                        sendMessageActual(curval);
                     }
                     else
                     {
-                        Thread.Sleep(100);
+                        sendMessageWithDataActual(curval.Substring(1), data);
                     }
+
                 }
-            }).Start();
+                else
+                {
+                    Thread.Sleep(100);
+                }
+            }
         }
 
         public void sendMessageActual(string message)

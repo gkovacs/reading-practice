@@ -29,7 +29,7 @@ namespace ReadingPractice
         /// </summary>
         public RightSidebarControl()
         {
-            Opacity = 0.0;
+            Visibility = Visibility.Collapsed;
             InitializeComponent();
         }
 

@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="ReadingPractice.LoginScreen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="250" d:DesignWidth="343" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit">
+    <StackPanel Orientation="Vertical">
+        <sdk:Label FontSize="20" Content="Welcome to Reading Practice"></sdk:Label>
+        <TextBlock TextWrapping="Wrap">Reading Practice is a site where you can practice reading sentences in a foreign language.</TextBlock>
+        <sdk:TabControl Name="tabControl1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <sdk:TabItem Header="Login" Name="loginTab">
+            <Grid>
+                <sdk:Label Content="Username" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />
+                <sdk:Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="label2" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Stretch" Margin="81,6,0,0" Name="textBox1" VerticalAlignment="Top" />
+                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="81,40,0,0" Name="textBox2" VerticalAlignment="Top" />
+                <Button Content="Login" Height="23" HorizontalAlignment="Right" Margin="0,84,0,0" Name="loginButton" VerticalAlignment="Top" Width="75" />
+                <sdk:Label Content=""  Height="23" HorizontalAlignment="Left" Margin="6,84,0,0" Name="loginErrors" VerticalAlignment="Top" Width="244" />
+            </Grid>
+        </sdk:TabItem>
+        <sdk:TabItem Header="Create Account" Name="createAccountTab">
+            <Grid>
+                <sdk:Label Content="Username" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
+                <sdk:Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" VerticalAlignment="Top" />
+                <TextBox Height="23" HorizontalAlignment="Stretch" Margin="117,6,0,0" Name="createAccountUsername" VerticalAlignment="Top" />
+                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,40,0,0" Name="createAccountPassword" VerticalAlignment="Top" />
+                <Button Content="Login" Height="23" HorizontalAlignment="Right" Margin="0,113,0,0" Name="createAccountButton" VerticalAlignment="Top" Width="75" />
+                <sdk:Label Content=""  Height="23" HorizontalAlignment="Left" Margin="6,113,0,0" Name="createAccountErrors" VerticalAlignment="Top" Width="199" />
+                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,74,0,0" Name="createAccountPassword2" VerticalAlignment="Top" />
+                <sdk:Label Content="Re-enter Password" Height="28" HorizontalAlignment="Left" Margin="6,74,0,0" VerticalAlignment="Top" />
+            </Grid>
+        </sdk:TabItem>
+    </sdk:TabControl>
+    </StackPanel>
+</UserControl>

@@ -6,7 +6,7 @@
     xmlns:rp="clr-namespace:ReadingPractice"
     mc:Ignorable="d" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" d:DesignHeight="685" d:DesignWidth="1008"
     HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="mainPageContents">
         <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="PopupShield" Background="Transparent" Width="Auto" Height="Auto" Visibility="Visible"></Canvas>
         <StackPanel Orientation="Horizontal">
         <rp:LeftSidebarControl x:Name="LeftSidebar"></rp:LeftSidebarControl>
