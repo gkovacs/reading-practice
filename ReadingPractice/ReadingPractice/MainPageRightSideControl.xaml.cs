@@ -82,7 +82,7 @@ namespace ReadingPractice
             this.readSentencesTab.Width = tabControl1.Width - 39;
 //            this.readSentencesTab.Height = tabControl1.Height;
 
-            this.readSentencesTab.SentenceListViewer.Height = this.tabControl1.Height-200;
+//            this.readSentencesTab.SentenceListViewer.Height = this.tabControl1.Height-200;
             //            this.readSentencesTab.Warnings.Width = tabControl1.Width;
             //            this.readSentencesTab.Resize(this.tabControl1.Width - 1);
             this.readSentencesScrollViewer.Width = (this.tabControl1.Width-12);
