@@ -52,6 +52,13 @@ namespace ReadingPractice
                 return mainPage.sentenceDictionary;
             }
         }
+        public ServerCommunication serverCommunication
+        {
+            get
+            {
+                return mainPage.serverCommunication;
+            }
+        }
 
         public ReadSentencesTab()
         {
@@ -135,14 +142,20 @@ namespace ReadingPractice
             return false;
         }
 
+        public void insertSentence(string sent)
+        {
+            string tranlatedSentence = sentenceDictionary.translateToEnglish(sent);
+            SentenceListViewer.Children.Insert(2, new SentenceView(sent, tranlatedSentence, mainPage));
+        }
+
         private void FetchNextSentenceButton_Click(object sender, RoutedEventArgs e)
         {
             if (sentencesToBeAdded.Count == 0)
                 return;
             string sent = sentencesToBeAdded.First();
-            string tranlatedSentence = sentenceDictionary.translateToEnglish(sent);
             sentencesToBeAdded.RemoveFirst();
-            SentenceListViewer.Children.Insert(2, new SentenceView(sent, tranlatedSentence, mainPage));
+            insertSentence(sent);
+            serverCommunication.sendAddSentence(sent);
             if (sentencesToBeAdded.Count == 0)
             {
                 noMoreSentencesAvailable();

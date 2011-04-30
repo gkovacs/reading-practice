@@ -197,19 +197,62 @@ namespace ReadingPractice
                     StreamReader studyFocusReader = new StreamReader(e3.Result);
                     while (!studyFocusReader.EndOfStream)
                     {
-                        LeftSidebar.StudyFocus = studyFocusReader.ReadLine();
+                        tmpstudyfocus = studyFocusReader.ReadLine();
+                        LeftSidebar.setStudyFocusNoChanges(tmpstudyfocus);
+                        //LeftSidebar.StudyFocus = studyFocusReader.ReadLine();
                         break;
                     }
-                    LeftSidebar.focusWordChanged += serverCommunication.sendNewStudyFocus;
-                    finishedDownloading();
+                    //LeftSidebar.focusWordChanged += serverCommunication.sendNewStudyFocus;
+                    populateSentenceLists();
                 };
                 wc3.OpenReadAsync(new Uri(baseurl + "getStudyFocus.cgi.py?userName=" + username));
             };
             wc2.OpenReadAsync(new Uri(baseurl + "getStudyHistory.cgi.py?userName=" + username));
         }
 
+        private string tmpstudyfocus = "";
+
+        private void populateSentenceLists()
+        {
+            serverCommunication.getSentences(sents =>
+            {
+                foreach (string x in sents)
+                {
+                    RightSidebar.readSentencesTab.insertSentence(x);
+                }
+                populateClosedSentenceLists();
+            });
+        }
+
+        private void populateClosedSentenceLists()
+        {
+            serverCommunication.getClosedSentences(sents =>
+            {
+                foreach (string x in sents)
+                {
+                    //RightSidebar.readSentencesTab.insertSentence(x);
+                }
+                populateContribSentenceLists();
+            });
+        }
+
+        private void populateContribSentenceLists()
+        {
+            serverCommunication.getContribSentences(sents =>
+            {
+                foreach (string x in sents)
+                {
+                    
+                    //RightSidebar.readSentencesTab.insertSentence(x);
+                }
+                finishedDownloading();
+            });
+        }
+
         private void finishedDownloading()
         {
+            LeftSidebar.StudyFocus = tmpstudyfocus;
+            LeftSidebar.focusWordChanged += serverCommunication.sendNewStudyFocus;
             this.mainPageContents.Children.Remove(waitingScreen);
             LeftSidebar.Visibility = Visibility.Visible;
             RightSidebar.Visibility = Visibility.Visible;

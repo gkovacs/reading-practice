@@ -89,6 +89,11 @@ namespace ReadingPractice
 
         private Brush defaultBrush = null;
 
+        public void setStudyFocusNoChanges(string nval)
+        {
+            _studyFocus = nval;
+        }
+
         /// <summary>
         /// getter returns empty string if no study focus is set (reviewing mode), returns study focus in
         /// the foreign language being studied otherwise.
