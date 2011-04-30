@@ -19,12 +19,12 @@
                 </ScrollViewer>
             </sdk:TabItem>
             <sdk:TabItem Header="Closed Sentences" Name="closedTab">
-                <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Name="closedSentencesScrollViewer" Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
                     <rp:ClosedSentenceTab x:Name="closedSentencesTab" />
                 </ScrollViewer>
             </sdk:TabItem>
             <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
-                <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Name="contributeSentencesScrollViewer" Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
                     <rp:ContributeSentenceTab x:Name="contributeSentencesTab" />
                 </ScrollViewer>
             </sdk:TabItem>

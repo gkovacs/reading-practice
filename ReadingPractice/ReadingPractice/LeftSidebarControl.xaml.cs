@@ -488,7 +488,6 @@ namespace ReadingPractice
             */
 //#endif
 
-            this.initializeWidthConstants();
         }
 
         private double measureStringHeight(string str, double width)
@@ -975,12 +974,6 @@ namespace ReadingPractice
         double dButtonMinWidthFractionSortEnglish = 0.4;
         double dButtonMinWidthFractionSortDisplayed = 0.4;
 
-        private void initializeWidthConstants ()
-        {
-//            dMinWidthLeftSideBar = dSortByWidth + dButtonMinWidthSortPinyin
-//                + dButtonMinWidthSortEnglish + dButtonMinWidthSortDisplayed;
-        }
-
         internal void Resize(double height, double width)
         {
 //            this.Width = (6.0/11.0)*width;
@@ -994,10 +987,10 @@ namespace ReadingPractice
             this.MainStackPanel.Width = Math.Max(dMinWidthLeftSideBar, 0.5 * width);
             this.MainStackPanel.Height = Math.Max(400,height);
 
-            this.VocabSelectionScrollViewer.Height = Math.Max(50, height - 300);
+            this.VocabSelectionScrollViewer.Height = Math.Max(75, height - 245);
             //            this.VocabSelectionScrollViewer.Width = Math.Max(300,width-200);
 
-            textbookSelect.Width = Math.Min(textbookSelect.DesiredSize.Width, this.MainStackPanel.Width - 70);
+//            textbookSelect.Width = Math.Min(textbookSelect.DesiredSize.Width, this.MainStackPanel.Width - 70);
             Debug.WriteLine("LeftSiderbarControl.xaml.cs,Resize():");
 
 //            textbookSelect.Measure(new Size(this.MainStackPanel.Width - 70, textbookSelect.ActualHeight));
