@@ -691,6 +691,7 @@ namespace ReadingPractice
                         this.allowWord(word);
                         kDisplayWord.IsEnabled = false;
                         kMakeStudyFocus.IsEnabled = false;
+
                     };
 
                     wordAllowedCheckboxes.Add(word, kDisplayWord);
@@ -974,6 +975,12 @@ namespace ReadingPractice
         double dButtonMinWidthFractionSortEnglish = 0.4;
         double dButtonMinWidthFractionSortDisplayed = 0.4;
 
+ /*       internal void StudyFocusTranslation_SizeChanged(object sender, TextChangedEventArgs e)
+        {
+            // the study focus height changed, so need to resize searches
+            this.Resize(App.Current.Host.Content.ActualHeight,App.Current.Host.Content.ActualWidth);
+        }*/
+
         internal void Resize(double height, double width)
         {
 //            this.Width = (6.0/11.0)*width;
@@ -987,10 +994,14 @@ namespace ReadingPractice
             this.MainStackPanel.Width = Math.Max(dMinWidthLeftSideBar, 0.5 * width);
             this.MainStackPanel.Height = Math.Max(400,height);
 
-            this.VocabSelectionScrollViewer.Height = Math.Max(75, height - 245);
+//            this.VocabSelectionScrollViewer.Height =
+//                Math.Max(75, height - 245 - this.StudyFocusTranslation.ActualHeight);
+            this.VocabSelectionScrollViewer.Height =
+                Math.Max(75, height - 221 - this.StudyFocusTranslation.ActualHeight);
             //            this.VocabSelectionScrollViewer.Width = Math.Max(300,width-200);
-
-//            textbookSelect.Width = Math.Min(textbookSelect.DesiredSize.Width, this.MainStackPanel.Width - 70);
+            Debug.WriteLine("StudyFocusTranslation.Height");
+            Debug.WriteLine(this.StudyFocusTranslation.ActualHeight);
+            //            textbookSelect.Width = Math.Min(textbookSelect.DesiredSize.Width, this.MainStackPanel.Width - 70);
             Debug.WriteLine("LeftSiderbarControl.xaml.cs,Resize():");
 
 //            textbookSelect.Measure(new Size(this.MainStackPanel.Width - 70, textbookSelect.ActualHeight));
@@ -1016,6 +1027,12 @@ namespace ReadingPractice
             VocabSelectionScrollViewer.Width = this.MainStackPanel.Width;
 
             DrawSearchMatches();
+        }
+
+        private void StudyFocusTranslation_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // the study focus height changed, so need to resize searches
+            this.Resize(App.Current.Host.Content.ActualHeight, App.Current.Host.Content.ActualWidth);
         }
     }
 }

@@ -10,10 +10,10 @@
         <ComboBox Name="StudyFocusForeignWord" HorizontalAlignment="Center" FontSize="24" SelectionChanged="StudyFocusForeignWord_SelectionChanged"></ComboBox>
         <sdk:Label Name="StudyFocusReading"  Content="somereading" HorizontalAlignment="Center" FontSize="16"></sdk:Label>
         <sdk:Label Name="StudyFocusTranslation" Content="sometranslation" HorizontalAlignment="Center"
-        FontSize="16">
+        FontSize="16" SizeChanged="StudyFocusTranslation_SizeChanged">
             <sdk:Label.Template>
                 <ControlTemplate TargetType="sdk:Label">
-                    <TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}"/>
+                    <TextBlock Name="StudyFocusTranslationTextBlock" TextWrapping="Wrap" Text="{TemplateBinding Content}"/>
                 </ControlTemplate>
             </sdk:Label.Template>
         </sdk:Label>
