@@ -61,5 +61,21 @@ namespace ReadingPractice
 
             }
         }
+
+
+
+        double dMinWidthRightSideBar = 300;
+
+
+        internal void Resize(double height, double width)
+        {
+//            this.Width = 5 * width / 11;
+//            this.Height = height;
+
+            this.LayoutRoot.Width = Math.Max(dMinWidthRightSideBar, 0.5 * width);
+            this.LayoutRoot.Height = Math.Max(400, height);
+
+            this.tabControl1.Width = this.LayoutRoot.Width;
+        }
     }
 }

@@ -139,7 +139,9 @@ namespace ReadingPractice
             //HtmlPage.RegisterScriptableObject("mainPage", this);
             //HtmlPage.RegisterScriptableObject("sentenceDictionary", sentenceDictionary);
             //HtmlPage.RegisterScriptableObject("wordDictionary", wordDictionary);
-            
+
+            App.Current.Host.Content.Resized += new EventHandler(Content_Resized);
+
             //getDisplayedWords();
             new Thread(() =>
             {
@@ -152,6 +154,18 @@ namespace ReadingPractice
                     getDisplayedWords();
                 });
             }).Start();
+        }
+
+        private void Content_Resized (object sender, EventArgs e)
+        {
+            double height = App.Current.Host.Content.ActualHeight;
+            double width = App.Current.Host.Content.ActualWidth;
+
+            Debug.WriteLine("MainPage.xaml.cs, Content_Resized():");
+            Debug.WriteLine(height);
+            Debug.WriteLine(width);
+            this.LeftSidebar.Resize(height,width);
+            this.RightSidebar.Resize(height,width);
         }
 
         private void getDisplayedWords()

@@ -487,6 +487,8 @@ namespace ReadingPractice
             }
             */
 //#endif
+
+            this.initializeWidthConstants();
         }
 
         private double measureStringHeight(string str, double width)
@@ -605,7 +607,8 @@ namespace ReadingPractice
                     RichTextBox kWord = new RichTextBox();
                     kWord.Height = height;
                     kWord.MinHeight = height;
-                    kWord.Width = wordColumnWidth;
+//                    kWord.Width = wordColumnWidth;
+                    kWord.Width = dSortByWidth;
                     kWord.Blocks.Add(toParagraphHighlighting(word, searchText));
                     kWord.Background = new SolidColorBrush(Colors.Transparent);
                     kWord.BorderThickness = new Thickness(0.0);
@@ -616,18 +619,21 @@ namespace ReadingPractice
                     RichTextBox kRomanization = new RichTextBox();
                     kRomanization.Height = height;
                     kRomanization.MinHeight = height;
-                    kRomanization.Width = readingColumnWidth;
+//                    kRomanization.Width = readingColumnWidth;
+                    kRomanization.Width = sortByPinyin.ActualWidth;
                     kRomanization.Blocks.Add(toParagraphHighlighting(wordDictionary.getReading(word), searchText));
                     kRomanization.Background = new SolidColorBrush(Colors.Transparent);
                     kRomanization.BorderThickness = new Thickness(0.0);
                     kRomanization.IsReadOnly = true;
                     kRomanization.TextWrapping = TextWrapping.Wrap;
-                    kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
+//                    kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
+                    kRomanization.SetValue(Canvas.LeftProperty, kWord.Width);
                     kRomanization.SetValue(Canvas.TopProperty, position);
                     RichTextBox kTranslation = new RichTextBox();
                     kTranslation.Height = height;
                     kTranslation.MinHeight = height;
-                    kTranslation.Width = translationColumnWidth;
+//                    kTranslation.Width = translationColumnWidth;
+                    kTranslation.Width = sortByEnglish.ActualWidth;
                     kTranslation.Blocks.Add(toParagraphHighlighting(wordDictionary.translateToEnglish(word), searchText));
                     kTranslation.TextWrapping = TextWrapping.Wrap;
                     //kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
@@ -635,12 +641,14 @@ namespace ReadingPractice
                     kTranslation.Background = new SolidColorBrush(Colors.Transparent);
                     kTranslation.BorderThickness = new Thickness(0.0);
                     kTranslation.IsReadOnly = true;
-                    kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
+//                    kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
+                    kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width);
                     kTranslation.SetValue(Canvas.TopProperty, position);
                     CheckBox kDisplayWord = new CheckBox();
                     kDisplayWord.Height = dLineHeight / 2.0;
                     kDisplayWord.Content = "May appear in sentences";
-                    kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
+//                    kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
+                    kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
                     kDisplayWord.SetValue(Canvas.TopProperty, position);
                     kDisplayWord.IsChecked = this.isDisplayed(word);
                     kDisplayWord.Checked += (s, e) =>
@@ -673,7 +681,7 @@ namespace ReadingPractice
                     }
                     kMakeStudyFocus.Height = dLineHeight / 2.0;
                     kMakeStudyFocus.Content = "Make study focus";
-                    kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
+                    kMakeStudyFocus.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
                     kMakeStudyFocus.SetValue(Canvas.TopProperty, dLineHeight / 2.0 + position);
                     kMakeStudyFocus.Click += (s, e) =>
                     {
@@ -958,5 +966,61 @@ namespace ReadingPractice
                 StudyFocus = (string)StudyFocusForeignWord.SelectedValue;
         }
 
+        double dSortByWidth = 70.0;
+        double dMinWidthLeftSideBar = 300.0;
+
+        double dButtonMinWidthFractionSortPinyin = 0.2;
+        double dButtonMinWidthFractionSortEnglish = 0.4;
+        double dButtonMinWidthFractionSortDisplayed = 0.4;
+
+        private void initializeWidthConstants ()
+        {
+//            dMinWidthLeftSideBar = dSortByWidth + dButtonMinWidthSortPinyin
+//                + dButtonMinWidthSortEnglish + dButtonMinWidthSortDisplayed;
+        }
+
+        internal void Resize(double height, double width)
+        {
+//            this.Width = (6.0/11.0)*width;
+//            this.Height = height;
+            Debug.WriteLine(height);
+            Debug.WriteLine(width);
+            Debug.WriteLine(MainStackPanel.Width);
+            Debug.WriteLine(MainStackPanel.Height);
+            Debug.WriteLine("sdas");
+
+            this.MainStackPanel.Width = Math.Max(dMinWidthLeftSideBar, 0.5 * width);
+            this.MainStackPanel.Height = Math.Max(400,height);
+
+            this.VocabSelectionScrollViewer.Height = Math.Max(50, height - 300);
+            //            this.VocabSelectionScrollViewer.Width = Math.Max(300,width-200);
+
+            textbookSelect.Width = Math.Min(textbookSelect.DesiredSize.Width, this.MainStackPanel.Width - 70);
+            Debug.WriteLine("LeftSiderbarControl.xaml.cs,Resize():");
+
+//            textbookSelect.Measure(new Size(this.MainStackPanel.Width - 70, textbookSelect.ActualHeight));
+//            Debug.WriteLine(textbookSelect.Measure();
+            Search.Width = Math.Max(100, this.MainStackPanel.Width - 70);
+
+            sortByPinyin.Width =
+                Math.Max(dButtonMinWidthFractionSortPinyin*(dMinWidthLeftSideBar-dSortByWidth),
+                dButtonMinWidthFractionSortPinyin *(this.MainStackPanel.Width - dSortByWidth));
+            sortByEnglish.Width =
+                Math.Max(dButtonMinWidthFractionSortEnglish*(dMinWidthLeftSideBar-dSortByWidth),
+                dButtonMinWidthFractionSortEnglish * (this.MainStackPanel.Width - dSortByWidth));
+            sortByDisplayed.Width =
+                Math.Max(dButtonMinWidthFractionSortDisplayed * (dMinWidthLeftSideBar - dSortByWidth),
+                dButtonMinWidthFractionSortDisplayed*(this.MainStackPanel.Width - dSortByWidth));
+
+
+            Debug.WriteLine(sortByPinyin.Width);
+            Debug.WriteLine(sortByEnglish.Width);
+            Debug.WriteLine(sortByDisplayed.Width);
+            Debug.WriteLine(this.MainStackPanel.Width);
+
+            VocabSelectionScrollViewer.Width = this.MainStackPanel.Width;
+
+            DrawSearchMatches();
+        }
     }
 }
