@@ -159,6 +159,10 @@ namespace ReadingPractice
                     getDisplayedWords();
                 });
             }).Start();
+
+
+
+            Content_Resized(null, null);
         }
 
         private void userLoggedIn()

@@ -13,7 +13,8 @@
         <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0"
         Name="tabControl1" VerticalAlignment="Top" Width="503">
             <sdk:TabItem Header="Read Sentences" Name="readTab">
-                <ScrollViewer Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Name="readSentencesScrollViewer" Height="531" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
                     <rp:ReadSentencesTab x:Name="readSentencesTab" />
                 </ScrollViewer>
             </sdk:TabItem>
@@ -33,7 +34,9 @@
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="70,32,0,0" Name="LanguageSelector"
         VerticalAlignment="Top" Width="209">
         </ComboBox>
-        <Button Content="Logout" Height="23" HorizontalAlignment="Left" Margin="433,32,0,0" Name="logoutButton" VerticalAlignment="Top" Width="67" Click="logoutButton_Click" />
-        <TextBlock Text="Logged in as gkovacs"  Height="28" HorizontalAlignment="Left" TextAlignment="Right" Margin="285,35,0,0" Name="loggedInAs" VerticalAlignment="Top" Width="142" />
+        <Button Content="Logout" Height="23" HorizontalAlignment="Left" Margin="433,32,0,0"
+        Name="logoutButton" VerticalAlignment="Top" Width="67" Click="logoutButton_Click" />
+        <TextBlock Text="Logged in as gkovacs"  Height="28" HorizontalAlignment="Left"
+        TextAlignment="Right" Margin="285,35,0,0" Name="loggedInAs" VerticalAlignment="Top" Width="142" />
     </Grid>
 </UserControl>

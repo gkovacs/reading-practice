@@ -504,6 +504,8 @@ namespace ReadingPractice
             return txt.ActualHeight;
         }
 
+
+
         private Paragraph toParagraphHighlighting(string text, string highlight)
         {
             Paragraph par = new Paragraph();

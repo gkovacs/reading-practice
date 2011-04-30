@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     d:DesignHeight="187" d:DesignWidth="414" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
 
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
         <Button HorizontalAlignment="Right" Name="removeButton">Remove</Button>
         <controls:WrapPanel Name="NativeLanguageSentenceDisplay">
             

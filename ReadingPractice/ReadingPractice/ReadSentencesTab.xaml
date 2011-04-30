@@ -6,10 +6,28 @@
     mc:Ignorable="d"
     xmlns:rp="clr-namespace:ReadingPractice"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-    d:DesignWidth="503" d:DesignHeight="555">
-            <StackPanel Orientation="Vertical" Name="SentenceListViewer">
+    >
+    <StackPanel Orientation="Vertical" Name="SentenceListViewer">
                 <Button Name="FetchNextSentenceButton" Click="FetchNextSentenceButton_Click">Fetch next sentence</Button>
-        <sdk:Label Name="Warnings" Height="16" MinHeight="16" MaxHeight="16" HorizontalAlignment="Center">Warning Text</sdk:Label>
+        <!--<Canvas Name="WarningsCanvas" HorizontalAlignment="Stretch">
+            <TextBlock Name="Warnings" TextWrapping="Wrap">Warning Text</TextBlock>
+        </Canvas>-->
+        <RichTextBox Name="WarningsCanvas" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0">
+            <Paragraph>
+                <Run Name="Warnings">
+                    
+                </Run>
+            </Paragraph>
+        </RichTextBox>
+        
+        <!--<sdk:Label Name="Warnings" HorizontalAlignment="Center"
+            Content="Warning Text" Background="Yellow">
+            <sdk:Label.Template>
+                <ControlTemplate TargetType="sdk:Label">
+                    <TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}"/>
+                </ControlTemplate>
+            </sdk:Label.Template>
+        </sdk:Label>-->
     </StackPanel>
 
 </UserControl>

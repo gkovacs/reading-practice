@@ -75,9 +75,20 @@ namespace ReadingPractice
 //            this.Height = height;
 
             this.LayoutRoot.Width = Math.Max(dMinWidthRightSideBar, 0.5 * width);
-            this.LayoutRoot.Height = Math.Max(400, height);
+            this.LayoutRoot.Height = Math.Max(400,height);
 
-            this.tabControl1.Width = this.LayoutRoot.Width;
+            this.tabControl1.Width = this.LayoutRoot.Width - 1;
+            this.tabControl1.Height = this.LayoutRoot.Height-100;
+            this.readSentencesTab.Width = tabControl1.Width - 39;
+//            this.readSentencesTab.Height = tabControl1.Height;
+
+            this.readSentencesTab.SentenceListViewer.Height = this.tabControl1.Height-200;
+            //            this.readSentencesTab.Warnings.Width = tabControl1.Width;
+            //            this.readSentencesTab.Resize(this.tabControl1.Width - 1);
+            this.readSentencesScrollViewer.Width = (this.tabControl1.Width-12);
+
+            //this.closedTab.Width = this.LayoutRoot.Width;
+            //this.contributeTab.Width = this.LayoutRoot.Width;
         }
     }
 }
