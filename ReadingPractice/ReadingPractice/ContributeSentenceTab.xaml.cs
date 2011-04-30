@@ -45,7 +45,13 @@ namespace ReadingPractice
         {
             string translatedSentence = sentenceDictionary.translateToEnglish(nativeSentence);
             serverCommunication.sendAddContribSentence(nativeSentence, translatedSentence);
-            this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, translatedSentence, mainPage));
+            SentenceView sentview = new SentenceView(nativeSentence, translatedSentence, mainPage);
+            sentview.removeButton.Click += (o, e) =>
+            {
+                this.ContributedSentenceListViewer.Children.Remove(sentview);
+                serverCommunication.sendRmContribSentence(nativeSentence);
+            };
+            this.ContributedSentenceListViewer.Children.Insert(1, sentview);
         }
 
         private void ContributeButton_Click(object sender, RoutedEventArgs e)
