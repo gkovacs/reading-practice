@@ -14,6 +14,7 @@ using System.Windows.Browser;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows.Input;
 
 namespace ReadingPractice
 {
@@ -87,12 +88,7 @@ namespace ReadingPractice
             _serverCommunication = new ServerCommunication();
             loginScreen = new LoginScreen(this);
             waitingScreen = new WaitingScreen();
-            loginScreen.userLoggedIn += () =>
-            {
-                this.RightSidebar.userLoggedIn(username);
-                closeLoginScreen();
-                this.isLoggedIn = true;
-            };
+            loginScreen.userLoggedIn += userLoggedIn;
             this.mainPageContents.Children.Add(loginScreen);
             WebClient wc1 = new WebClient();
             wc1.OpenReadCompleted += (o1, webReadEventArgs1) =>
@@ -142,6 +138,15 @@ namespace ReadingPractice
 
             App.Current.Host.Content.Resized += new EventHandler(Content_Resized);
 
+            // remove this block to prevent auto-login as anthonyl
+            if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && serverCommunication.username == null)
+            {
+                serverCommunication.username = "anthony";
+                userLoggedIn();
+            }
+            
+            // end of auto-login block
+
             //getDisplayedWords();
             new Thread(() =>
             {
@@ -154,6 +159,13 @@ namespace ReadingPractice
                     getDisplayedWords();
                 });
             }).Start();
+        }
+
+        private void userLoggedIn()
+        {
+            this.RightSidebar.userLoggedIn(username);
+            closeLoginScreen();
+            this.isLoggedIn = true;
         }
 
         private void Content_Resized (object sender, EventArgs e)
