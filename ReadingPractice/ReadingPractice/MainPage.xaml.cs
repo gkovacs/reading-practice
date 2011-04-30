@@ -244,7 +244,7 @@ namespace ReadingPractice
             {
                 foreach (string x in sents)
                 {
-                    //RightSidebar.readSentencesTab.insertSentence(x);
+                    RightSidebar.closedSentencesTab.insertSentence(x);
                 }
                 populateContribSentenceLists();
             });

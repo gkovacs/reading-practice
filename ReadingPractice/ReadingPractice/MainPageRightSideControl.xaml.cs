@@ -41,8 +41,10 @@ namespace ReadingPractice
             LanguageSelector.SelectedIndex = 0;
             this.readSentencesTab.mainPage = mainPage;
             this.contributeSentencesTab.mainPage = mainPage;
+            this.closedSentencesTab.mainPage = mainPage;
             this.readSentencesTab.performOnStartup();
             this.contributeSentencesTab.performOnStartup();
+            this.closedSentencesTab.performOnStartup();
         }
 
         public void userLoggedIn(string username)

@@ -146,10 +146,12 @@ namespace ReadingPractice
         {
             string tranlatedSentence = sentenceDictionary.translateToEnglish(nativeSentence);
             SentenceView sentview = new SentenceView(nativeSentence, tranlatedSentence, mainPage);
+            sentview.removeButton.Content = "Close";
             sentview.removeButton.Click += (o, e) =>
             {
                 this.SentenceListViewer.Children.Remove(sentview);
                 serverCommunication.sendRmSentence(nativeSentence);
+                mainPage.RightSidebar.closedSentencesTab.insertSentence(nativeSentence);
             };
             SentenceListViewer.Children.Insert(2, sentview);
         }
