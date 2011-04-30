@@ -142,10 +142,16 @@ namespace ReadingPractice
             return false;
         }
 
-        public void insertSentence(string sent)
+        public void insertSentence(string nativeSentence)
         {
-            string tranlatedSentence = sentenceDictionary.translateToEnglish(sent);
-            SentenceListViewer.Children.Insert(2, new SentenceView(sent, tranlatedSentence, mainPage));
+            string tranlatedSentence = sentenceDictionary.translateToEnglish(nativeSentence);
+            SentenceView sentview = new SentenceView(nativeSentence, tranlatedSentence, mainPage);
+            sentview.removeButton.Click += (o, e) =>
+            {
+                this.SentenceListViewer.Children.Remove(sentview);
+                serverCommunication.sendRmSentence(nativeSentence);
+            };
+            SentenceListViewer.Children.Insert(2, sentview);
         }
 
         private void FetchNextSentenceButton_Click(object sender, RoutedEventArgs e)
