@@ -21,7 +21,7 @@ namespace ReadingPractice
         List<string> sentences = new List<string>();
         //Dictionary<string, string[]> segmentation = new Dictionary<string, string[]>();
         Dictionary<string, string> foreignToEnglish = new Dictionary<string, string>();
-        Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
+        //Dictionary<string, string> englishToForeign = new Dictionary<string, string>();
         readonly WordDictionary _wordDictionary;
         public override WordDictionary wordDictionary
         {
@@ -51,7 +51,7 @@ namespace ReadingPractice
                     if (parts.Length != 2)
                         throw new Exception();
                     foreignToEnglish[parts[0]] = parts[1];
-                    englishToForeign[parts[1]] = parts[0];
+                    //englishToForeign[parts[1]] = parts[0];
                 }
                 reader.Close();
             }
@@ -75,6 +75,12 @@ namespace ReadingPractice
             }
         }
 
+        public override void addSentence(string sentence, string translation)
+        {
+            sentences.Add(sentence);
+            foreignToEnglish[sentence] = translation;
+        }
+
         public override IList<string> getSentences(string focusWord, Func<string, bool> isWordAllowedFunc)
         {
             return sentences.Where((sent) =>
@@ -96,13 +102,6 @@ namespace ReadingPractice
             if (!foreignToEnglish.ContainsKey(foreignSentence))
                 return "";
             return foreignToEnglish[foreignSentence];
-        }
-
-        public override string translateToForeign(string englishSentence)
-        {
-            if (!englishToForeign.ContainsKey(englishSentence))
-                return "";
-            return englishToForeign[englishSentence];
         }
 
         public override string[] getWords(string foreignSentence)

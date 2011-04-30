@@ -242,8 +242,7 @@ namespace ReadingPractice
             {
                 foreach (string x in sents)
                 {
-                    
-                    //RightSidebar.readSentencesTab.insertSentence(x);
+                    RightSidebar.contributeSentencesTab.insertSentence(x);
                 }
                 finishedDownloading();
             });

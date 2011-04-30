@@ -16,6 +16,21 @@ namespace ReadingPractice
     {
         public MainPage mainPage;
 
+        public ServerCommunication serverCommunication
+        {
+            get
+            {
+                return mainPage.serverCommunication;
+            }
+        }
+        public SentenceDictionary sentenceDictionary
+        {
+            get
+            {
+                return mainPage.sentenceDictionary;
+            }
+        }
+
         public ContributeSentenceTab()
         {
             InitializeComponent();
@@ -26,11 +41,21 @@ namespace ReadingPractice
             ContributeButton.IsEnabled = false;
         }
 
+        public void insertSentence(string nativeSentence)
+        {
+            string translatedSentence = sentenceDictionary.translateToEnglish(nativeSentence);
+            serverCommunication.sendAddContribSentence(nativeSentence, translatedSentence);
+            this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, translatedSentence, mainPage));
+        }
+
         private void ContributeButton_Click(object sender, RoutedEventArgs e)
         {
             string nativeSentence = this.NativeSentenceTextBox.Text;
             string translatedSentence = this.TranslatedSentenceTextBox.Text;
-            this.ContributedSentenceListViewer.Children.Insert(1, new SentenceView(nativeSentence, translatedSentence, mainPage));
+            sentenceDictionary.addSentence(nativeSentence, translatedSentence);
+            insertSentence(nativeSentence);
+            serverCommunication.sendAddContribSentence(nativeSentence, translatedSentence);
+            mainPage.LeftSidebar.updateDisplayedWords();
             this.NativeSentenceTextBox.Text = "";
             this.TranslatedSentenceTextBox.Text = "";
         }

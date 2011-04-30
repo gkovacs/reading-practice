@@ -182,9 +182,9 @@ namespace ReadingPractice
             sendMessage("addClosedSentence.cgi.py?userName=" + username + "&sentence=" + sentence);
         }
 
-        public void sendAddContribSentence(string sentence)
+        public void sendAddContribSentence(string sentence, string translation)
         {
-            sendMessage("addContribSentence.cgi.py?userName=" + username + "&sentence=" + sentence);
+            sendMessage("addContribSentence.cgi.py?userName=" + username + "&sentence=" + sentence + "&translation=" + translation);
         }
 
         public void sendRmSentence(string sentence)

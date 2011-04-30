@@ -20,9 +20,9 @@ namespace ReadingPractice
     {
         public abstract IList<string> getSentences(string focusWord, Func<string, bool> isWordAllowedFunc);
         public abstract string translateToEnglish(string foreignSentence);
-        public abstract string translateToForeign(string englishSentence);
         public abstract string[] getWords(string foreignSentence);
         public abstract WordDictionary wordDictionary { get; }
         public abstract Languages language { get; }
+        public abstract void addSentence(string sentence, string translation);
     }
 }
