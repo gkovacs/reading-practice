@@ -6,37 +6,70 @@
     mc:Ignorable="d"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     xmlns:rp="clr-namespace:ReadingPractice"
-    d:DesignWidth="503" d:DesignHeight="685"
+    
     VerticalAlignment="Top">
 
-    <Grid x:Name="LayoutRoot" Background="White" Height="685" Width="503">
+        <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch">
+
+            
+
+        <Grid Name="TopGrid" HorizontalAlignment="Left" Width="550">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0">
+                <TextBlock Text="Logged in as gkovacs"  Height="28" HorizontalAlignment="Right"
+                        TextAlignment="Center" Margin="0,8,0,0" Name="loggedInAs" VerticalAlignment="Top" Width="142" />
+                <Button Content="Logout" Height="23" HorizontalAlignment="Right" Margin="0,5,0,0"
+                        Name="logoutButton" VerticalAlignment="Top" Width="67" Click="logoutButton_Click" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                <sdk:Label Content="Language:" Height="28" HorizontalAlignment="Left" Margin="04,8,0,0"
+                        Name="label1" VerticalAlignment="Top" Width="65" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="0,5,0,0" Name="LanguageSelector"
+                        VerticalAlignment="Top" Width="209" />
+            </StackPanel>
+        </Grid>
+
         <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0"
-        Name="tabControl1" VerticalAlignment="Top" Width="503">
-            <sdk:TabItem Header="Read Sentences" Name="readTab">
-                <ScrollViewer Name="readSentencesScrollViewer" Height="531" HorizontalAlignment="Left"
-                VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
-                    <rp:ReadSentencesTab x:Name="readSentencesTab" />
-                </ScrollViewer>
-            </sdk:TabItem>
-            <sdk:TabItem Header="Closed Sentences" Name="closedTab">
-                <ScrollViewer Name="closedSentencesScrollViewer" Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
-                    <rp:ClosedSentenceTab x:Name="closedSentencesTab" />
-                </ScrollViewer>
-            </sdk:TabItem>
-            <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
-                <ScrollViewer Name="contributeSentencesScrollViewer" Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
-                    <rp:ContributeSentenceTab x:Name="contributeSentencesTab" />
-                </ScrollViewer>
-            </sdk:TabItem>
-        </sdk:TabControl>
-        <sdk:Label Content="Language:" Height="28" HorizontalAlignment="Left" Margin="04,35,0,0"
-        Name="label1" VerticalAlignment="Top" Width="120" />
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="70,32,0,0" Name="LanguageSelector"
-        VerticalAlignment="Top" Width="209">
-        </ComboBox>
-        <Button Content="Logout" Height="23" HorizontalAlignment="Left" Margin="433,32,0,0"
-        Name="logoutButton" VerticalAlignment="Top" Width="67" Click="logoutButton_Click" />
-        <TextBlock Text="Logged in as gkovacs"  Height="28" HorizontalAlignment="Left"
-        TextAlignment="Right" Margin="285,35,0,0" Name="loggedInAs" VerticalAlignment="Top" Width="142" />
-    </Grid>
+            Name="tabControl1" VerticalAlignment="Top" Width="503">
+                <sdk:TabItem Header="Read Sentences" Name="readTab">
+                    <ScrollViewer Name="readSentencesScrollViewer" Height="531" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                        <rp:ReadSentencesTab x:Name="readSentencesTab" />
+                    </ScrollViewer>
+                </sdk:TabItem>
+                <sdk:TabItem Header="Closed Sentences" Name="closedTab">
+                    <ScrollViewer Name="closedSentencesScrollViewer" Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                        <rp:ClosedSentenceTab x:Name="closedSentencesTab" />
+                    </ScrollViewer>
+                </sdk:TabItem>
+                <sdk:TabItem Header="Contribute Sentences" Name="contributeTab">
+                    <ScrollViewer Name="contributeSentencesScrollViewer" Height="531" HorizontalAlignment="Left" VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
+                        <rp:ContributeSentenceTab x:Name="contributeSentencesTab" />
+                    </ScrollViewer>
+                </sdk:TabItem>
+            </sdk:TabControl>
+            
+        </Grid>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
 </UserControl>

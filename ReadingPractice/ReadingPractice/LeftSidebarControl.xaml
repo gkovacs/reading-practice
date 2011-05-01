@@ -17,6 +17,9 @@
                 </ControlTemplate>
             </sdk:Label.Template>
         </sdk:Label>
+        
+        
+
         <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
             <sdk:Label Content="Textbook: " ></sdk:Label>
             <ComboBox Name="textbookSelect"></ComboBox>
@@ -30,6 +33,9 @@
             <TextBox HorizontalAlignment="Stretch" Margin="15,0,0,0" Name="Search" TextChanged="Search_TextChanged">
             </TextBox>
         </StackPanel>
+        
+        
+        
         <StackPanel Orientation="Horizontal" Margin="50,5,10,5" HorizontalAlignment="Right">
             <Button Name="allowAll" Click="allowAll_Click" >Check words below</Button>
             <Button Name="banAll" Click="banAll_Click" Margin="10,0,0,0" >Uncheck words below</Button>
