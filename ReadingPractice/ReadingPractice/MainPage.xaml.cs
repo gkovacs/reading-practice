@@ -141,7 +141,14 @@ namespace ReadingPractice
             // remove this block to prevent auto-login as anthonyl
             if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && serverCommunication.username == null)
             {
-                serverCommunication.username = "anthony";
+                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Alt))
+                {
+                    serverCommunication.username = "andrew";
+                }
+                else
+                {
+                    serverCommunication.username = "anthony";
+                }
                 userLoggedIn();
             }
             
