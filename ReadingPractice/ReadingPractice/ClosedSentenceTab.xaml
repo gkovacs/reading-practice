@@ -11,7 +11,8 @@
     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="SentenceListViewer">
         <Grid HorizontalAlignment="Stretch">
             <sdk:Label HorizontalAlignment="Left">Search</sdk:Label>
-            <TextBox HorizontalAlignment="Stretch" Margin="45,0,0,0"></TextBox>
+            <TextBox Name="SearchClosedSentences" HorizontalAlignment="Stretch" Margin="45,0,0,0"
+                TextChanged="SearchClosedSentences_TextChanged"></TextBox>
         </Grid>
     </StackPanel>
 </UserControl>

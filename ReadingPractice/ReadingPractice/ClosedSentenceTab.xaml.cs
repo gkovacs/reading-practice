@@ -55,5 +55,38 @@ namespace ReadingPractice
             };
             this.SentenceListViewer.Children.Insert(1, sentview);
         }
+
+
+        void findClosedSentencesAsynch()
+        {
+            // lock ()
+            // {
+            // List newMatches = new List<>()
+            // global list of ALL closed sentences: allClosedSentences
+            // for each sentence in allClosedSentences
+            //    if the sentence matches the search query
+            //    then add the sentence to newMatches
+            // prevSentenceMatches = newMatches
+
+
+            // for existing search, if the user simply entered more keys,
+            // then u can narrow the search by searching through the previous search
+            // you'll need some sort of previousSentenceMatches
+            // search through the list of prevSentenceMatches
+            // for each sentence in prevSentenceMatches
+            // remove the nonmatching sentences from prevSentenceMatches
+
+
+            // draw(prevSentenceMatches)
+            // }
+        }
+
+        private void SearchClosedSentences_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // schedule a thread and run findClosedSentencesAsynch in the thread
+
+            
+        }
+
     }
 }
