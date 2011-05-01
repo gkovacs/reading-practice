@@ -265,7 +265,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="PinYin" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Displayed" HorizontalAlignment="Center"/>
 
                         </Grid>
                         <Grid Name="SortByDisplayedGrid" Width="114" HorizontalAlignment="Center">
