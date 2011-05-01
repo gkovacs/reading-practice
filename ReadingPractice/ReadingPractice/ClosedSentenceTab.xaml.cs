@@ -9,7 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
+using System.Threading;
+using System.Diagnostics;
 namespace ReadingPractice
 {
     public partial class ClosedSentenceTab : UserControl
@@ -30,6 +32,13 @@ namespace ReadingPractice
                 return mainPage.sentenceDictionary;
             }
         }
+        public WordDictionary wordDictionary
+        {
+            get
+            {
+                return mainPage.wordDictionary;
+            }
+        }
 
         public ClosedSentenceTab()
         {
@@ -43,6 +52,7 @@ namespace ReadingPractice
 
         public void insertSentence(string nativeSentence)
         {
+            allClosedSentences.Add(nativeSentence);
             string translatedSentence = sentenceDictionary.translateToEnglish(nativeSentence);
             serverCommunication.sendAddClosedSentence(nativeSentence);
             SentenceView sentview = new SentenceView(nativeSentence, translatedSentence, mainPage);
@@ -55,35 +65,70 @@ namespace ReadingPractice
             };
             this.SentenceListViewer.Children.Insert(1, sentview);
         }
+/// <summary>
+/// NEW CODE BY ANDREW
+/// </summary>
+        public IList<string> allClosedSentences = new List<string>();
 
-
-        void findClosedSentencesAsynch()
+        public IList<string> newMatches;
+        void findClosedSentencesAsynch(string searchText)
         {
-            // lock ()
-            // {
-            // List newMatches = new List<>()
-            // global list of ALL closed sentences: allClosedSentences
-            // for each sentence in allClosedSentences
-            //    if the sentence matches the search query
-            //    then add the sentence to newMatches
-            // prevSentenceMatches = newMatches
+                //SentenceListViewer.Dispatcher.BeginInvoke(() =>
+                //{
+            for (int i = 1; i < SentenceListViewer.Children.Count; ++i)
+            {
+                SentenceListViewer.Children.RemoveAt(i);
+            }
+                //});
+                
+                if (searchText == ""){
+                    foreach (string sentence in allClosedSentences){
+                        string translatedSentence = sentenceDictionary.translateToEnglish(sentence);
+                        SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage);
+                        //SentenceListViewer.Dispatcher.BeginInvoke(() =>
+                        //{
+                            SentenceListViewer.Children.Insert(1, sv);
+                        //});
+                        
+                    }
+                }
+                else {
+                    foreach (string sentence in allClosedSentences){
+                        string translatedSentence = sentenceDictionary.translateToEnglish(sentence);
+                        bool matchingPinyin = false;
+                        foreach (string word in sentenceDictionary.getWords(sentence))
+                        {
+                            if (wordDictionary.getReading(word).Contains(searchText) || wordDictionary.translateToEnglish(word).Contains(searchText))
+                            {
+                                matchingPinyin = true;
+                                break;
+                            }
+                        }
+                        if (matchingPinyin || sentence.Contains(searchText) || translatedSentence.Contains(searchText))
+                        {
+                           
+                            SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage);
+                            //SentenceListViewer.Dispatcher.BeginInvoke(() =>
+                            //{
+                                SentenceListViewer.Children.Insert(1, sv);
+                            //});
+                        }
+                    }
+                }
 
-
-            // for existing search, if the user simply entered more keys,
-            // then u can narrow the search by searching through the previous search
-            // you'll need some sort of previousSentenceMatches
-            // search through the list of prevSentenceMatches
-            // for each sentence in prevSentenceMatches
-            // remove the nonmatching sentences from prevSentenceMatches
-
-
-            // draw(prevSentenceMatches)
-            // }
-        }
+            }
 
         private void SearchClosedSentences_TextChanged(object sender, TextChangedEventArgs e)
         {
             // schedule a thread and run findClosedSentencesAsynch in the thread
+            
+            string searchText = SearchClosedSentences.Text.Trim();
+            Debug.WriteLine(searchText);
+            //Thread t = new Thread(() =>
+            //{
+                findClosedSentencesAsynch(searchText);
+            //});
+            //t.Start();
 
             
         }

@@ -133,6 +133,8 @@ namespace ReadingPractice
 
         private bool isAlreadyPresent(string sentence)
         {
+            if (mainPage.RightSidebar.closedSentencesTab.allClosedSentences.Contains(sentence))
+                return true;
             foreach (var x in SentenceListViewer.Children.Skip(2))
             {
                 SentenceView sen = (SentenceView)x;
