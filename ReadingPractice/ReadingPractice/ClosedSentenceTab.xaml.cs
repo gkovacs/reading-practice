@@ -85,6 +85,7 @@ namespace ReadingPractice
                     foreach (string sentence in allClosedSentences){
                         string translatedSentence = sentenceDictionary.translateToEnglish(sentence);
                         SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage);
+                        sv.removeButton.Content = "Restore";
                         //SentenceListViewer.Dispatcher.BeginInvoke(() =>
                         //{
                             SentenceListViewer.Children.Insert(1, sv);
@@ -108,6 +109,7 @@ namespace ReadingPractice
                         {
                            
                             SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage);
+                            sv.removeButton.Content = "Restore";
                             //SentenceListViewer.Dispatcher.BeginInvoke(() =>
                             //{
                                 SentenceListViewer.Children.Insert(1, sv);
