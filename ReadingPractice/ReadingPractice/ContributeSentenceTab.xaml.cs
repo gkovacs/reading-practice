@@ -94,9 +94,9 @@ namespace ReadingPractice
 
         internal void Resize (double height,double width)
         {
-            this.NativeSentenceTextBox.Width = width / 2;
-            this.TranslatedSentenceTextBox.Width = this.NativeSentenceTextBox.Width;
-            this.ContributeButton.Width = this.NativeSentenceTextBox.Width;
+            //this.NativeSentenceTextBox.Width = width / 2;
+            //this.TranslatedSentenceTextBox.Width = this.NativeSentenceTextBox.Width;
+            //this.ContributeButton.Width = this.NativeSentenceTextBox.Width;
 //            this.ContributedSentenceListViewer.Width = width / 2;
 //            this.LayoutRoot.Width = width / 2;
         }

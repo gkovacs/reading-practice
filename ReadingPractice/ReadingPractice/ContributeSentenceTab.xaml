@@ -10,25 +10,21 @@
     
     <StackPanel Orientation="Vertical" Name="ContributedSentenceListViewer" HorizontalAlignment="Stretch">
     <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch">
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <sdk:Label Content="Sentence" Height="28" HorizontalAlignment="Left" Margin="20,20,0,0"
-                    Name="label1" VerticalAlignment="Top" Width="70" />
-                <TextBox Height="81" HorizontalAlignment="Stretch" Margin="0,20,0,0" Name="NativeSentenceTextBox"
-                    VerticalAlignment="Top" Width="272" TextChanged="NativeSentenceTextBox_TextChanged" 
-                    AcceptsReturn = "true" TextWrapping = "Wrap"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <sdk:Label Content="Translation" Height="28" HorizontalAlignment="Left" Margin="20,113,0,0"
-                    Name="label2" VerticalAlignment="Top" Width="70" />
-                <TextBox Height="81" HorizontalAlignment="Left" Margin="0,113,0,0" Name="TranslatedSentenceTextBox"
-                    VerticalAlignment="Top" Width="272" TextChanged="TranslatedSentenceTextBox_TextChanged"
-                    AcceptsReturn = "true" TextWrapping = "Wrap" />
-            </StackPanel>
-            <StackPanel>
-                <Button Content="Contribute Sentence" Height="23" HorizontalAlignment="Left"
-                    Margin="90,200,0,0" Name="ContributeButton" VerticalAlignment="Top" Width="272" Click="ContributeButton_Click" />
-            </StackPanel>
+                <sdk:Label Content="Sentence" Height="28" HorizontalAlignment="Left" Margin="10,20,0,0"
+                    Name="label1" VerticalAlignment="Top" Width="70" MaxWidth="70" MinWidth="70" />
+                <TextBox Height="81" HorizontalAlignment="Stretch" Margin="85,20,20,0" Name="NativeSentenceTextBox"
+                    VerticalAlignment="Top" TextChanged="NativeSentenceTextBox_TextChanged" 
+                    AcceptsReturn = "False" TextWrapping = "Wrap"/>
+            
+            
+                <sdk:Label Content="Translation" Height="28" HorizontalAlignment="Left" Margin="10,113,0,0"
+                    Name="label2" VerticalAlignment="Top" Width="70" MaxWidth="70" MinWidth="70" />
+                <TextBox Height="81" HorizontalAlignment="Stretch" Margin="85,113,20,0" Name="TranslatedSentenceTextBox"
+                    VerticalAlignment="Top" TextChanged="TranslatedSentenceTextBox_TextChanged"
+                    AcceptsReturn = "False" TextWrapping = "Wrap" />
+            
+                <Button Content="Contribute Sentence" Height="23" HorizontalAlignment="Stretch"
+                    Margin="85,200,20,0" Name="ContributeButton" VerticalAlignment="Top" Click="ContributeButton_Click" />
     </Grid>
         
     </StackPanel>
