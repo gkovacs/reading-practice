@@ -546,7 +546,7 @@ namespace ReadingPractice
 
                 double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
                 double scrollViewerHeight = VocabSelectionScrollViewer.Height;
-                double scrollViewerWidth = VocabSelectionScrollViewer.ActualWidth;
+                double scrollViewerWidth = VocabSelectionScrollViewer.Width;
                 double verticalOffsetEnd = verticalOffsetStart + scrollViewerHeight;
 
                 if (positions.Length == 0)
@@ -621,7 +621,7 @@ namespace ReadingPractice
                     kRomanization.Height = height;
                     kRomanization.MinHeight = height;
 //                    kRomanization.Width = readingColumnWidth;
-                    kRomanization.Width = sortByPinyin.ActualWidth;
+                    kRomanization.Width = sortByPinyin.Width;
                     kRomanization.Blocks.Add(toParagraphHighlighting(wordDictionary.getReading(word), searchText));
                     kRomanization.Background = new SolidColorBrush(Colors.Transparent);
                     kRomanization.BorderThickness = new Thickness(0.0);
@@ -634,7 +634,7 @@ namespace ReadingPractice
                     kTranslation.Height = height;
                     kTranslation.MinHeight = height;
 //                    kTranslation.Width = translationColumnWidth;
-                    kTranslation.Width = sortByEnglish.ActualWidth;
+                    kTranslation.Width = sortByEnglish.Width;
                     kTranslation.Blocks.Add(toParagraphHighlighting(wordDictionary.translateToEnglish(word), searchText));
                     kTranslation.TextWrapping = TextWrapping.Wrap;
                     //kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
@@ -1027,6 +1027,7 @@ namespace ReadingPractice
             Debug.WriteLine(this.MainStackPanel.Width);
 
             VocabSelectionScrollViewer.Width = this.MainStackPanel.Width;
+            //VocabSelectionCanvas.Width = this.MainStackPanel.Width;
 
             DrawSearchMatches();
         }
