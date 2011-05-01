@@ -19,22 +19,30 @@
         </sdk:Label>
         
         
+        <Grid Name="SelectGrid" HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-            <sdk:Label Content="Textbook: " ></sdk:Label>
-            <ComboBox Name="textbookSelect"></ComboBox>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="5,1,0,0">
-            <sdk:Label Content="Chapter:  "></sdk:Label>
-            <ComboBox Name="chapterSelect" Margin="2,0,0,0"></ComboBox>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Name="searchContainer" Margin="5,5,0,0">
-            <sdk:Label Content="Search:"  Height="28" Name="label3"/>
-            <TextBox HorizontalAlignment="Stretch" Margin="15,0,0,0" Name="Search" TextChanged="Search_TextChanged">
-            </TextBox>
-        </StackPanel>
-        
-        
+            <sdk:Label Content="Textbook: " Grid.Column="0" Grid.Row="0" Margin="5,0,0,0" />
+            <ComboBox Name="textbookSelect" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"
+                Margin="0,0,5,0" />
+
+            <sdk:Label Content="Chapter:  " Grid.Column="0" Grid.Row="1" Margin="5,0,0,0" />
+            <ComboBox Name="chapterSelect" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"
+                Margin="0,0,5,0" />
+
+            <sdk:Label Content="Search:"  Height="28" Name="label3" Grid.Column="0" Grid.Row="2"
+                Margin="5,0,0,0" />
+            <TextBox HorizontalAlignment="Stretch" Name="Search" TextChanged="Search_TextChanged" Height="22"
+                Grid.Column="1" Grid.Row="2" Margin="0,0,5,0" />
+        </Grid>
         
         <StackPanel Orientation="Horizontal" Margin="50,5,10,5" HorizontalAlignment="Right">
             <Button Name="allowAll" Click="allowAll_Click" >Check words below</Button>

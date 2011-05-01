@@ -779,7 +779,6 @@ namespace ReadingPractice
                 // if search text is empty, or current search text is not a substring of the previous search
                 if (searchText == "")
                 {
-                    Debug.WriteLine("findMatchingTextSynchronous");
                     this.kMatches = filterToTextbookAndChapter(wordDictionary.listWords());
                     this.kPrevSearchTerm = searchText;
                     computeOffsets();
@@ -1006,7 +1005,10 @@ namespace ReadingPractice
 
 //            textbookSelect.Measure(new Size(this.MainStackPanel.Width - 70, textbookSelect.ActualHeight));
 //            Debug.WriteLine(textbookSelect.Measure();
-            Search.Width = Math.Max(100, this.MainStackPanel.Width - 70);
+//            Search.Width = Math.Max(100, this.MainStackPanel.Width - 70);
+
+            SelectGrid.Width = Math.Max(100, this.MainStackPanel.Width);
+
 
             sortByPinyin.Width =
                 Math.Max(dButtonMinWidthFractionSortPinyin*(dMinWidthLeftSideBar-dSortByWidth),

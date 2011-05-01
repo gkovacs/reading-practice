@@ -33,7 +33,7 @@
                 <sdk:Label Content="Language:" Height="28" HorizontalAlignment="Left" Margin="04,8,0,0"
                         Name="label1" VerticalAlignment="Top" Width="65" />
                 <ComboBox Height="23" HorizontalAlignment="Left" Margin="0,5,0,0" Name="LanguageSelector"
-                        VerticalAlignment="Top" Width="209" />
+                        VerticalAlignment="Top" />
             </StackPanel>
         </Grid>
 
