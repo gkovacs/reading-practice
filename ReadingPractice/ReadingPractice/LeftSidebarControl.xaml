@@ -21,8 +21,9 @@
         
         <Grid Name="SelectGrid" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"></RowDefinition>
-                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="22"></RowDefinition>
+                <RowDefinition Height="2"></RowDefinition>
+                <RowDefinition Height="22"></RowDefinition>
                 <RowDefinition Height="28"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -34,20 +35,21 @@
             <ComboBox Name="textbookSelect" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"
                 Margin="0,0,5,0" />
 
-            <sdk:Label Content="Chapter:  " Grid.Column="0" Grid.Row="1" Margin="5,0,0,0" />
-            <ComboBox Name="chapterSelect" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"
+            <sdk:Label Content="Chapter:  " Grid.Column="0" Grid.Row="2" Margin="5,0,0,0" />
+            <ComboBox Name="chapterSelect" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2"
                 Margin="0,0,5,0" />
 
-            <sdk:Label Content="Search:"  Height="28" Name="label3" Grid.Column="0" Grid.Row="2"
+            <sdk:Label Content="Search:"  Height="28" Name="label3" Grid.Column="0" Grid.Row="3"
                 Margin="5,0,0,0" />
             <TextBox HorizontalAlignment="Stretch" Name="Search" TextChanged="Search_TextChanged" Height="22"
-                Grid.Column="1" Grid.Row="2" Margin="0,0,5,0" />
+                Grid.Column="1" Grid.Row="3" Margin="0,0,5,0" />
         </Grid>
         
-        <StackPanel Orientation="Horizontal" Margin="50,5,10,5" HorizontalAlignment="Right">
+        <StackPanel Orientation="Horizontal" Margin="0,5,10,5" HorizontalAlignment="Right">
             <Button Name="allowAll" Click="allowAll_Click" >Check words below</Button>
             <Button Name="banAll" Click="banAll_Click" Margin="10,0,0,0" >Uncheck words below</Button>
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal"  Name="sort" Margin="5,0,0,0">
             <sdk:Label Content="Sort by:   " Width="65" Height="28" Name="label4" Margin="0,0,0,0" />
 
