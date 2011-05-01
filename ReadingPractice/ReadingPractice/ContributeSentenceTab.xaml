@@ -6,15 +6,27 @@
     xmlns:rp="clr-namespace:ReadingPractice"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
+    >
     
-    <StackPanel Orientation="Vertical" Name="ContributedSentenceListViewer">
-    <Grid x:Name="LayoutRoot" Background="White">
-        <sdk:Label Content="Sentence" Height="28" HorizontalAlignment="Left" Margin="12,16,0,0" Name="label1" VerticalAlignment="Top" Width="120" />
-        <TextBox Height="81" HorizontalAlignment="Left" Margin="90,16,0,0" Name="NativeSentenceTextBox" VerticalAlignment="Top" Width="272" TextChanged="NativeSentenceTextBox_TextChanged" />
-        <sdk:Label Content="Translation" Height="28" HorizontalAlignment="Left" Margin="12,103,0,0" Name="label2" VerticalAlignment="Top" Width="120" />
-        <TextBox Height="81" HorizontalAlignment="Left" Margin="90,103,0,0" Name="TranslatedSentenceTextBox" VerticalAlignment="Top" Width="272" TextChanged="TranslatedSentenceTextBox_TextChanged" />
-        <Button Content="Contribute Sentence" Height="23" HorizontalAlignment="Left" Margin="90,190,0,0" Name="ContributeButton" VerticalAlignment="Top" Width="272" Click="ContributeButton_Click" />
+    <StackPanel Orientation="Vertical" Name="ContributedSentenceListViewer" HorizontalAlignment="Stretch">
+    <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <sdk:Label Content="Sentence" Height="28" HorizontalAlignment="Left" Margin="20,20,0,0"
+                    Name="label1" VerticalAlignment="Top" Width="70" />
+                <TextBox Height="81" HorizontalAlignment="Stretch" Margin="0,20,0,0" Name="NativeSentenceTextBox"
+                    VerticalAlignment="Top" Width="272" TextChanged="NativeSentenceTextBox_TextChanged" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <sdk:Label Content="Translation" Height="28" HorizontalAlignment="Left" Margin="20,113,0,0"
+                    Name="label2" VerticalAlignment="Top" Width="70" />
+                <TextBox Height="81" HorizontalAlignment="Left" Margin="0,113,0,0" Name="TranslatedSentenceTextBox"
+                    VerticalAlignment="Top" Width="272" TextChanged="TranslatedSentenceTextBox_TextChanged" />
+            </StackPanel>
+            <StackPanel>
+                <Button Content="Contribute Sentence" Height="23" HorizontalAlignment="Left"
+                    Margin="90,200,0,0" Name="ContributeButton" VerticalAlignment="Top" Width="272" Click="ContributeButton_Click" />
+            </StackPanel>
     </Grid>
         
     </StackPanel>

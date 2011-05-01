@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
+using System.Diagnostics;
+
 namespace ReadingPractice
 {
     public partial class ContributeSentenceTab : UserControl
@@ -88,6 +90,15 @@ namespace ReadingPractice
             {
                 ContributeButton.IsEnabled = false;
             }
+        }
+
+        internal void Resize (double height,double width)
+        {
+            this.NativeSentenceTextBox.Width = width / 2;
+            this.TranslatedSentenceTextBox.Width = this.NativeSentenceTextBox.Width;
+            this.ContributeButton.Width = this.NativeSentenceTextBox.Width;
+//            this.ContributedSentenceListViewer.Width = width / 2;
+//            this.LayoutRoot.Width = width / 2;
         }
     }
 }

@@ -97,6 +97,11 @@ namespace ReadingPractice
             this.contributeSentencesScrollViewer.Width = this.tabControl1.Width - 12;
             this.contributeSentencesScrollViewer.Height = this.tabControl1.Height - 37;
 
+            //this.contributeSentencesTab.Width = contributeSentencesScrollViewer.Width-5;
+            //ContributedSentenceListViewer
+
+            this.contributeSentencesTab.Resize(contributeSentencesScrollViewer.Height,
+                contributeSentencesScrollViewer.Width);
         }
     }
 }
