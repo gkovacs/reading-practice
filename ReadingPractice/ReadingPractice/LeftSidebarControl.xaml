@@ -51,41 +51,252 @@
         </StackPanel>
         
         <StackPanel Orientation="Horizontal"  Name="sort" Margin="5,0,0,0">
+            <StackPanel.Resources>
+
+                <ControlTemplate TargetType="Button" x:Key="RectButtonTemplate">
+
+                    <!--
+                <Style x:Key="ButtonStyle1" TargetType="Button">
+
+                    <Setter Property="Background" Value="#FF1F3B53"/>
+                    <Setter Property="Foreground" Value="#FF000000"/>
+                    <Setter Property="Padding" Value="3"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFA3AEB9" Offset="0"/>
+                                <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                                <GradientStop Color="#FF718597" Offset="0.375"/>
+                                <GradientStop Color="#FF617584" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                   
+
+                </Style>
+-->
+
+                    <Grid>
+                        
+                        <Border x:Name="Background" Background="White" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0,0,0,0">
+                            <Grid Margin="1" Background="{TemplateBinding Background}">
+                                <Border x:Name="BackgroundAnimation" Opacity="0" Background="#FF448DCA"/>
+                                <Rectangle x:Name="BackgroundGradient">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint=".7,1" StartPoint=".7,0">
+                                            <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                            <GradientStop Color="#F9FFFFFF" Offset="0.375"/>
+                                            <GradientStop Color="#E5FFFFFF" Offset="0.625"/>
+                                            <GradientStop Color="#C6FFFFFF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" x:Name="contentPresenter" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        <Rectangle x:Name="DisabledVisualElement" IsHitTestVisible="false" Opacity="0" RadiusX="0" RadiusY="0" Fill="#FFFFFFFF"/>
+                        <Rectangle Margin="1" x:Name="FocusVisualElement" IsHitTestVisible="false" Opacity="0" RadiusX="0" RadiusY="0" Stroke="#FF6DBDD1" StrokeThickness="1"/>
+
+
+
+                        <VisualStateManager.VisualStateGroups>
+                            <!--Define the states for the common states.
+                            The states in the VisualStateGroup are mutually exclusive to
+                            each other.-->
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <!--The Normal state is the state the button is in
+                                when it is not in another state from this VisualStateGroup.-->
+                                <VisualState x:Name="Normal" />
+                                <!--Change the SolidColorBrush, BorderBrush, to red when the
+                                mouse is over the button.-->
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#F2FFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#CCFFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#7FFFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <!--Change the SolidColorBrush, BorderBrush, to Transparent when the
+                                button is pressed.-->
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#FF6DBDD1"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#D8FFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#C6FFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#8CFFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)">
+                                            <SplineColorKeyFrame KeyTime="0" Value="#3FFFFFFF"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <!--The Disabled state is omitted for brevity.-->
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+
+
+                    </Grid>
+                </ControlTemplate>
+            </StackPanel.Resources>
+            
             <sdk:Label Content="Sort by:   " Width="65" Height="28" Name="label4" Margin="0,0,0,0" />
 
             <Button Name="sortByPinyin" Click="sortPinYin" Margin="0,0,0,0" Width="114"
-            HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <sdk:Label HorizontalAlignment="Left">PinYin</sdk:Label>
-                    <Image Name="PinYinSortImage" Width="10" HorizontalAlignment="Right" Margin="10,0,0,0">
-                        <Image.Source>
-                            <BitmapImage x:Name="PinYinSortImageSource" />
-                        </Image.Source>
-                    </Image>
-                </StackPanel>
+            HorizontalAlignment="Stretch" Template="{StaticResource RectButtonTemplate}">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="PinYin" HorizontalAlignment="Center"/>
+                            
+                        </Grid>
+                        <Grid Name="SortByPinyinGrid" Width="114" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="8"></ColumnDefinition>
+                                <ColumnDefinition Width="10"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Path Name="SortPinyinPath" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            Grid.Column="1" Grid.Row="0" Stroke="Black" Fill="BLack">
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathGeometry.Figures>
+                                            <PathFigure x:Name="SortPinyinPathP0" StartPoint="2.5, 1.25" IsClosed="True">
+                                                <LineSegment x:Name="SortPinyinPathP1" Point="0,3.75"/>
+                                                <LineSegment x:Name="SortPinyinPathP2" Point="5,3.75"/>
+                                            </PathFigure>
+                                        </PathGeometry.Figures>
+                                    </PathGeometry>
+                                </Path.Data>
+                            </Path>
+                        </Grid>
+                    </Grid>
+                </Button.Content>
             </Button>
+
             <Button Name="sortByEnglish" Click="sortEnglish" Margin="0,0,0,0" Width="210"
-            HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <sdk:Label HorizontalAlignment="Left">English</sdk:Label>
-                    <Image Name="EnglishSortImage" Width="10" HorizontalAlignment="Right" Margin="10,0,0,0">
-                        <Image.Source>
-                            <BitmapImage x:Name="EnglishSortImageSource" />
-                        </Image.Source>
-                    </Image>
-                </StackPanel>
+            HorizontalAlignment="Stretch" Template="{StaticResource RectButtonTemplate}">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="English" HorizontalAlignment="Center"/>
+
+                        </Grid>
+                        <Grid Name="SortByEnglishGrid" Width="114" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="8"></ColumnDefinition>
+                                <ColumnDefinition Width="10"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Path VerticalAlignment="Center" HorizontalAlignment="Right"
+                            Grid.Column="1" Grid.Row="0" Stroke="Black" Fill="BLack">
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathGeometry.Figures>
+                                            <PathFigure x:Name="SortEnglishPathP0" StartPoint="2.5, 1.25" IsClosed="True">
+                                                <LineSegment x:Name="SortEnglishPathP1" Point="0,3.75"/>
+                                                <LineSegment x:Name="SortEnglishPathP2" Point="5,3.75"/>
+                                            </PathFigure>
+                                        </PathGeometry.Figures>
+                                    </PathGeometry>
+                                </Path.Data>
+                            </Path>
+                        </Grid>
+                    </Grid>
+                </Button.Content>
             </Button>
+
             <Button Name="sortByDisplayed" Click="sortDisplayed" Margin="0,0,0,0" Width="213"
-            HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <sdk:Label HorizontalAlignment="Left">Displayed</sdk:Label>
-                    <Image Name="DisplayedSortImage" Width="10" HorizontalAlignment="Right" Margin="10,0,0,0">
-                        <Image.Source>
-                            <BitmapImage x:Name="DisplayedSortImageSource" />
-                        </Image.Source>
-                    </Image>
-                </StackPanel>
+            HorizontalAlignment="Stretch" Template="{StaticResource RectButtonTemplate}">
+                <Button.Content>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="PinYin" HorizontalAlignment="Center"/>
+
+                        </Grid>
+                        <Grid Name="SortByDisplayedGrid" Width="114" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="8"></ColumnDefinition>
+                                <ColumnDefinition Width="10"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Path Name="SortDisplayedPath" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            Grid.Column="1" Grid.Row="0" Stroke="Black" Fill="BLack">
+                                <Path.Data>
+                                    <PathGeometry>
+                                        <PathGeometry.Figures>
+                                            <PathFigure x:Name="SortDisplayedPathP0" StartPoint="2.5, 1.25" IsClosed="True">
+                                                <LineSegment x:Name="SortDisplayedPathP1" Point="0,3.75"/>
+                                                <LineSegment x:Name="SortDisplayedPathP2" Point="5,3.75"/>
+                                            </PathFigure>
+                                        </PathGeometry.Figures>
+                                    </PathGeometry>
+                                </Path.Data>
+                            </Path>
+                        </Grid>
+                    </Grid>
+                </Button.Content>
             </Button>
+
+
+
         </StackPanel>
         
         <ScrollViewer Name="VocabSelectionScrollViewer" VerticalScrollBarVisibility="Auto" Height="400">
