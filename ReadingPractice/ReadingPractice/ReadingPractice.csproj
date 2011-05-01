@@ -194,7 +194,10 @@
     <None Include="cmn-simp-word-freqs.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="downarrow.png" />
+    <Resource Include="blank.png" />
     <Content Include="LeftSidebarControl.xaml.csdiscard.txt" />
+    <Resource Include="uparrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

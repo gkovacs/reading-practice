@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Windows.Media.Imaging;
 
 namespace ReadingPractice
 {
@@ -904,22 +905,35 @@ namespace ReadingPractice
 
         void resetSortButtonColors ()
         {
-            sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-            sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-            sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            
+            setBlankImage(PinYinSortImageSource);
+            setBlankImage(EnglishSortImageSource);
+            setBlankImage(DisplayedSortImageSource);
+
+            //sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            //sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            //sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
         }
 
         private void sortPinYin(object sender, RoutedEventArgs e)
         {
+            bool reverse = isDown(PinYinSortImageSource);
+            resetSortButtonColors();
+            if (reverse)
+                setUpImage(PinYinSortImageSource);
+            else
+                setDownImage(PinYinSortImageSource);
+
             if ( kMatches == null )
                 return;
 
             List<string> k = (List<string>)(kMatches);//.sort
             k.Sort(PinyinCompare);
+            if (reverse)
+                k.Reverse();
             computeOffsets();
 
-            resetSortButtonColors();
-            sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+            //sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
 
             // then issue re-display
             DrawSearchMatches();
@@ -927,6 +941,13 @@ namespace ReadingPractice
 
         private void sortEnglish(object sender, RoutedEventArgs e)
         {
+            bool reverse = isDown(EnglishSortImageSource);
+            resetSortButtonColors();
+            if (reverse)
+                setUpImage(EnglishSortImageSource);
+            else
+                setDownImage(EnglishSortImageSource);
+
             if ( kMatches == null )
                 return;
             
@@ -934,10 +955,9 @@ namespace ReadingPractice
 
             List<string> k = (List<string>)(kMatches);//.sort
             k.Sort(EnglishCompare);
+            if (reverse)
+                k.Reverse();
             computeOffsets();
-
-            resetSortButtonColors();
-            sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
 
             // then issue re-display
             DrawSearchMatches();
@@ -945,18 +965,56 @@ namespace ReadingPractice
 
         private void sortDisplayed(object sender, RoutedEventArgs e)
         {
+            bool reverse = isDown(DisplayedSortImageSource);
+            resetSortButtonColors();
+            if (reverse)
+                setUpImage(DisplayedSortImageSource);
+            else
+                setDownImage(DisplayedSortImageSource);
+
             if (kMatches == null)
                 return;
 
             List<string> k = (List<string>)(kMatches);//.sort
             k.Sort(DisplayedCompare);
+            if (reverse)
+                k.Reverse();
             computeOffsets();
-
-            resetSortButtonColors();
-            sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
 
             // then issue re-display
             DrawSearchMatches();
+        }
+
+        private HashSet<BitmapImage> downImages = new HashSet<BitmapImage>();
+
+        private bool isDown(BitmapImage img)
+        {
+            return downImages.Contains(img);
+        }
+
+        private Stream downArrowStream = Application.GetResourceStream(new Uri("ReadingPractice;component/downarrow.png", UriKind.Relative)).Stream;
+        private Stream upArrowStream = Application.GetResourceStream(new Uri("ReadingPractice;component/uparrow.png", UriKind.Relative)).Stream;
+        private Stream blankStream = Application.GetResourceStream(new Uri("ReadingPractice;component/blank.png", UriKind.Relative)).Stream;
+        
+
+        private void setDownImage(BitmapImage img)
+        {
+            downImages.Add(img);
+            img.SetSource(downArrowStream);
+        }
+
+        private void setUpImage(BitmapImage img)
+        {
+            if (downImages.Contains(img))
+                downImages.Remove(img);
+            img.SetSource(upArrowStream);
+        }
+
+        private void setBlankImage(BitmapImage img)
+        {
+            if (downImages.Contains(img))
+                downImages.Remove(img);
+            img.SetSource(blankStream);
         }
 
         private void StudyFocusForeignWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1036,6 +1094,11 @@ namespace ReadingPractice
         {
             // the study focus height changed, so need to resize searches
             this.Resize(App.Current.Host.Content.ActualHeight, App.Current.Host.Content.ActualWidth);
+        }
+
+        private void PinYinSortImageSource_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            Debug.WriteLine(e.ErrorException);
         }
     }
 }

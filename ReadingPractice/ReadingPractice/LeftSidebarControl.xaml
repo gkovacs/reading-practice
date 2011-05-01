@@ -55,15 +55,36 @@
 
             <Button Name="sortByPinyin" Click="sortPinYin" Margin="0,0,0,0" Width="114"
             HorizontalAlignment="Stretch">
-                PinYin
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <sdk:Label HorizontalAlignment="Left">PinYin</sdk:Label>
+                    <Image Name="PinYinSortImage" Width="10" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Image.Source>
+                            <BitmapImage x:Name="PinYinSortImageSource" />
+                        </Image.Source>
+                    </Image>
+                </StackPanel>
             </Button>
             <Button Name="sortByEnglish" Click="sortEnglish" Margin="0,0,0,0" Width="210"
             HorizontalAlignment="Stretch">
-                English
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <sdk:Label HorizontalAlignment="Left">English</sdk:Label>
+                    <Image Name="EnglishSortImage" Width="10" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Image.Source>
+                            <BitmapImage x:Name="EnglishSortImageSource" />
+                        </Image.Source>
+                    </Image>
+                </StackPanel>
             </Button>
             <Button Name="sortByDisplayed" Click="sortDisplayed" Margin="0,0,0,0" Width="213"
             HorizontalAlignment="Stretch">
-                Displayed
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <sdk:Label HorizontalAlignment="Left">Displayed</sdk:Label>
+                    <Image Name="DisplayedSortImage" Width="10" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Image.Source>
+                            <BitmapImage x:Name="DisplayedSortImageSource" />
+                        </Image.Source>
+                    </Image>
+                </StackPanel>
             </Button>
         </StackPanel>
         
