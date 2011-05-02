@@ -13,9 +13,9 @@
             <Grid>
                 <sdk:Label Content="Username" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" Name="label1" VerticalAlignment="Top" />
                 <sdk:Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" Name="label2" VerticalAlignment="Top" />
-                <TextBox TabIndex="0" Height="23" HorizontalAlignment="Stretch" Margin="81,6,0,0" Name="loginUserNameTextBox" VerticalAlignment="Top" TextChanged="loginUserNameTextBox_TextChanged" />
-                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="81,40,0,0" Name="loginPasswordTextBox" VerticalAlignment="Top" PasswordChanged="loginPasswordTextBox_PasswordChanged" />
-                <Button Content="Login" Height="23" HorizontalAlignment="Right" Margin="0,84,0,0" Name="loginButton" VerticalAlignment="Top" Width="75" Click="loginButton_Click" />
+                <TextBox TabIndex="0" Height="23" HorizontalAlignment="Stretch" Margin="81,6,0,0" Name="loginUserNameTextBox" VerticalAlignment="Top" TextChanged="loginUserNameTextBox_TextChanged" KeyUp="loginPasswordTextBox_KeyUp" />
+                <PasswordBox TabIndex="1" Height="23" HorizontalAlignment="Stretch" Margin="81,40,0,0" Name="loginPasswordTextBox" VerticalAlignment="Top" PasswordChanged="loginPasswordTextBox_PasswordChanged" KeyUp="loginPasswordTextBox_KeyUp" />
+                <Button TabIndex="2" Content="Login" Height="23" HorizontalAlignment="Right" Margin="0,84,0,0" Name="loginButton" VerticalAlignment="Top" Width="75" Click="loginButton_Click" />
                 <sdk:Label Content=""  Height="23" HorizontalAlignment="Stretch" Margin="6,84,81,0" Name="loginErrors" VerticalAlignment="Top" />
             </Grid>
         </sdk:TabItem>
@@ -23,9 +23,9 @@
             <Grid>
                 <sdk:Label Content="Username" Height="28" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" />
                 <sdk:Label Content="Password" Height="28" HorizontalAlignment="Left" Margin="6,40,0,0" VerticalAlignment="Top" />
-                <TextBox Height="23" HorizontalAlignment="Stretch" Margin="117,6,0,0" Name="createAccountUsername" VerticalAlignment="Top" TextChanged="createAccountUsername_TextChanged" />
-                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,40,0,0" Name="createAccountPassword" VerticalAlignment="Top" PasswordChanged="createAccountPassword_PasswordChanged" />
-                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,74,0,0" Name="createAccountPassword2" VerticalAlignment="Top" PasswordChanged="createAccountPassword2_PasswordChanged" />
+                <TextBox Height="23" HorizontalAlignment="Stretch" Margin="117,6,0,0" Name="createAccountUsername" VerticalAlignment="Top" TextChanged="createAccountUsername_TextChanged" KeyUp="createAccountUsername_KeyUp" />
+                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,40,0,0" Name="createAccountPassword" VerticalAlignment="Top" PasswordChanged="createAccountPassword_PasswordChanged" KeyUp="createAccountUsername_KeyUp" />
+                <PasswordBox Height="23" HorizontalAlignment="Stretch" Margin="117,74,0,0" Name="createAccountPassword2" VerticalAlignment="Top" PasswordChanged="createAccountPassword2_PasswordChanged" KeyUp="createAccountUsername_KeyUp" />
                 <sdk:Label Content="Re-enter Password" Height="28" HorizontalAlignment="Left" Margin="6,74,0,0" VerticalAlignment="Top" />
                 <sdk:Label Content=""  Height="23" HorizontalAlignment="Stretch" Margin="6,113,108,0" Name="createAccountErrors" VerticalAlignment="Top" />
                 <Button Content="Create Account" Height="23" HorizontalAlignment="Right" Margin="0,113,0,0" Name="createAccountButton" VerticalAlignment="Top" Width="103" Click="createAccountButton_Click" />

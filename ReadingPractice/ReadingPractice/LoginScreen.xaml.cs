@@ -237,5 +237,21 @@ namespace ReadingPractice
             }
             passwordMatchCheck();
         }
+
+        private void loginPasswordTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (loginButton.IsEnabled && e.Key == Key.Enter)
+            {
+                loginButton_Click(null, null);
+            }
+        }
+
+        private void createAccountUsername_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (createAccountButton.IsEnabled && e.Key == Key.Enter)
+            {
+                createAccountButton_Click(null, null);
+            }
+        }
     }
 }
