@@ -18,7 +18,7 @@
                     English Translation
                 </sdk:Label>
             </controls:Expander.Header>
-                <TextBlock FontSize="14" TextWrapping="Wrap" Name="TranslatedSentence" Width="385">Some translation.</TextBlock>
+                <TextBlock FontSize="14" TextWrapping="Wrap" Name="TranslatedSentence">Some translation.</TextBlock>
         </controls:Expander>
         <sdk:Label Height="20"  Content=" "></sdk:Label>
     </StackPanel>
