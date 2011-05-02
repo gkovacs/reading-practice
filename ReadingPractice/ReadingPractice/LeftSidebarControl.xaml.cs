@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Windows.Media.Imaging;
 
 namespace ReadingPractice
 {
@@ -46,7 +47,7 @@ namespace ReadingPractice
         }
 
         public bool batchChanges = false;
-        public void allowWord(string word, bool sendupdate=true, bool displayListChange=true)
+        public void allowWord(string word, bool sendupdate = true, bool displayListChange = true)
         {
             if (sendupdate && !batchChanges)
                 serverCommunication.sendAllowWord(word);
@@ -329,7 +330,7 @@ namespace ReadingPractice
             elementList.Add(showVocab);
             */
             // going ahead to create an Element List of every possible UI element that could ever be displayed on the canvas
-            
+
 
             /*
             IList<string> allWords = wordDictionary.listWords();
@@ -367,14 +368,10 @@ namespace ReadingPractice
 
 
             //int iOffset = 0;
-            
+
             //Search_TextChanged(null,null);
             findMatchingTextSynchronous("");
-
-            sortEnglish(null, null);
-            sortDisplayed(null, null);
             sortPinYin(null, null);
-            
             //VocabSelectionCanvas.Height = dLineHeight * this.kMatches.Count;
             VocabSelectionCanvas.Height = canvasHeight;
 
@@ -387,22 +384,22 @@ namespace ReadingPractice
             VocabSelectionScrollViewer.AddScrollCallback(onScrollChanged);
 
 
-/*            double dLineHeight = 20.0;
+            /*            double dLineHeight = 20.0;
 
-            int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/20.0);
-            int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset+VocabSelectionScrollViewer.Height)/20.0);
+                        int iFirstVisibleItem = (int)(VocabSelectionScrollViewer.VerticalOffset/20.0);
+                        int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset+VocabSelectionScrollViewer.Height)/20.0);
 
-            for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
-            {
-                CheckBox kCheckBoxBook = new CheckBox();
-                kCheckBoxBook.Height = dLineHeight;
-                kCheckBoxBook.Content = this.kMatches[i];
-                kCheckBoxBook.SetValue(Canvas.LeftProperty,10.0);
-                kCheckBoxBook.SetValue(Canvas.TopProperty,dLineHeight*i+dLineHeight);
-                VocabSelectionCanvas.Children.Add(kCheckBoxBook);
-            }
+                        for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
+                        {
+                            CheckBox kCheckBoxBook = new CheckBox();
+                            kCheckBoxBook.Height = dLineHeight;
+                            kCheckBoxBook.Content = this.kMatches[i];
+                            kCheckBoxBook.SetValue(Canvas.LeftProperty,10.0);
+                            kCheckBoxBook.SetValue(Canvas.TopProperty,dLineHeight*i+dLineHeight);
+                            VocabSelectionCanvas.Children.Add(kCheckBoxBook);
+                        }
 
- */
+             */
 
             /*
             // for each book
@@ -438,50 +435,50 @@ namespace ReadingPractice
             */
 
 
-/*
-            VocabSelectionCanvas.Children.Add(showVocab);
-            // given two input integers, draws the ui elements whos indices are in the list designated by the range indices
-            Action<int, int> drawItemsInRange = (int firstItemVisible, int lastItemVisible) =>
-            {
-                VocabSelectionCanvas.Children.Clear();
-                int startpos = Math.Max(firstItemVisible - 2, 0);
-                int endpos = Math.Min(lastItemVisible + 2, allWords.Count - 1);
-                for (int i = startpos; i < endpos; ++i)
-                {
-                    //elementList[i].SetValue(Canvas.LeftProperty, 10.0);
-                    //elementList[i].SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
-                    CheckBox newVocab = new CheckBox();
-                    newVocab.Height = 20.0;
-                    newVocab.Content = allWords[i];
-                    newVocab.SetValue(Canvas.LeftProperty, 10.0);
-                    newVocab.SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
-                    VocabSelectionCanvas.Children.Add(newVocab);
-                }
-            };
+            /*
+                        VocabSelectionCanvas.Children.Add(showVocab);
+                        // given two input integers, draws the ui elements whos indices are in the list designated by the range indices
+                        Action<int, int> drawItemsInRange = (int firstItemVisible, int lastItemVisible) =>
+                        {
+                            VocabSelectionCanvas.Children.Clear();
+                            int startpos = Math.Max(firstItemVisible - 2, 0);
+                            int endpos = Math.Min(lastItemVisible + 2, allWords.Count - 1);
+                            for (int i = startpos; i < endpos; ++i)
+                            {
+                                //elementList[i].SetValue(Canvas.LeftProperty, 10.0);
+                                //elementList[i].SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
+                                CheckBox newVocab = new CheckBox();
+                                newVocab.Height = 20.0;
+                                newVocab.Content = allWords[i];
+                                newVocab.SetValue(Canvas.LeftProperty, 10.0);
+                                newVocab.SetValue(Canvas.TopProperty, 20.0 * i + 20.0);
+                                VocabSelectionCanvas.Children.Add(newVocab);
+                            }
+                        };
 
 
-            bool vocabShownClicked = false;
-            showVocab.MouseLeftButtonDown += (s, e) =>
-            {
-                vocabShownClicked = true;
-                VocabSelectionCanvas.Height = 20.0 + 20.0 * allWords.Count;
-                int firstItemVisible = (int) (VocabSelectionScrollViewer.VerticalOffset / 20.0);
-                int lastItemVisible = (int) ((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height) / 20.0);
-                drawItemsInRange(firstItemVisible, lastItemVisible);
-            };
+                        bool vocabShownClicked = false;
+                        showVocab.MouseLeftButtonDown += (s, e) =>
+                        {
+                            vocabShownClicked = true;
+                            VocabSelectionCanvas.Height = 20.0 + 20.0 * allWords.Count;
+                            int firstItemVisible = (int) (VocabSelectionScrollViewer.VerticalOffset / 20.0);
+                            int lastItemVisible = (int) ((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height) / 20.0);
+                            drawItemsInRange(firstItemVisible, lastItemVisible);
+                        };
 
-            // function that determines what ui elements are visible, and then calls drawItemsInRange to draw them
-            PropertyChangedCallback onScrollChanged = (s, e) =>
-            {
-                if (!vocabShownClicked) return;
-                int firstItemVisible = (int)(VocabSelectionScrollViewer.VerticalOffset / 20.0);
-                int lastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height) / 20.0);
-                drawItemsInRange(firstItemVisible, lastItemVisible);
-            };
+                        // function that determines what ui elements are visible, and then calls drawItemsInRange to draw them
+                        PropertyChangedCallback onScrollChanged = (s, e) =>
+                        {
+                            if (!vocabShownClicked) return;
+                            int firstItemVisible = (int)(VocabSelectionScrollViewer.VerticalOffset / 20.0);
+                            int lastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height) / 20.0);
+                            drawItemsInRange(firstItemVisible, lastItemVisible);
+                        };
 
-            // attach onScrolledChanged, so it is called everytime scrolling happens
-            VocabSelectionScrollViewer.AddScrollCallback(onScrollChanged);
-*/
+                        // attach onScrolledChanged, so it is called everytime scrolling happens
+                        VocabSelectionScrollViewer.AddScrollCallback(onScrollChanged);
+            */
             /*
             foreach (string word in wordDictionary.listWords().Take(50)) // first 50 words in dictionary
             {
@@ -490,7 +487,7 @@ namespace ReadingPractice
                 this.AllVocabList.Items.Add(checkbox);
             }
             */
-//#endif
+            //#endif
 
         }
 
@@ -538,7 +535,7 @@ namespace ReadingPractice
         public Dictionary<string, CheckBox> wordAllowedCheckboxes = new Dictionary<string, CheckBox>();
         public Dictionary<string, Button> wordMakeStudyFocusButtons = new Dictionary<string, Button>();
 
-        public void DrawSearchMatches ()
+        public void DrawSearchMatches()
         {
             lock (VocabSelectionCanvas)
             {
@@ -550,14 +547,14 @@ namespace ReadingPractice
 
                 double verticalOffsetStart = VocabSelectionScrollViewer.VerticalOffset;
                 double scrollViewerHeight = VocabSelectionScrollViewer.Height;
-                double scrollViewerWidth = VocabSelectionScrollViewer.ActualWidth;
+                double scrollViewerWidth = VocabSelectionScrollViewer.Width;
                 double verticalOffsetEnd = verticalOffsetStart + scrollViewerHeight;
 
                 if (positions.Length == 0)
                     return;
                 int first = 0;
                 int last = positions.Length - 1;
-                
+
                 while (first < last)
                 {
                     int mid = (first + last) / 2;
@@ -591,7 +588,7 @@ namespace ReadingPractice
                 //int iLastItemVisible = (int)((VocabSelectionScrollViewer.VerticalOffset + VocabSelectionScrollViewer.Height)/dLineHeight);
 
                 //iLastItemVisible = Math.Min(iLastItemVisible,this.kMatches.Count);
-                SolidColorBrush highlightColor = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));;
+                SolidColorBrush highlightColor = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255)); ;
                 for (int i = iFirstVisibleItem; i <= iLastItemVisible; ++i)
                 {
                     string word = this.kMatches[i];
@@ -612,7 +609,7 @@ namespace ReadingPractice
                     RichTextBox kWord = new RichTextBox();
                     kWord.Height = height;
                     kWord.MinHeight = height;
-//                    kWord.Width = wordColumnWidth;
+                    //                    kWord.Width = wordColumnWidth;
                     kWord.Width = dSortByWidth;
                     kWord.Blocks.Add(toParagraphHighlighting(word, searchText));
                     kWord.Background = new SolidColorBrush(Colors.Transparent);
@@ -624,21 +621,21 @@ namespace ReadingPractice
                     RichTextBox kRomanization = new RichTextBox();
                     kRomanization.Height = height;
                     kRomanization.MinHeight = height;
-//                    kRomanization.Width = readingColumnWidth;
-                    kRomanization.Width = sortByPinyin.ActualWidth;
+                    //                    kRomanization.Width = readingColumnWidth;
+                    kRomanization.Width = sortByPinyin.Width;
                     kRomanization.Blocks.Add(toParagraphHighlighting(wordDictionary.getReading(word), searchText));
                     kRomanization.Background = new SolidColorBrush(Colors.Transparent);
                     kRomanization.BorderThickness = new Thickness(0.0);
                     kRomanization.IsReadOnly = true;
                     kRomanization.TextWrapping = TextWrapping.Wrap;
-//                    kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
+                    //                    kRomanization.SetValue(Canvas.LeftProperty, kWord.Width + 5.0);
                     kRomanization.SetValue(Canvas.LeftProperty, kWord.Width);
                     kRomanization.SetValue(Canvas.TopProperty, position);
                     RichTextBox kTranslation = new RichTextBox();
                     kTranslation.Height = height;
                     kTranslation.MinHeight = height;
-//                    kTranslation.Width = translationColumnWidth;
-                    kTranslation.Width = sortByEnglish.ActualWidth;
+                    //                    kTranslation.Width = translationColumnWidth;
+                    kTranslation.Width = sortByEnglish.Width;
                     kTranslation.Blocks.Add(toParagraphHighlighting(wordDictionary.translateToEnglish(word), searchText));
                     kTranslation.TextWrapping = TextWrapping.Wrap;
                     //kTranslation.LineStackingStrategy = LineStackingStrategy.BlockLineHeight;
@@ -646,13 +643,13 @@ namespace ReadingPractice
                     kTranslation.Background = new SolidColorBrush(Colors.Transparent);
                     kTranslation.BorderThickness = new Thickness(0.0);
                     kTranslation.IsReadOnly = true;
-//                    kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
+                    //                    kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + 10.0);
                     kTranslation.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width);
                     kTranslation.SetValue(Canvas.TopProperty, position);
                     CheckBox kDisplayWord = new CheckBox();
                     kDisplayWord.Height = dLineHeight / 2.0;
                     kDisplayWord.Content = "May appear in sentences";
-//                    kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
+                    //                    kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width + 15.0);
                     kDisplayWord.SetValue(Canvas.LeftProperty, kWord.Width + kRomanization.Width + kTranslation.Width);
                     kDisplayWord.SetValue(Canvas.TopProperty, position);
                     kDisplayWord.IsChecked = this.isDisplayed(word);
@@ -877,116 +874,66 @@ namespace ReadingPractice
             batchChanges = false;
         }
 
-
-        bool bPinyinSortedAscending = false;
-        bool bEnglishSortedAscending = false;
-        bool bDisplayedSortedAscending = false;
-
         int StrokeCountCompare(string x, string y)
         {
             return CompareInfo.GetCompareInfo("zh-CN_stroke").Compare(x, y);
         }
 
-        int PinyinCompareAscending(string x, string y)
+        int PinyinCompare(string x, string y)
         {
             return wordDictionary.getReading(x).CompareTo(wordDictionary.getReading(y));
         }
-        int PinyinCompareDescending(string x, string y)
-        {
-            return wordDictionary.getReading(y).CompareTo(wordDictionary.getReading(x));
-        }
 
-        int EnglishCompareAscending(string x, string y)
+        int EnglishCompare(string x, string y)
         {
             return wordDictionary.translateToEnglish(x).CompareTo(wordDictionary.translateToEnglish(y));
         }
-        int EnglishCompareDescending(string x, string y)
-        {
-            return wordDictionary.translateToEnglish(y).CompareTo(wordDictionary.translateToEnglish(x));
-        }
 
-        int DisplayedCompareAscending(string x, string y)
-        {
-            bool containsX = this.kSetAllowedWords.Contains(x);
-            bool containsY = this.kSetAllowedWords.Contains(y);
-
-            if ( (containsX && containsY) || (!containsX && !containsY))
-            {
-                /*if (bSorted)
-                {
-                    return EnglishCompare(x,y);
-                }
-                else
-                {
-
-                }*/
-                return 0;
-            }
-            return containsX && !containsY ? -1 : 1;
-        }
-        int DisplayedCompareDescending(string x, string y)
+        int DisplayedCompare(string x, string y)
         {
             bool containsX = this.kSetAllowedWords.Contains(x);
             bool containsY = this.kSetAllowedWords.Contains(y);
 
             if ((containsX && containsY) || (!containsX && !containsY))
             {
-                //return EnglishCompare(x, y);
-                return 0;
+                return EnglishCompare(x, y);
             }
-            return containsY && !containsX ? -1 : 1;
+
+
+            return containsX && !containsY ? -1 : 1;
         }
 
-        void resetSortButtonColors ()
+        void resetSortButtonColors()
         {
-            sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-            sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-            sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+
+            setBlankImage(PinYinSortImageSource);
+            setBlankImage(EnglishSortImageSource);
+            setBlankImage(DisplayedSortImageSource);
+
+            //sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            //sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+            //sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
         }
-
-        /*void setAscendingArrow(Geometry g)
-        {
-            g.
-            PathConverter.StringToPathGeometryConverter conv = new PathConverter.StringToPathGeometryConverter();
-            PathGeometry pathData = conv.Convert(pathString);
-
-            path.SetValue(Path.DataProperty, pathData);
-
-            Object obj = "M0,1.25 2.5,3.75 5,1.25 Z";
-            g.SetValue(System.Windows.Shapes.Path.DataProperty, obj);
-        }
-        void setDescendingArrow(Geometry g)
-        {
-            Object obj = "M2.5,1.25 L0,3.75 L5,3.75 Z";
-            g.SetValue(System.Windows.Shapes.Path.DataProperty, obj);
-        }*/
 
         private void sortPinYin(object sender, RoutedEventArgs e)
         {
-            if ( kMatches == null )
+            bool reverse = isDown(PinYinSortImageSource);
+            resetSortButtonColors();
+            if (reverse)
+                setUpImage(PinYinSortImageSource);
+            else
+                setDownImage(PinYinSortImageSource);
+
+            if (kMatches == null)
                 return;
 
             List<string> k = (List<string>)(kMatches);//.sort
-            if (bPinyinSortedAscending)
-            {
-                k.Sort(PinyinCompareDescending);
-                SortPinyinPathP0.StartPoint = new Point(2.5,1.25);
-                SortPinyinPathP1.Point = new Point(0,3.75);
-                SortPinyinPathP2.Point = new Point(5,3.75);
-            }
-            else
-            {
-                k.Sort(PinyinCompareAscending);
-                SortPinyinPathP0.StartPoint = new Point(0,1.25);
-                SortPinyinPathP1.Point = new Point(2.5,3.75);
-                SortPinyinPathP2.Point = new Point(5,1.25);
-            }
-            bPinyinSortedAscending = !bPinyinSortedAscending;
+            k.Sort(PinyinCompare);
+            if (reverse)
+                k.Reverse();
             computeOffsets();
 
-
-            resetSortButtonColors();
-            sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
+            //sortByPinyin.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
 
             // then issue re-display
             DrawSearchMatches();
@@ -994,32 +941,23 @@ namespace ReadingPractice
 
         private void sortEnglish(object sender, RoutedEventArgs e)
         {
-            if ( kMatches == null )
+            bool reverse = isDown(EnglishSortImageSource);
+            resetSortButtonColors();
+            if (reverse)
+                setUpImage(EnglishSortImageSource);
+            else
+                setDownImage(EnglishSortImageSource);
+
+            if (kMatches == null)
                 return;
-            
+
             computeOffsets();
 
             List<string> k = (List<string>)(kMatches);//.sort
-
-            if (bEnglishSortedAscending)
-            {
-                k.Sort(EnglishCompareDescending);
-                SortEnglishPathP0.StartPoint = new Point(2.5, 1.25);
-                SortEnglishPathP1.Point = new Point(0, 3.75);
-                SortEnglishPathP2.Point = new Point(5, 3.75);
-            }
-            else
-            {
-                k.Sort(EnglishCompareAscending);
-                SortEnglishPathP0.StartPoint = new Point(0, 1.25);
-                SortEnglishPathP1.Point = new Point(2.5, 3.75);
-                SortEnglishPathP2.Point = new Point(5, 1.25);
-            }
-            bEnglishSortedAscending = !bEnglishSortedAscending;
+            k.Sort(EnglishCompare);
+            if (reverse)
+                k.Reverse();
             computeOffsets();
-
-            resetSortButtonColors();
-            sortByEnglish.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
 
             // then issue re-display
             DrawSearchMatches();
@@ -1027,33 +965,56 @@ namespace ReadingPractice
 
         private void sortDisplayed(object sender, RoutedEventArgs e)
         {
+            bool reverse = isDown(DisplayedSortImageSource);
+            resetSortButtonColors();
+            if (reverse)
+                setUpImage(DisplayedSortImageSource);
+            else
+                setDownImage(DisplayedSortImageSource);
+
             if (kMatches == null)
                 return;
 
             List<string> k = (List<string>)(kMatches);//.sort
-
-            if (bDisplayedSortedAscending)
-            {
-                k.Sort(DisplayedCompareDescending);
-                SortDisplayedPathP0.StartPoint = new Point(2.5, 1.25);
-                SortDisplayedPathP1.Point = new Point(0, 3.75);
-                SortDisplayedPathP2.Point = new Point(5, 3.75);
-            }
-            else
-            {
-                k.Sort(DisplayedCompareAscending);
-                SortDisplayedPathP0.StartPoint = new Point(0, 1.25);
-                SortDisplayedPathP1.Point = new Point(2.5, 3.75);
-                SortDisplayedPathP2.Point = new Point(5, 1.25);
-            }
-            bDisplayedSortedAscending = !bDisplayedSortedAscending;
+            k.Sort(DisplayedCompare);
+            if (reverse)
+                k.Reverse();
             computeOffsets();
-
-            resetSortButtonColors();
-            sortByDisplayed.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
 
             // then issue re-display
             DrawSearchMatches();
+        }
+
+        private HashSet<BitmapImage> downImages = new HashSet<BitmapImage>();
+
+        private bool isDown(BitmapImage img)
+        {
+            return downImages.Contains(img);
+        }
+
+        private Stream downArrowStream = Application.GetResourceStream(new Uri("ReadingPractice;component/downarrow.png", UriKind.Relative)).Stream;
+        private Stream upArrowStream = Application.GetResourceStream(new Uri("ReadingPractice;component/uparrow.png", UriKind.Relative)).Stream;
+        private Stream blankStream = Application.GetResourceStream(new Uri("ReadingPractice;component/blank.png", UriKind.Relative)).Stream;
+
+
+        private void setDownImage(BitmapImage img)
+        {
+            downImages.Add(img);
+            img.SetSource(downArrowStream);
+        }
+
+        private void setUpImage(BitmapImage img)
+        {
+            if (downImages.Contains(img))
+                downImages.Remove(img);
+            img.SetSource(upArrowStream);
+        }
+
+        private void setBlankImage(BitmapImage img)
+        {
+            if (downImages.Contains(img))
+                downImages.Remove(img);
+            img.SetSource(blankStream);
         }
 
         private void StudyFocusForeignWord_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1067,20 +1028,20 @@ namespace ReadingPractice
         double dSortByWidth = 70.0;
         double dMinWidthLeftSideBar = 300.0;
 
-        double dButtonMinWidthFractionSortPinyin = 0.25;
-        double dButtonMinWidthFractionSortEnglish = 0.375;
-        double dButtonMinWidthFractionSortDisplayed = 0.375;
+        double dButtonMinWidthFractionSortPinyin = 0.2;
+        double dButtonMinWidthFractionSortEnglish = 0.4;
+        double dButtonMinWidthFractionSortDisplayed = 0.4;
 
- /*       internal void StudyFocusTranslation_SizeChanged(object sender, TextChangedEventArgs e)
-        {
-            // the study focus height changed, so need to resize searches
-            this.Resize(App.Current.Host.Content.ActualHeight,App.Current.Host.Content.ActualWidth);
-        }*/
+        /*       internal void StudyFocusTranslation_SizeChanged(object sender, TextChangedEventArgs e)
+               {
+                   // the study focus height changed, so need to resize searches
+                   this.Resize(App.Current.Host.Content.ActualHeight,App.Current.Host.Content.ActualWidth);
+               }*/
 
         internal void Resize(double height, double width)
         {
-//            this.Width = (6.0/11.0)*width;
-//            this.Height = height;
+            //            this.Width = (6.0/11.0)*width;
+            //            this.Height = height;
             Debug.WriteLine(height);
             Debug.WriteLine(width);
             Debug.WriteLine(MainStackPanel.Width);
@@ -1088,10 +1049,10 @@ namespace ReadingPractice
             Debug.WriteLine("sdas");
 
             this.MainStackPanel.Width = Math.Max(dMinWidthLeftSideBar, 0.5 * width);
-            this.MainStackPanel.Height = Math.Max(400,height);
+            this.MainStackPanel.Height = Math.Max(400, height);
 
-//            this.VocabSelectionScrollViewer.Height =
-//                Math.Max(75, height - 245 - this.StudyFocusTranslation.ActualHeight);
+            //            this.VocabSelectionScrollViewer.Height =
+            //                Math.Max(75, height - 245 - this.StudyFocusTranslation.ActualHeight);
             this.VocabSelectionScrollViewer.Height =
                 Math.Max(75, height - 221 - this.StudyFocusTranslation.ActualHeight);
             //            this.VocabSelectionScrollViewer.Width = Math.Max(300,width-200);
@@ -1100,27 +1061,23 @@ namespace ReadingPractice
             //            textbookSelect.Width = Math.Min(textbookSelect.DesiredSize.Width, this.MainStackPanel.Width - 70);
             Debug.WriteLine("LeftSiderbarControl.xaml.cs,Resize():");
 
-//            textbookSelect.Measure(new Size(this.MainStackPanel.Width - 70, textbookSelect.ActualHeight));
-//            Debug.WriteLine(textbookSelect.Measure();
-//            Search.Width = Math.Max(100, this.MainStackPanel.Width - 70);
+            //            textbookSelect.Measure(new Size(this.MainStackPanel.Width - 70, textbookSelect.ActualHeight));
+            //            Debug.WriteLine(textbookSelect.Measure();
+            //            Search.Width = Math.Max(100, this.MainStackPanel.Width - 70);
 
             SelectGrid.Width = Math.Max(100, this.MainStackPanel.Width);
 
 
             sortByPinyin.Width =
-                Math.Max(dButtonMinWidthFractionSortPinyin*(dMinWidthLeftSideBar-dSortByWidth),
-                dButtonMinWidthFractionSortPinyin *(this.MainStackPanel.Width - dSortByWidth));
-            SortByPinyinGrid.Width = sortByPinyin.Width;
-
+                Math.Max(dButtonMinWidthFractionSortPinyin * (dMinWidthLeftSideBar - dSortByWidth),
+                dButtonMinWidthFractionSortPinyin * (this.MainStackPanel.Width - dSortByWidth));
             sortByEnglish.Width =
-                Math.Max(dButtonMinWidthFractionSortEnglish*(dMinWidthLeftSideBar-dSortByWidth),
+                Math.Max(dButtonMinWidthFractionSortEnglish * (dMinWidthLeftSideBar - dSortByWidth),
                 dButtonMinWidthFractionSortEnglish * (this.MainStackPanel.Width - dSortByWidth));
-            SortByEnglishGrid.Width = sortByEnglish.Width;
-
             sortByDisplayed.Width =
                 Math.Max(dButtonMinWidthFractionSortDisplayed * (dMinWidthLeftSideBar - dSortByWidth),
-                dButtonMinWidthFractionSortDisplayed*(this.MainStackPanel.Width - dSortByWidth));
-            SortByDisplayedGrid.Width = sortByDisplayed.Width;
+                dButtonMinWidthFractionSortDisplayed * (this.MainStackPanel.Width - dSortByWidth));
+
 
             Debug.WriteLine(sortByPinyin.Width);
             Debug.WriteLine(sortByEnglish.Width);
@@ -1128,6 +1085,7 @@ namespace ReadingPractice
             Debug.WriteLine(this.MainStackPanel.Width);
 
             VocabSelectionScrollViewer.Width = this.MainStackPanel.Width;
+            //VocabSelectionCanvas.Width = this.MainStackPanel.Width;
 
             DrawSearchMatches();
         }
@@ -1136,6 +1094,11 @@ namespace ReadingPractice
         {
             // the study focus height changed, so need to resize searches
             this.Resize(App.Current.Host.Content.ActualHeight, App.Current.Host.Content.ActualWidth);
+        }
+
+        private void PinYinSortImageSource_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            Debug.WriteLine(e.ErrorException);
         }
     }
 }
