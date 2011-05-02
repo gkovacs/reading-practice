@@ -139,6 +139,7 @@ namespace ReadingPractice
             App.Current.Host.Content.Resized += new EventHandler(Content_Resized);
 
             // remove this block to prevent auto-login as anthonyl
+            /*
             if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && serverCommunication.username == null)
             {
                 if (Keyboard.Modifiers.HasFlag(ModifierKeys.Alt))
@@ -151,7 +152,7 @@ namespace ReadingPractice
                 }
                 userLoggedIn();
             }
-            
+            */
             // end of auto-login block
 
             //getDisplayedWords();
