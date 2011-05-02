@@ -52,8 +52,11 @@ namespace ReadingPractice
 
         public void rmSentence(string nativeSentence)
         {
+            if (!presentWords.ContainsKey(nativeSentence))
+                return;
             SentenceView sentview = presentWords[nativeSentence];
             presentWords.Remove(nativeSentence);
+            allClosedSentences.Remove(nativeSentence);
             this.SentenceListViewer.Children.Remove(sentview);
             serverCommunication.sendRmClosedSentence(nativeSentence);
             

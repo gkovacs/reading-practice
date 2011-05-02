@@ -106,21 +106,51 @@ namespace ReadingPractice
                 }
                 else
                 {
-                    this.Warnings.Text = "No more sentences are available";
-                    this.FetchNextSentenceButton.IsEnabled = false;
+                    noMoreSentencesAvailableTryClosedSentences();
                     return;
                 }
 
             }
             if (sentencesToBeAdded.Count == 0)
             {
-                this.Warnings.Text = "No more sentences are available containing " + StudyFocus;
-                this.FetchNextSentenceButton.IsEnabled = false;
+                noMoreSentencesAvailableTryClosedSentences();
             }
             else
             {
                 this.Warnings.Text = "Remaining sentences containing " + StudyFocus + " contain words you may not know";
                 this.FetchNextSentenceButton.IsEnabled = true;
+            }
+        }
+
+        private void noMoreSentencesAvailableTryClosedSentences()
+        {
+            if (StudyFocus == "")
+            {
+                sentencesToBeAdded = new LinkedList<string>(mainPage.RightSidebar.closedSentencesTab.allClosedSentences.OrderBy(q => sentenceDictionary.getWords(q).Select(v => wordDictionary.translateToEnglish(v) != "" && !mainPage.LeftSidebar.isDisplayed(q) ? 1 : 0).Sum()));
+                if (sentencesToBeAdded.Count > 0)
+                {
+                    this.Warnings.Text = "Remaining sentences have previously been seen";
+                    this.FetchNextSentenceButton.IsEnabled = true;
+                }
+                else
+                {
+                    this.Warnings.Text = "No more sentences are available";
+                    this.FetchNextSentenceButton.IsEnabled = false;
+                }
+            }
+            else
+            {
+                sentencesToBeAdded = new LinkedList<string>(mainPage.RightSidebar.closedSentencesTab.allClosedSentences.Where(sent => sentenceDictionary.getWords(sent).Contains(StudyFocus)).OrderBy(q => sentenceDictionary.getWords(q).Select(v => wordDictionary.translateToEnglish(v) != "" && !mainPage.LeftSidebar.isDisplayed(q) ? 1 : 0).Sum()));
+                if (sentencesToBeAdded.Count > 0)
+                {
+                    this.Warnings.Text = "Remaining sentences containing " + StudyFocus + " have previously been seen";
+                    this.FetchNextSentenceButton.IsEnabled = true;
+                }
+                else
+                {
+                    this.Warnings.Text = "No more sentences are available containing " + StudyFocus;
+                    this.FetchNextSentenceButton.IsEnabled = false;
+                }
             }
         }
 
@@ -133,26 +163,37 @@ namespace ReadingPractice
 
         private bool isAlreadyPresent(string sentence)
         {
-            if (mainPage.RightSidebar.closedSentencesTab.allClosedSentences.Contains(sentence))
+            if (mainPage.RightSidebar.closedSentencesTab.presentWords.ContainsKey(sentence))
                 return true;
-            foreach (var x in SentenceListViewer.Children.Skip(2))
-            {
-                SentenceView sen = (SentenceView)x;
-                if (sentence == sen.nativeSentence)
-                    return true;
-            }
+            if (presentWords.ContainsKey(sentence))
+                return true;
             return false;
+        }
+
+        public Dictionary<string, SentenceView> presentWords = new Dictionary<string, SentenceView>();
+
+        public void rmSentence(string nativeSentence)
+        {
+            if (!presentWords.ContainsKey(nativeSentence))
+                return;
+            SentenceView sentview = presentWords[nativeSentence];
+            this.SentenceListViewer.Children.Remove(sentview);
+            serverCommunication.sendRmSentence(nativeSentence);
         }
 
         public void insertSentence(string nativeSentence)
         {
+            if (presentWords.ContainsKey(nativeSentence))
+            {
+                rmSentence(nativeSentence);
+            }
             string tranlatedSentence = sentenceDictionary.translateToEnglish(nativeSentence);
             SentenceView sentview = new SentenceView(nativeSentence, tranlatedSentence, mainPage);
+            presentWords[nativeSentence] = sentview;
             sentview.removeButton.Content = "Close";
             sentview.removeButton.Click += (o, e) =>
             {
-                this.SentenceListViewer.Children.Remove(sentview);
-                serverCommunication.sendRmSentence(nativeSentence);
+                rmSentence(nativeSentence);
                 mainPage.RightSidebar.closedSentencesTab.insertSentence(nativeSentence);
             };
             SentenceListViewer.Children.Insert(2, sentview);
@@ -164,6 +205,7 @@ namespace ReadingPractice
                 return;
             string sent = sentencesToBeAdded.First();
             sentencesToBeAdded.RemoveFirst();
+            mainPage.RightSidebar.closedSentencesTab.rmSentence(sent);
             insertSentence(sent);
             serverCommunication.sendAddSentence(sent);
             if (sentencesToBeAdded.Count == 0)
