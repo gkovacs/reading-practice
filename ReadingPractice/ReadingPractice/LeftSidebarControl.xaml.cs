@@ -190,7 +190,7 @@ namespace ReadingPractice
         double[] positions;
 
         string allTextbooks = "Show All Vocabulary (don't filter by textbook)";
-        string allChapters = "Show Vocab from All Chapters";
+        string allChapters = "Show Vocabulary from All Chapters";
 
         public void performOnStartup()
         {
@@ -271,7 +271,7 @@ namespace ReadingPractice
 
             selectedTextbook = allTextbooks;
             selectedChapter = allChapters;
-            this.textbookSelect.Items.Add(allTextbooks);
+            //this.textbookSelect.Items.Add(allTextbooks);
 
             for (int i = 0; i < textbooks.textbooks.Length; ++i)
             {
@@ -302,6 +302,15 @@ namespace ReadingPractice
                     Search_TextChanged(null, null);
                 }
             };
+
+            Textbooks.Textbook t1 = textbooks.textbookDictionary[textbookSelect.SelectedItem.ToString()];
+            this.chapterSelect.Items.Add(allChapters);
+            for (int i = 0; i < t1.chapters.Length; ++i)
+            {
+                this.chapterSelect.Items.Add(t1.chapters[i].chapterName);
+            }
+
+            this.chapterSelect.SelectedIndex = 0;
 
             chapterSelect.SelectionChanged += (s, e) =>
             {
@@ -740,7 +749,7 @@ namespace ReadingPractice
 
         private IList<string> filterToTextbookAndChapter(IList<string> wordList)
         {
-            if (this.selectedTextbook == allTextbooks || this.selectedTextbook == "")
+            if ((this.selectedTextbook == allTextbooks || this.selectedTextbook == "") && (this.selectedChapter == "" || this.selectedChapter == allChapters || this.selectedChapter == "All Vocabulary"))
                 return wordList;
             Textbooks.Textbook currentTextbook = textbooks.textbookDictionary[selectedTextbook];
             List<string> list = new List<string>();
