@@ -8,7 +8,10 @@
     d:DesignHeight="187" d:DesignWidth="414" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-        <Button HorizontalAlignment="Right" Name="removeButton">Remove</Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="restoreButton" Margin="0,0,10,0">Restore to currently reading list</Button>
+            <Button Name="removeButton">Remove</Button>
+        </StackPanel>
         <controls:WrapPanel Name="NativeLanguageSentenceDisplay">
             
         </controls:WrapPanel>

@@ -64,11 +64,19 @@ namespace ReadingPractice
             }
         }
 
-        public SentenceView(string nativeSentence, string translated, MainPage mainPage)
+        public SentenceView(string nativeSentence, string translated, MainPage mainPage, bool isClosedSentenceBar = false)
         {
             InitializeComponent();
             this.mainPage = mainPage;
             this.nativeSentence = nativeSentence;
+            if (isClosedSentenceBar)
+            {
+                removeButton.Content = "Remove from list";
+            }
+            else
+            {
+                restoreButton.Visibility = Visibility.Collapsed;
+            }
             string[] segmented = sentenceDictionary.getWords(nativeSentence);
             if (segmented.Length == 0)
             {

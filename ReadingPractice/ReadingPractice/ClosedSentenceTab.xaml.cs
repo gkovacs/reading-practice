@@ -50,18 +50,34 @@ namespace ReadingPractice
 
         }
 
+        public void rmSentence(string nativeSentence)
+        {
+            SentenceView sentview = presentWords[nativeSentence];
+            presentWords.Remove(nativeSentence);
+            this.SentenceListViewer.Children.Remove(sentview);
+            serverCommunication.sendRmClosedSentence(nativeSentence);
+            
+        }
+
         public void insertSentence(string nativeSentence)
         {
+            if (presentWords.ContainsKey(nativeSentence))
+            {
+                rmSentence(nativeSentence);
+            }
             allClosedSentences.Add(nativeSentence);
             string translatedSentence = sentenceDictionary.translateToEnglish(nativeSentence);
             serverCommunication.sendAddClosedSentence(nativeSentence);
-            SentenceView sentview = new SentenceView(nativeSentence, translatedSentence, mainPage);
-            sentview.removeButton.Content = "Restore";
+            SentenceView sentview = new SentenceView(nativeSentence, translatedSentence, mainPage, true);
+            presentWords[nativeSentence] = sentview;
+            sentview.restoreButton.Click += (o, e) =>
+            {
+                rmSentence(nativeSentence);
+                mainPage.RightSidebar.readSentencesTab.insertSentence(nativeSentence);
+            };
             sentview.removeButton.Click += (o, e) =>
             {
-                this.SentenceListViewer.Children.Remove(sentview);
-                serverCommunication.sendRmClosedSentence(nativeSentence);
-                mainPage.RightSidebar.readSentencesTab.insertSentence(nativeSentence);
+                rmSentence(nativeSentence);
             };
             this.SentenceListViewer.Children.Insert(1, sentview);
         }
@@ -69,8 +85,7 @@ namespace ReadingPractice
 /// NEW CODE BY ANDREW
 /// </summary>
         public IList<string> allClosedSentences = new List<string>();
-
-        public IList<string> newMatches;
+        public Dictionary<string, SentenceView> presentWords = new Dictionary<string, SentenceView>();
         void findClosedSentencesAsynch(string searchText)
         {
                 //SentenceListViewer.Dispatcher.BeginInvoke(() =>
@@ -84,8 +99,7 @@ namespace ReadingPractice
                 if (searchText == ""){
                     foreach (string sentence in allClosedSentences){
                         string translatedSentence = sentenceDictionary.translateToEnglish(sentence);
-                        SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage);
-                        sv.removeButton.Content = "Restore";
+                        SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage, true);
                         //SentenceListViewer.Dispatcher.BeginInvoke(() =>
                         //{
                             SentenceListViewer.Children.Insert(1, sv);
@@ -108,8 +122,7 @@ namespace ReadingPractice
                         if (matchingPinyin || sentence.Contains(searchText) || translatedSentence.Contains(searchText))
                         {
                            
-                            SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage);
-                            sv.removeButton.Content = "Restore";
+                            SentenceView sv = new SentenceView(sentence, translatedSentence, mainPage, true);
                             //SentenceListViewer.Dispatcher.BeginInvoke(() =>
                             //{
                                 SentenceListViewer.Children.Insert(1, sv);
@@ -122,17 +135,9 @@ namespace ReadingPractice
 
         private void SearchClosedSentences_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // schedule a thread and run findClosedSentencesAsynch in the thread
-            
             string searchText = SearchClosedSentences.Text.Trim();
             Debug.WriteLine(searchText);
-            //Thread t = new Thread(() =>
-            //{
                 findClosedSentencesAsynch(searchText);
-            //});
-            //t.Start();
-
-            
         }
 
     }

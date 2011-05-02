@@ -39,7 +39,7 @@
 
         <sdk:TabControl Height="577" HorizontalAlignment="Left" Margin="0,80,0,0"
             Name="tabControl1" VerticalAlignment="Top" Width="503">
-                <sdk:TabItem Header="Read Sentences" Name="readTab">
+                <sdk:TabItem Header="Currently Reading" Name="readTab">
                     <ScrollViewer Name="readSentencesScrollViewer" Height="531" HorizontalAlignment="Left"
                     VerticalAlignment="Top" Width="476" VerticalScrollBarVisibility="Auto">
                         <rp:ReadSentencesTab x:Name="readSentencesTab" />
