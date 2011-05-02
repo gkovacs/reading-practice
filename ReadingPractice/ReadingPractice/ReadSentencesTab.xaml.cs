@@ -179,6 +179,7 @@ namespace ReadingPractice
             SentenceView sentview = presentWords[nativeSentence];
             this.SentenceListViewer.Children.Remove(sentview);
             serverCommunication.sendRmSentence(nativeSentence);
+            colorBackgrounds();
         }
 
         public void insertSentence(string nativeSentence)
@@ -197,6 +198,21 @@ namespace ReadingPractice
                 mainPage.RightSidebar.closedSentencesTab.insertSentence(nativeSentence);
             };
             SentenceListViewer.Children.Insert(2, sentview);
+            colorBackgrounds();
+        }
+
+        private void colorBackgrounds()
+        {
+            int i = 0;
+            foreach (var x in SentenceListViewer.Children.Skip(2))
+            {
+                SentenceView sentview = x as SentenceView;
+                if (i % 2 == 1)
+                    sentview.rootStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));
+                else
+                    sentview.rootStackPanel.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+                i += 1;
+            }
         }
 
         private void FetchNextSentenceButton_Click(object sender, RoutedEventArgs e)

@@ -51,9 +51,25 @@ namespace ReadingPractice
             sentview.removeButton.Click += (o, e) =>
             {
                 this.ContributedSentenceListViewer.Children.Remove(sentview);
+                colorBackgrounds();
                 serverCommunication.sendRmContribSentence(nativeSentence);
             };
             this.ContributedSentenceListViewer.Children.Insert(1, sentview);
+            colorBackgrounds();
+        }
+
+        private void colorBackgrounds()
+        {
+            int i = 0;
+            foreach (var x in ContributedSentenceListViewer.Children.Skip(1))
+            {
+                SentenceView sentview = x as SentenceView;
+                if (i % 2 == 1)
+                    sentview.rootStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));
+                else
+                    sentview.rootStackPanel.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+                i += 1;
+            }
         }
 
         private void ContributeButton_Click(object sender, RoutedEventArgs e)

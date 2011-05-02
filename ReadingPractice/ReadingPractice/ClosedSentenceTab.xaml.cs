@@ -59,7 +59,7 @@ namespace ReadingPractice
             allClosedSentences.Remove(nativeSentence);
             this.SentenceListViewer.Children.Remove(sentview);
             serverCommunication.sendRmClosedSentence(nativeSentence);
-            
+            colorBackgrounds();
         }
 
         public void insertSentence(string nativeSentence)
@@ -83,6 +83,7 @@ namespace ReadingPractice
                 rmSentence(nativeSentence);
             };
             this.SentenceListViewer.Children.Insert(1, sentview);
+            colorBackgrounds();
         }
 /// <summary>
 /// NEW CODE BY ANDREW
@@ -133,8 +134,23 @@ namespace ReadingPractice
                         }
                     }
                 }
+                colorBackgrounds();
 
             }
+
+        private void colorBackgrounds()
+        {
+            int i = 0;
+            foreach (var x in SentenceListViewer.Children.Skip(1))
+            {
+                SentenceView sentview = x as SentenceView;
+                if (i % 2 == 1)
+                    sentview.rootStackPanel.Background = new SolidColorBrush(Color.FromArgb(255, 224, 251, 255));
+                else
+                    sentview.rootStackPanel.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+                i += 1;
+            }
+        }
 
         private void SearchClosedSentences_TextChanged(object sender, TextChangedEventArgs e)
         {
